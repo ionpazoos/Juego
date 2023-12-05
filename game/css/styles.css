@@ -1,0 +1,33 @@
+@font-face{
+
+    font-family: emulogic;
+    src: url("../fonts/emulogic.ttf")
+}
+
+
+#gameScreen {
+    width: 100%;
+    height: 80%;
+     border: black;
+    border-style: solid; 
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    background-image: url("../images/Background.png");
+    background-repeat:repeat-x;
+    background-size: 100%;
+    /* background-color: rgb(116, 208, 227); */
+    
+}
+
+/* ADD */
+#gameHUD {
+    width: 100%;
+    height:150%;
+    margin-bottom: -5px;
+    background-color: rgb(43, 58, 109);
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
