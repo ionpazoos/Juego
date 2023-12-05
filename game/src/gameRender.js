@@ -174,9 +174,13 @@ function renderHUD(){
     globals.ctxHUD.fillText(time, 222, 32);
 
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("LIFE", 321, 16);
+    globals.ctxHUD.fillText("RAGE", 321, 16);
+
+    globals.ctxHUD.drawImage(globals.tileSets[1], 304,352 , 16, 16, 321, 18, 16, 16);
+    globals.ctxHUD.drawImage(globals.tileSets[1], 256,352 , 16, 16, 335, 18, 16, 16);
+    globals.ctxHUD.drawImage(globals.tileSets[1], 288,352 , 16, 16, 348, 18, 16, 16);
 
 
-    
+
 
 }
