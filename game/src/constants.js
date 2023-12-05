@@ -13,7 +13,8 @@ export const Game = {
 export const SpriteID = {
     PLAYER: 0,
     VILLAN:1,
-    SKELETON:2
+    SKELETON:2,
+    BEE:3
 }
 
 //Identificador de estado de sprite (direccion)
@@ -26,9 +27,9 @@ export const State = {
 
 //Diferentes TileSets
 export const Tile = {
-    SIZE_64: 0,     //Sprites 64 x 64
+    SIZE_64: 0,     
     SIZE_32: 1, 
-    VILLAN: 2     //Tiles de mapa 32 x 32
+    VILLAN: 2     
 }
 
 // id de bloque del mapa

@@ -40,6 +40,7 @@ function loadAssets(){
     let tileSetw;
     let tileSetv;
     let tileSets;
+    let tileSetb;
 
     //Load the spritesheet image index 1
     tileSetw = new Image();
@@ -69,6 +70,13 @@ function loadAssets(){
         tileSets.src = "./images/SkeletonCrew/SkeletonMage/Idle/Idle-Sheet.png"; //La ruta es relativa al HTML no al JS
         globals.tileSets.push(tileSets);
         globals.assetsToLoad.push(tileSets);
+
+        //Load the spritesheet villan index 4
+        tileSetb = new Image();
+        tileSetb.addEventListener("load", loadHandler, false);
+        tileSetb.src = "./images/SmallBee/Fly/Fly-Sheet.png"; //La ruta es relativa al HTML no al JS
+        globals.tileSets.push(tileSetb);
+        globals.assetsToLoad.push(tileSetb);
 }
 
 //Funcion que se llama cada vez que se carga un activo
@@ -99,6 +107,7 @@ function initSprites() {
     initplayer();
     initvillan();
     initskeleton();
+    initbee();
 
 }
 
@@ -143,6 +152,20 @@ function initskeleton(){
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
+}
+function initbee(){
+
+    //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(0, 0, 64, 60, 34, 0, 0,4);
+
+    //Creamos los datos de la animacion. 8 frames / state
+    const frames = new Frames(4);
+
+    //Creamos nuestro sprite
+    const bee = new Sprite(SpriteID.BEE, State.IDLE, 400, 10, imageSet, frames);
+
+    //Añadimos el pirata al array de sprites
+    globals.sprites.push(bee);
 }
 function initLevel(){
 

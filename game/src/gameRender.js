@@ -170,8 +170,7 @@ function renderHUD(){
     //Draw time
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("TIME", 221, 16);
-    globals.ctxHUD.fillStyle = 'lightgray';
-    globals.ctxHUD.fillText(time, 222, 32);
+    globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 190, 14, 120, 32);
 
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("RAGE", 321, 16);
