@@ -11,8 +11,18 @@ export default function update(){
             break;
 
         case Game.PLAYING:
+            
             playGame();
             break;
+
+        case Game.NEWGAME:
+                playGame();
+                break;
+        case Game.HISTORIA:
+             playhistori();
+              break;
+    
+    
 
         default:
             console.error("Error: Game State invalid");
@@ -21,6 +31,10 @@ export default function update(){
 function playGame(){
     // ... A completar
     updateSprites();
+}
+function playhistori(){
+    // ... A completar
+     updateSprites();
 }
 
 function updateSprites(){

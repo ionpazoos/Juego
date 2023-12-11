@@ -6,7 +6,9 @@ export const Game = {
     INVALID:    -1,
     LOADING:    0,
     PLAYING:    1,
-    OVER:       2
+    OVER:       2,
+    NEWGAME:    3,
+    HISTORIA:   4
 };
 
 //Identificador de tipo Sprite (ID)
@@ -14,7 +16,9 @@ export const SpriteID = {
     PLAYER: 0,
     VILLAN:1,
     SKELETON:2,
-    BEE:3
+    BEE:3,
+    ERUDITO:4,
+    BOOK: 5
 }
 
 //Identificador de estado de sprite (direccion)

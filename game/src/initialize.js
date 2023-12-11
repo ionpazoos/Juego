@@ -3,7 +3,7 @@ import ImageSet from "./ImageSet.js";
 import Sprite from "./Sprite.js";
 import { FPS, Game, SpriteID, State } from "./constants.js";
 import globals from "./globals.js";
-import { Level, level1 } from "./levels.js";
+import { Level, level1,menu} from "./levels.js";
 
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
@@ -30,17 +30,20 @@ function initVars(){
     globals.frameTimeObj = 1 / FPS; //Frame time in seconds
 
     //Inicializamos el estado del juego
-    globals.gameState = Game.LOADING;
+    globals.gameState = Game.PLAYING
 }
 
 //Carga de activos: TILEMAPS, IMAGES, SOUNDS
 function loadAssets(){
 
     let tileSet;
+    let tileSetBu;
     let tileSetw;
     let tileSetv;
     let tileSets;
     let tileSetb;
+    let tileSetErudito;
+    let tileSetBook;
 
     //Load the spritesheet image index 1
     tileSetw = new Image();
@@ -71,12 +74,33 @@ function loadAssets(){
         globals.tileSets.push(tileSets);
         globals.assetsToLoad.push(tileSets);
 
-        //Load the spritesheet villan index 4
+        //Load the spritesheet villan index 5
         tileSetb = new Image();
         tileSetb.addEventListener("load", loadHandler, false);
         tileSetb.src = "./images/SmallBee/Fly/Fly-Sheet.png"; //La ruta es relativa al HTML no al JS
         globals.tileSets.push(tileSetb);
         globals.assetsToLoad.push(tileSetb);
+
+                //Load the spritesheet ERUDITO index 6(Temporal) 
+                tileSetErudito = new Image();
+                tileSetErudito.addEventListener("load", loadHandler, false);
+                tileSetErudito.src = "./images/erudito_enfadado.png"; //La ruta es relativa al HTML no al JS
+                globals.tileSets.push(tileSetErudito);
+                globals.assetsToLoad.push(tileSetErudito);
+
+    //Load the spritesheet image index 7
+    tileSetBu = new Image();
+    tileSetBu.addEventListener("load", loadHandler, false);
+    tileSetBu.src = "./images/Buildings.png"; //La ruta es relativa al HTML no al JS
+    globals.tileSets.push(tileSetBu);
+    globals.assetsToLoad.push(tileSetBu);
+
+        //Load the spritesheet image index 8
+        tileSetBook = new Image();
+        tileSetBook.addEventListener("load", loadHandler, false);
+        tileSetBook.src = "./images/book.png"; //La ruta es relativa al HTML no al JS
+        globals.tileSets.push(tileSetBook);
+        globals.assetsToLoad.push(tileSetBook);
 }
 
 //Funcion que se llama cada vez que se carga un activo
@@ -97,7 +121,7 @@ function loadHandler(){
         console.log("Assets finished loading");
 
         //Start the game
-        globals.gameState = Game.PLAYING;
+        globals.gameState = Game.HISTORIA;
 
     }
 }
@@ -108,6 +132,8 @@ function initSprites() {
     initvillan();
     initskeleton();
     initbee();
+    initErudito();
+    initbook();
 
 }
 
@@ -167,14 +193,62 @@ function initbee(){
     //Añadimos el pirata al array de sprites
     globals.sprites.push(bee);
 }
+function initErudito(){
+
+    //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(0, 0, 64, 60, 34, 0, 0,5);
+
+    //Creamos los datos de la animacion. 8 frames / state
+    const frames = new Frames(3);
+
+    //Creamos nuestro sprite
+    const bee = new Sprite(SpriteID.ERUDITO, State.IDLE, 500, 10, imageSet, frames);
+
+    //Añadimos el pirata al array de sprites
+    globals.sprites.push(bee);
+}
+
+function initbook(){
+
+    //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(0, 0, 1920, 1080, 400, 100, 100,5);
+
+    //Creamos los datos de la animacion. 8 frames / state
+    const frames = new Frames(1);
+
+    //Creamos nuestro sprite
+    const book = new Sprite(SpriteID.BOOK, State.IDLE, 500, 10, imageSet, frames);
+
+    //Añadimos el pirata al array de sprites
+    globals.sprites.push(book);
+}
 function initLevel(){
 
     //Creamos las propiedades de las imagenes del mapa: initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 16, 16, 16, 0, 0,2);
+    var imageSet = "";
 
-    //Creamos y guardamos nuestro nivel
+    switch(globals.gameState){
+
+        case Game.PLAYING:
+                //Creamos y guardamos nuestro nivel
+     imageSet = new ImageSet(0, 0, 16, 16, 16, 0, 0,2);
     globals.level = new Level(level1, imageSet);
+            break;
+
+        case Game.NEWGAME:
+                    //Creamos y guardamos nuestro nivel
+    imageSet = new ImageSet(0, 0, 16, 16, 16, 0, 0,5);
+    globals.level = new Level(menu, imageSet);
+                break;
+
+        default:
+            console.error("Error: Game State invalid,init");
+    }
+
+    
+
 }
+
 
 //Exportamos las funciones
 export {

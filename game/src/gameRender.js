@@ -1,5 +1,6 @@
 import { Game, Tile } from "./constants.js";
 import globals from "./globals.js";
+import { Level } from "./levels.js";
 
 //Funcion que renderiza los grarficos
 export default function render(){
@@ -14,6 +15,13 @@ export default function render(){
         case Game.PLAYING:
             drawGame();
             break;
+
+        case Game.NEWGAME:
+                drawNewGame();
+                break;
+        case Game.HISTORIA:
+                historia();
+                break;
 
         default:
             console.error("Error: Game State invalid");
@@ -39,9 +47,64 @@ function drawGame(){
 
 }
 
+function drawNewGame(){
+    
+    // Borramos la pantalla entera
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+
+    renderTitle();
+    renderMap();
+    
+
+
+
+
+
+}
+function historia (){
+    // globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+    renderTitle();
+    renderbook();
+ 
+}
+
+function renderbook(){
+
+
+    globals.ctx.drawImage(globals.tileSets[7], 0,0 , 1920, 1080, 0, 0, 1000, 360);
+    globals.ctx.font = '10px upheavtt';
+    globals.ctx.fillText("Mihi Gaiztoen Hirian", 120, 40); 
+    globals.ctx.fillText("mago zurtzen familiaren oinordekoa", 93, 52); 
+    globals.ctx.fillText("jaiotzen da, El Erudito X.G", 90, 64); 
+    globals.ctx.fillText("Txikitatik, bere bulkada psikotikoak ", 80, 76); 
+    globals.ctx.fillText("inguruan kaosa sortuz.Bere kontrolik ", 80, 88); 
+    globals.ctx.fillText("ezaz kezkatuta, familiako zaharrek ", 80, 100); 
+    globals.ctx.fillText("maisu zahar bati bidaltzen diote ", 80, 112);
+    globals.ctx.fillText("X.G, Silvano maisua bezala ezaguna", 80, 124); 
+    globals.ctx.fillText("ezaguna, material islatzailearen ", 80, 136); 
+    globals.ctx.fillText("urregintzan aditua.", 80, 148); 
+
+    globals.ctx.fillText("Maisu Silvanok X.G Mihi ", 270, 40); 
+    globals.ctx.fillText("Labirintorantz gidatzen du bere haserrea", 270, 52); 
+    globals.ctx.fillText("kontrolatzen irakasteko.Ilusioz eta ", 270, 64); 
+    globals.ctx.fillText("beteriko labirinto magiko honek ", 270, 76); 
+    globals.ctx.fillText("Erudito gaztearen barne-oinazeak  ", 270, 88); 
+    globals.ctx.fillText("irudikatzen ditu.Pazientziaz eta", 270, 100); 
+    globals.ctx.fillText("jakinduriaz, Maisu Silvanok", 270, 112); 
+    globals.ctx.fillText("barne-hausnarketaren eta autokontrolaren", 269, 124); 
+    globals.ctx.fillText("irakasten dio X.G. Aurrera egin ahala", 269, 136); 
+    globals.ctx.fillText("Silvano maisuak familiaren historia ", 269, 148); 
+
+
+
+}
+
 function renderMap() {
     const brickSize = globals.level.imageSet.gridSize;
     const levelData = globals.level.data;
+    const imagepath = globals.level.imageSet.imgpath;
 
     // Dibujamos el mapa
     const num_fil = levelData.length;
@@ -64,7 +127,7 @@ function renderMap() {
 
             // Dibujamos el nuevo fotograma del sprite en la posición adecuada
             globals.ctx.drawImage(
-                globals.tileSets[Tile.SIZE_32],
+                globals.tileSets[imagepath -1],
                 xTile, yTile,
                 brickSize, brickSize,
                 xPos, yPos,
@@ -154,7 +217,7 @@ function renderHUD(){
 
 
     //Draw score
-    globals.ctxHUD.font = '15px VT323-Regular';
+    globals.ctxHUD.font = '17px upheavtt';
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("SCORE", 8, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
@@ -172,14 +235,27 @@ function renderHUD(){
     globals.ctxHUD.fillText("TIME", 221, 16);
     globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 190, 14, 120, 32);
 
+     // rage
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("RAGE", 321, 16);
-
-    globals.ctxHUD.drawImage(globals.tileSets[1], 304,352 , 16, 16, 321, 18, 16, 16);
-    globals.ctxHUD.drawImage(globals.tileSets[1], 256,352 , 16, 16, 335, 18, 16, 16);
-    globals.ctxHUD.drawImage(globals.tileSets[1], 288,352 , 16, 16, 348, 18, 16, 16);
+    globals.ctxHUD.fillText("RAGE", 305, 16);
+   //botellas
+    globals.ctxHUD.drawImage(globals.tileSets[1], 304,352 , 16, 16, 305, 18, 16, 16);
+    globals.ctxHUD.drawImage(globals.tileSets[1], 256,352 , 16, 16, 320, 18, 16, 16);
+    globals.ctxHUD.drawImage(globals.tileSets[1], 288,352 , 16, 16, 335, 18, 16, 16);
+    //erudito
+    globals.ctxHUD.drawImage(globals.tileSets[5], 0,0 , 64, 64, 350, 0, 64, 64);
+    
 
 
 
 
 }
+
+function renderTitle(){
+    globals.ctxHUD.font = '30px upheavtt';
+    globals.ctxHUD.fillStyle = 'pink';
+    globals.ctxHUD.fillText("Haserrearen esnatzea", 80, 26);
+}
+
+
+
