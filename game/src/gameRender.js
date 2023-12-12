@@ -1,5 +1,6 @@
 import { Game, Tile } from "./constants.js";
 import globals from "./globals.js";
+import { initLevel } from "./initialize.js";
 import { Level } from "./levels.js";
 
 //Funcion que renderiza los grarficos
@@ -55,15 +56,14 @@ function drawNewGame(){
 
     renderTitle();
     renderMap();
-    
-
-
-
-
+    renderText();
 
 }
+
+
+
 function historia (){
-    // globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
     renderTitle();
     renderbook();
@@ -73,7 +73,7 @@ function historia (){
 function renderbook(){
 
 
-    globals.ctx.drawImage(globals.tileSets[7], 0,0 , 1920, 1080, 0, 0, 1000, 360);
+    globals.ctx.drawImage(globals.tileSets[0], 0,769 , 1920, 1080, 0, 0, 1000, 360);
     globals.ctx.font = '10px upheavtt';
     globals.ctx.fillText("Mihi Gaiztoen Hirian", 120, 40); 
     globals.ctx.fillText("mago zurtzen familiaren oinordekoa", 93, 52); 
@@ -101,10 +101,18 @@ function renderbook(){
 
 }
 
+function renderText(){
+    globals.ctx.font = '16px ';
+    globals.ctx.fillText("New Game", 60, 80); 
+    globals.ctx.fillText("History", 210, 80);
+    globals.ctx.fillText("Controls", 330, 80);  
+}
+
 function renderMap() {
-    const brickSize = globals.level.imageSet.gridSize;
-    const levelData = globals.level.data;
-    const imagepath = globals.level.imageSet.imgpath;
+    const brickSize = globals.level[globals.gameState-1].imageSet.gridSize;
+    const levelData = globals.level[globals.gameState-1].data;
+    const imagepath = globals.level[globals.gameState -1].imageSet.imgpath;
+    globals.ctx.drawImage(globals.tileSets[0],0,490,480,272,0,0,490,272);
 
     // Dibujamos el mapa
     const num_fil = levelData.length;
@@ -135,6 +143,8 @@ function renderMap() {
             );
         }
     }
+
+    
 }
 
 
@@ -178,6 +188,8 @@ function renderSprite(sprite)
         xPos, yPos,                                     //The destination x and y position
         sprite.imageSet.xSize, sprite.imageSet.ySize    //The destination height and width
     );
+
+    
 }
 
 function drawSprites(){
@@ -243,7 +255,7 @@ function renderHUD(){
     globals.ctxHUD.drawImage(globals.tileSets[1], 256,352 , 16, 16, 320, 18, 16, 16);
     globals.ctxHUD.drawImage(globals.tileSets[1], 288,352 , 16, 16, 335, 18, 16, 16);
     //erudito
-    globals.ctxHUD.drawImage(globals.tileSets[5], 0,0 , 64, 64, 350, 0, 64, 64);
+    globals.ctxHUD.drawImage(globals.tileSets[0], 30,0 , 32, 32, 360, 5, 32, 32);
     
 
 

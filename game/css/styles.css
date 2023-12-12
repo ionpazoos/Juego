@@ -14,7 +14,7 @@
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    background-image: url("../images/Background.png");
+    /* background-image: url("../images/Background.png"); */
     background-repeat:repeat-x;
     background-size: 100%;
     /* background-color: rgb(116, 208, 227); */
@@ -30,4 +30,5 @@
     image-rendering: -moz-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    
 }

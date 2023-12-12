@@ -35,7 +35,7 @@ export default {
     sprites: [],
 
     // Datos del nivel
-    level: {},
+    level: [],
 
 
 };
