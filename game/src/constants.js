@@ -7,8 +7,9 @@ export const Game = {
     LOADING:    0,
     PLAYING:    1,
     NEWGAME:    2,
-    OVER:       3,
-    HISTORIA:   4
+    OVER:       5,
+    HISTORIA:   4,
+    HIGHSCORE:  3
 };
 
 //Identificador de tipo Sprite (ID)

@@ -21,7 +21,9 @@ export default function update(){
         case Game.HISTORIA:
              playhistori();
               break;
-    
+        case Game.HIGHSCORE:
+                playhistori();
+                 break;   
     
 
         default:
@@ -51,9 +53,13 @@ function updateSprite(sprite){
     switch (type){
 
         //Caso del jugador
-        case SpriteID.BIRD:
+        case SpriteID.PLAYER:
             updateplayer(sprite);
             break;
+
+        case SpriteID.SKELETON:
+                updateenemi(sprite);
+              break;
 
         //Otros
         default:
@@ -66,10 +72,25 @@ function updateplayer(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
 
-    sprite.xPos = 222.5;
-    sprite.yPos = 0;
+    sprite.xPos = 20;
+    sprite.yPos = 110;
 
     sprite.state = State.IDLE;
+
+
+
+}
+function updateenemi(sprite){
+
+    //Aqui actualizariamos el estado de las variables del player
+
+    sprite.xPos = 100;
+    sprite.yPos = 110;
+
+    sprite.state = State.IDLE;
+
+
+
 }
 }
 

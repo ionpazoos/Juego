@@ -3,7 +3,7 @@ import ImageSet from "./ImageSet.js";
 import Sprite from "./Sprite.js";
 import { FPS, Game, SpriteID, State } from "./constants.js";
 import globals from "./globals.js";
-import { Level, level1,menu} from "./levels.js";
+import { Level, level1,menu,highScore} from "./levels.js";
 
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
@@ -31,7 +31,7 @@ function initVars(){
 
     //Inicializamos el estado del juego
     globals.gameState = Game.PLAYING
-    console.log("modo cambiado");
+    
 }
 
 //Carga de activos: TILEMAPS, IMAGES, SOUNDS
@@ -76,8 +76,8 @@ function loadHandler(){
         console.log("Assets finished loading");
 
         //Start the game
-        globals.gameState = Game.NEWGAME;
-
+        globals.gameState = Game.HIGHSCORE;
+        console.log("modo cambiado");
     }
 }
 
@@ -87,21 +87,21 @@ function initSprites() {
     initvillan();
     initskeleton();
     initbee();
-    initErudito();
+    
     initbook();
 
 }
 
 function initplayer(){
 
-    //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 32 , 32, 32, 30, 0,0);
+    //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
+    const imageSet = new ImageSet(0, 0,  30, 32, 32, 32, 0);
 
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(4);
 
     //Creamos nuestro sprite
-    const player = new Sprite(SpriteID.PLAYER, State.IDLE, 20, 110, imageSet, frames);
+    const player = new Sprite(SpriteID.PLAYER, State.IDLE, 0, 0, imageSet, frames);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
@@ -148,20 +148,7 @@ function initbee(){
     //Añadimos el pirata al array de sprites
     globals.sprites.push(bee);
 }
-function initErudito(){
 
-    //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 64, 60, 34, 0, 0,1);
-
-    //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(3);
-
-    //Creamos nuestro sprite
-    const bee = new Sprite(SpriteID.ERUDITO, State.IDLE, 500, 10, imageSet, frames);
-
-    //Añadimos el pirata al array de sprites
-    globals.sprites.push(bee);
-}
 
 function initbook(){
 
@@ -191,6 +178,8 @@ function initLevel(){
 
 
     globals.level[1] = new Level(menu, imageSet);
+
+    globals.level[2] = new Level(highScore, imageSet);
 
 
 

@@ -24,6 +24,10 @@ export default function render(){
                 historia();
                 break;
 
+        case Game.HIGHSCORE:
+                highScore();
+                break;
+
         default:
             console.error("Error: Game State invalid");
     }
@@ -57,6 +61,18 @@ function drawNewGame(){
     renderTitle();
     renderMap();
     renderText();
+
+}
+
+function highScore(){
+    
+    // Borramos la pantalla entera
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+
+    renderTitle();
+    renderMap();
+    rendercontrols();
 
 }
 
@@ -182,7 +198,7 @@ function renderSprite(sprite)
 
     //Dibujamos el nuevo fotograma del sprite en la posicion adecuada
     globals.ctx.drawImage(
-        globals.tileSets[sprite.imageSet.imgpath],                 //The image file
+        globals.tileSets[0],                 //The image file
         xTile, yTile,                                   //The source x and y position
         sprite.imageSet.xSize, sprite.imageSet.ySize,   //The source height and width
         xPos, yPos,                                     //The destination x and y position
@@ -267,6 +283,15 @@ function renderTitle(){
     globals.ctxHUD.font = '30px upheavtt';
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("Haserrearen esnatzea", 80, 26);
+}
+
+function rendercontrols(){
+    globals.ctx.drawImage(globals.tileSets[0], 3, 1317, 16, 16, 100, 5, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 22, 1317, 16, 16, 105, 32, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 54, 1317, 16, 16, 135, 32, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 39, 1317, 16, 16, 78, 32, 32, 32);
+    globals.ctx.font = '15px upheavtt';
+    globals.ctx.fillText("Move", 95, 76);
 }
 
 
