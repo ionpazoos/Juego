@@ -37,5 +37,7 @@ export default {
     // Datos del nivel
     level: [],
 
+    leveltime: {},
+
 
 };

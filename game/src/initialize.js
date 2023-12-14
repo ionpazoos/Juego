@@ -1,10 +1,12 @@
 import Frames from "./Frames.js";
 import ImageSet from "./ImageSet.js";
+import physics from "./Physics.js";
 import Sprite from "./Sprite.js";
 import { FPS, Game, SpriteID, State } from "./constants.js";
 import globals from "./globals.js";
-import { Level, level1,menu,highScore} from "./levels.js";
-
+import { Level, level1,menu,highScore,controls} from "./levels.js";
+import Time from "./timer.js"
+import Physics from "./Physics.js";
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
 
@@ -32,6 +34,9 @@ function initVars(){
     //Inicializamos el estado del juego
     globals.gameState = Game.PLAYING
     
+}
+function initTimers(){
+    globals.leveltime = new Time(200,0.5);
 }
 
 //Carga de activos: TILEMAPS, IMAGES, SOUNDS
@@ -76,7 +81,7 @@ function loadHandler(){
         console.log("Assets finished loading");
 
         //Start the game
-        globals.gameState = Game.HIGHSCORE;
+        globals.gameState = Game.PLAYING;
         console.log("modo cambiado");
     }
 }
@@ -95,13 +100,15 @@ function initSprites() {
 function initplayer(){
 
     //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
-    const imageSet = new ImageSet(0, 0,  30, 32, 32, 32, 0);
+    const imageSet = new ImageSet(0, 0,  32, 32, 32, 26, 0);
 
     //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(4);
+    const frames = new Frames(4, 3);
+
+    const physics = new Physics(40);
 
     //Creamos nuestro sprite
-    const player = new Sprite(SpriteID.PLAYER, State.IDLE, 0, 0, imageSet, frames);
+    const player = new Sprite(SpriteID.PLAYER, State.RUNNING_RIGHT, 30, 110, imageSet, frames,physics);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
@@ -179,7 +186,8 @@ function initLevel(){
 
     globals.level[1] = new Level(menu, imageSet);
 
-    globals.level[2] = new Level(highScore, imageSet);
+    globals.level[2] = new Level(controls, imageSet);
+    globals.level[3] = new Level(highScore, imageSet);
 
 
 
@@ -193,6 +201,6 @@ function initLevel(){
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets
+    initVars, loadAssets,initTimers
 };
 

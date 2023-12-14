@@ -24,6 +24,9 @@ export default function render(){
                 historia();
                 break;
 
+        case Game.CONTROLS:
+                controls();
+                break;
         case Game.HIGHSCORE:
                 highScore();
                 break;
@@ -64,7 +67,7 @@ function drawNewGame(){
 
 }
 
-function highScore(){
+function controls(){
     
     // Borramos la pantalla entera
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
@@ -75,6 +78,20 @@ function highScore(){
     rendercontrols();
 
 }
+
+function highScore(){
+    
+    // Borramos la pantalla entera
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+
+    renderTitle();
+    renderMap();
+
+    renderscore();
+
+}
+
 
 
 
@@ -122,6 +139,20 @@ function renderText(){
     globals.ctx.fillText("New Game", 60, 80); 
     globals.ctx.fillText("History", 210, 80);
     globals.ctx.fillText("Controls", 330, 80);  
+}
+
+function renderscore(){
+    let score = 500;
+    let x = 150;
+    globals.ctx.font = '16px ';
+    for(var i = 0;i<5;i++){
+        globals.ctx.fillText((i+1)+". name:" + score, x , 100);
+        globals.ctx.drawImage(globals.tileSets[0], 30,0 , 32, 32, x, 110, 32, 32);
+        x += 80; 
+        score -=50;
+        
+    }
+
 }
 
 function renderMap() {
@@ -240,7 +271,7 @@ function renderHUD(){
     const score = 1500;
     const highScore = 130000;
     const life = 40;
-    const time = 3000;
+    const time = globals.leveltime.value;
 
 
 
@@ -260,7 +291,7 @@ function renderHUD(){
     
     //Draw time
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("TIME", 221, 16);
+    globals.ctxHUD.fillText("TIME" + time, 221, 16);
     globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 190, 14, 120, 32);
 
      // rage
@@ -286,12 +317,20 @@ function renderTitle(){
 }
 
 function rendercontrols(){
-    globals.ctx.drawImage(globals.tileSets[0], 3, 1317, 16, 16, 100, 5, 32, 32);
-    globals.ctx.drawImage(globals.tileSets[0], 22, 1317, 16, 16, 105, 32, 32, 32);
-    globals.ctx.drawImage(globals.tileSets[0], 54, 1317, 16, 16, 135, 32, 32, 32);
-    globals.ctx.drawImage(globals.tileSets[0], 39, 1317, 16, 16, 78, 32, 32, 32);
+
+    //Flechas
+    globals.ctx.drawImage(globals.tileSets[0], 3, 1317, 16, 16, 150, 5, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 22, 1317, 16, 16, 155, 32, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 54, 1317, 16, 16, 185, 32, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 39, 1317, 16, 16, 128, 32, 32, 32);
     globals.ctx.font = '15px upheavtt';
-    globals.ctx.fillText("Move", 95, 76);
+    globals.ctx.fillText("Move", 145, 76);
+
+    globals.ctx.drawImage(globals.tileSets[0], 65, 1574, 32, 16, 250, 32, 64, 32);
+    globals.ctx.font = '15px upheavtt';
+    globals.ctx.fillText("Interact", 250, 76);
+
+
 }
 
 

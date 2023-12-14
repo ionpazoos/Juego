@@ -1,6 +1,7 @@
 import { Game, SpriteID, State } from "./constants.js";
 import globals from "./globals.js";
 
+
 export default function update(){
 
     //Change what the game is doing based on the game state
@@ -33,6 +34,7 @@ export default function update(){
 function playGame(){
     // ... A completar
     updateSprites();
+    updateLevelTime();
 }
 function playhistori(){
     // ... A completar
@@ -44,6 +46,14 @@ function updateSprites(){
 
         const sprite = globals.sprites[i];
         updateSprite(sprite);
+    }
+}
+function updateLevelTime(){
+    globals.leveltime.timeChangeCounter += globals.deltaTime;
+    if(globals.leveltime.timeChangeCounter > globals.leveltime.timeChangeValue){
+        globals.leveltime.value--;
+        globals.leveltime.timeChangeCounter = 0;
+
     }
 }
 
@@ -72,11 +82,26 @@ function updateplayer(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
 
-    sprite.xPos = 20;
-    sprite.yPos = 110;
+     //sprite.xPos = 20;
+    // sprite.yPos = 110;
+    // sprite.physics.vLimit = 4;
+    
+    //  sprite.state = State.IDLE;
 
-    sprite.state = State.IDLE;
+    switch (sprite.state){
+        case State.RUNNING_RIGHT:
+            sprite.physics.vx = sprite.physics.vlimit;
+            console.log("vx:" + sprite.physics.vlimit);
+            break;
+        case State.LEFT:
+                sprite.physics.vx = -sprite.physics.vlimit;
+                break;
 
+    }
+
+    sprite.xPos += sprite.physics.vx * globals.deltaTime;
+    console.log("XPOS:" + sprite.xPos);
+    updateAnimationFrame(sprite);
 
 
 }
@@ -91,6 +116,19 @@ function updateenemi(sprite){
 
 
 
+}
+
+function updateAnimationFrame(sprite){
+    sprite.frames.frameChangeCounter++;
+
+    if(sprite.frames.frameChangeCounter === sprite.frames.speed){
+        sprite.frames.frameCounter++;
+        sprite.frames.frameChangeCounter = 0;
+    }
+
+    if(sprite.frames.frameCounter === sprite.frames.framesPerState){
+        sprite.frames.frameCounter = 0;
+    }
 }
 }
 

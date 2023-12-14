@@ -8,8 +8,9 @@ export const Game = {
     PLAYING:    1,
     NEWGAME:    2,
     OVER:       5,
-    HISTORIA:   4,
-    HIGHSCORE:  3
+    HISTORIA:   6,
+    CONTROLS:   3,
+    HIGHSCORE:  4
 };
 
 //Identificador de tipo Sprite (ID)
@@ -27,7 +28,11 @@ export const State = {
 
    
     IDLE: 0 ,
-    RUNNING: 1
+    RUNNING_RIGHT: 1,
+    STILL_UP:2,
+    RIGHT: 3,
+    LEFT: 4
+
 }
 
 //Diferentes TileSets
