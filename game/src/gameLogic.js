@@ -86,21 +86,22 @@ function updateplayer(sprite){
     // sprite.yPos = 110;
     // sprite.physics.vLimit = 4;
     
-    //  sprite.state = State.IDLE;
+      sprite.state = State.RUNNING_LEFT;
+
+      //readKeyboardAndAssignState(sprite);
+      console.log(sprite.state);
 
     switch (sprite.state){
         case State.RUNNING_RIGHT:
             sprite.physics.vx = sprite.physics.vlimit;
-            console.log("vx:" + sprite.physics.vlimit);
             break;
-        case State.LEFT:
+        case State.RUNNING_LEFT:
                 sprite.physics.vx = -sprite.physics.vlimit;
                 break;
 
     }
 
     sprite.xPos += sprite.physics.vx * globals.deltaTime;
-    console.log("XPOS:" + sprite.xPos);
     updateAnimationFrame(sprite);
 
 
@@ -130,5 +131,18 @@ function updateAnimationFrame(sprite){
         sprite.frames.frameCounter = 0;
     }
 }
+
+
+function readKeyboardAndAssignState(sprite)
+{
+sprite.state =  globals.action.moveLeft         ? State.RUNNING_LEFT : 
+                globals.action.moveRight        ? State.RUNNING_RIGHT:
+                globals.action.moveUp           ? State.STILL_UP:
+                globals.action.moveDown         ? State.STILL_DOWN:
+                sprite.state === State.RUNNING_LEFT     ? State.STILL_LEFT:   
+                sprite.state === State.RUNNING_RIGHT    ? State.STILL_RIGHT:
+                sprite.state;
+}
+
 }
 

@@ -7,6 +7,7 @@ import globals from "./globals.js";
 import { Level, level1,menu,highScore,controls} from "./levels.js";
 import Time from "./timer.js"
 import Physics from "./Physics.js";
+import { keyDownHandeler,keyupHandeler } from "./events.js";
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
 
@@ -33,7 +34,18 @@ function initVars(){
 
     //Inicializamos el estado del juego
     globals.gameState = Game.PLAYING
+
+    globals.action = {
+        moveLeft: false,
+        moveRight:false,
+        moveUp:false,
+        moveDown:false
+    }
     
+}
+function initEvents(){
+    window.addEventListener("keydown",keyDownHandeler,false);
+    window.addEventListener("keydown",keyupHandeler,false);
 }
 function initTimers(){
     globals.leveltime = new Time(200,0.5);
@@ -100,7 +112,7 @@ function initSprites() {
 function initplayer(){
 
     //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
-    const imageSet = new ImageSet(0, 0,  32, 32, 32, 26, 0);
+    const imageSet = new ImageSet(0, 0,  32, 32, 32, 0, 0);
 
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(4, 3);
@@ -150,7 +162,7 @@ function initbee(){
     const frames = new Frames(4);
 
     //Creamos nuestro sprite
-    const bee = new Sprite(SpriteID.BEE, State.IDLE, 420, 10, imageSet, frames);
+    const bee = new Sprite(SpriteID.BEE, State.STILL_RIGHT, 420, 10, imageSet, frames);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(bee);
@@ -201,6 +213,6 @@ function initLevel(){
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets,initTimers
+    initVars, loadAssets, initTimers, initEvents
 };
 

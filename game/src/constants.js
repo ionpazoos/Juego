@@ -29,9 +29,12 @@ export const State = {
    
     IDLE: 0 ,
     RUNNING_RIGHT: 1,
-    STILL_UP:2,
+    RUNNING_LEFT: 53.1,
+    STILL_UP: 20,
     RIGHT: 3,
-    LEFT: 4
+    STILL_DOWN: 30,
+    STILL_LEFT:52.1,
+    STILL_RIGHT:0
 
 }
 
@@ -43,7 +46,12 @@ export const Tile = {
 }
 
 // id de bloque del mapa
-export const Block = {
+export const Key = {
+
+UP:     38,
+DOWN:   40,
+RIGHT:  39,
+LEFT:   37
 
 }
 
