@@ -55,6 +55,10 @@ function updateLevelTime(){
         globals.leveltime.timeChangeCounter = 0;
 
     }
+
+    if(globals.leveltime.value <= 0){
+        globals.leveltime.value=0;
+    }
 }
 
 function updateSprite(sprite){
@@ -86,9 +90,9 @@ function updateplayer(sprite){
     // sprite.yPos = 110;
     // sprite.physics.vLimit = 4;
     
-      sprite.state = State.RUNNING_LEFT;
+      //sprite.state = State.RUNNING_LEFT;
 
-      //readKeyboardAndAssignState(sprite);
+      readKeyboardAndAssignState(sprite);
       console.log(sprite.state);
 
     switch (sprite.state){
@@ -98,6 +102,8 @@ function updateplayer(sprite){
         case State.RUNNING_LEFT:
                 sprite.physics.vx = -sprite.physics.vlimit;
                 break;
+        default: sprite.physics.vx = 0;
+            break;
 
     }
 
@@ -135,10 +141,11 @@ function updateAnimationFrame(sprite){
 
 function readKeyboardAndAssignState(sprite)
 {
+   
 sprite.state =  globals.action.moveLeft         ? State.RUNNING_LEFT : 
                 globals.action.moveRight        ? State.RUNNING_RIGHT:
-                globals.action.moveUp           ? State.STILL_UP:
-                globals.action.moveDown         ? State.STILL_DOWN:
+                // globals.action.moveUp           ? State.STILL_UP:
+                // globals.action.moveDown         ? State.STILL_DOWN:
                 sprite.state === State.RUNNING_LEFT     ? State.STILL_LEFT:   
                 sprite.state === State.RUNNING_RIGHT    ? State.STILL_RIGHT:
                 sprite.state;

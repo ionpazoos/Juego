@@ -17,6 +17,7 @@ export function keyDownHandeler(event){
                     break;
             case Key.RIGHT:
                     globals.action.moveRight = true;
+                    
                     break;
     }
 }
@@ -34,6 +35,7 @@ export function keyupHandeler(event){
                 break;
             case Key.LEFT:
                     globals.action.moveLeft = false;
+                    console.log("levantar");
                     break;
             case Key.RIGHT:
                     globals.action.moveRight = false;

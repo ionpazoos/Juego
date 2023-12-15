@@ -45,7 +45,7 @@ function initVars(){
 }
 function initEvents(){
     window.addEventListener("keydown",keyDownHandeler,false);
-    window.addEventListener("keydown",keyupHandeler,false);
+    window.addEventListener("keyup",keyupHandeler,false);
 }
 function initTimers(){
     globals.leveltime = new Time(200,0.5);
@@ -120,7 +120,7 @@ function initplayer(){
     const physics = new Physics(40);
 
     //Creamos nuestro sprite
-    const player = new Sprite(SpriteID.PLAYER, State.RUNNING_RIGHT, 30, 110, imageSet, frames,physics);
+    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 110, imageSet, frames,physics);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
