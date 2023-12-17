@@ -1,7 +1,7 @@
 import Frames from "./Frames.js";
 import ImageSet from "./ImageSet.js";
 import physics from "./Physics.js";
-import Sprite from "./Sprite.js";
+import Sprite, { Ladron } from "./Sprite.js";
 import { FPS, Game, SpriteID, State } from "./constants.js";
 import globals from "./globals.js";
 import { Level, level1,menu,highScore,controls} from "./levels.js";
@@ -128,13 +128,17 @@ function initplayer(){
 function initvillan(){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 32, 32, 32, 30, 220,0);
+    const imageSet = new ImageSet(0, 0, 32, 32, 32, 32, 220,0);
 
     //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(4);
+    const frames = new Frames(3,3);
+
+    const physics = new Physics(40);
+
+    const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const villan = new Sprite(SpriteID.VILLAN, State.IDLE, 60, 110, imageSet, frames);
+    const villan = new Ladron (SpriteID.VILLAN, State.IDLE, 60, 110, imageSet, frames,physics,initTimeToChancheDirection);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(villan);
@@ -142,13 +146,17 @@ function initvillan(){
 function initskeleton(){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 32, 32, 32, 30, 340,0);
+    const imageSet = new ImageSet(0, 0, 32, 32, 32, 25, 340,0);
 
     //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(4);
+    const frames = new Frames(4,4);
+
+    const physics = new Physics(30);
+
+    const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const Skeleton = new Sprite(SpriteID.SKELETON, State.IDLE, 100, 110, imageSet, frames);
+    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 110, imageSet, frames,physics,initTimeToChancheDirection);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
@@ -156,13 +164,22 @@ function initskeleton(){
 function initbee(){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 64, 40, 32, 30, 140,0);
+    const imageSet = new ImageSet(0, 0, 64, 40, 64, 64, 140,0);
 
     //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(4);
+    const frames = new Frames(3,2);
+
+    const initangle = 90*Math.PI * 180;
+    const omega = 0.5;
+    const xRotorCenter = globals.canvas.width/2;
+    const yRotorCenter = globals.canvas.height/2;
+
+    const physics = new Physics(30,omega,initangle,xRotorCenter,yRotorCenter);
 
     //Creamos nuestro sprite
-    const bee = new Sprite(SpriteID.BEE, State.STILL_RIGHT, 420, 10, imageSet, frames);
+    const bee = new Sprite(SpriteID.BEE, State.STILL_RIGHT, 420, 15, imageSet, frames,physics);
+
+
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(bee);

@@ -29,7 +29,9 @@ export const State = {
    
     IDLE: 0 ,
     RUNNING_RIGHT: 1,
+    RUNNING_RIGHT_ESKELETON: 1.2,
     RUNNING_LEFT: 53.1,
+    RUNNING_LEFT_ESKELETON: 43.53,
     STILL_UP: 20,
     RIGHT: 3,
     STILL_DOWN: 30,

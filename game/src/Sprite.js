@@ -11,4 +11,16 @@ export default class Sprite{
         this.frames     = frames;           //Datos de los frames de animacion
         this.physics    = physics; 
     }
+
+
+}
+export class Ladron extends Sprite
+{
+    constructor(id,state,xPos,yPos,imageSet,frames,physics,maxTimeToChangeDirection)
+    {
+        super(id,state,xPos,yPos,imageSet,frames,physics);
+
+        this.directionChangeCounter = 0;
+        this.maxTimeToChangeDirection = maxTimeToChangeDirection;
+    }
 }

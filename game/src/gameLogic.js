@@ -74,6 +74,13 @@ function updateSprite(sprite){
         case SpriteID.SKELETON:
                 updateenemi(sprite);
               break;
+        case SpriteID.BEE:
+            updatebee(sprite);
+            break;
+
+        case SpriteID.VILLAN:
+                updatevillan(sprite);
+                break;
 
         //Otros
         default:
@@ -93,7 +100,6 @@ function updateplayer(sprite){
       //sprite.state = State.RUNNING_LEFT;
 
       readKeyboardAndAssignState(sprite);
-      console.log(sprite.state);
 
     switch (sprite.state){
         case State.RUNNING_RIGHT:
@@ -109,21 +115,87 @@ function updateplayer(sprite){
 
     sprite.xPos += sprite.physics.vx * globals.deltaTime;
     updateAnimationFrame(sprite);
+    updateDirectionRandom(sprite);
 
 
 }
 function updateenemi(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
+    
 
-    sprite.xPos = 100;
-    sprite.yPos = 110;
+    //  sprite.state = State.RUNNING_LEFT_ESKELETON;
 
-    sprite.state = State.IDLE;
+    switch (sprite.state){
+        case State.RUNNING_RIGHT_ESKELETON:
+            sprite.physics.vx = sprite.physics.vlimit;
+            break;
+        case State.RUNNING_LEFT_ESKELETON:
+                sprite.physics.vx = -sprite.physics.vlimit;
+                break;
+        default: sprite.physics.vx = 0;
+            break;
+    }
+    sprite.xPos += sprite.physics.vx * globals.deltaTime;
+    updateAnimationFrame(sprite);
+
+     updateDirectionRandom(sprite);
 
 
 
 }
+
+function updatevillan(sprite){
+
+    //Aqui actualizariamos el estado de las variables del player
+    
+
+    //  sprite.state = State.RUNNING_LEFT_ESKELETON;
+
+    // switch (sprite.state){
+    //     case State.RUNNING_RIGHT_ESKELETON:
+    //         sprite.physics.vx = sprite.physics.vlimit;
+    //         break;
+    //     case State.RUNNING_LEFT_ESKELETON:
+    //             sprite.physics.vx = -sprite.physics.vlimit;
+    //             break;
+    //     default: sprite.physics.vx = 0;
+    //         break;
+    // }
+    // sprite.xPos += sprite.physics.vx * globals.deltaTime;
+    updateAnimationFrame(sprite);
+
+    //  updateDirectionRandom(sprite);
+
+
+
+}
+
+function updatebee(sprite){
+
+
+    sprite.physics.angle += sprite.physics.omega * globals.deltaTime;
+    setPositionBee(sprite);
+
+
+    updateAnimationFrame(sprite);
+
+
+
+
+}
+
+ function setPositionBee(sprite){
+    const radius = 25;
+
+    sprite.xPos = sprite.physics.xRotorCenter + radius * Math.cos(sprite.physics.angle);
+    sprite.yPos = sprite.physics.yRotorCenter + radius * Math.sin(sprite.physics.angle);
+
+    sprite.xPos -= sprite.imageSet.xSize /2;
+    sprite.yPos -= sprite.imageSet.ySize /2;
+
+}
+
 
 function updateAnimationFrame(sprite){
     sprite.frames.frameChangeCounter++;
@@ -149,6 +221,21 @@ sprite.state =  globals.action.moveLeft         ? State.RUNNING_LEFT :
                 sprite.state === State.RUNNING_LEFT     ? State.STILL_LEFT:   
                 sprite.state === State.RUNNING_RIGHT    ? State.STILL_RIGHT:
                 sprite.state;
+}
+
+function swapDirectio(sprite){
+    sprite.state = sprite.state === State.RUNNING_RIGHT_ESKELETON ? State.RUNNING_LEFT_ESKELETON : State.RUNNING_RIGHT_ESKELETON
+}
+function updateDirectionRandom(sprite){
+    sprite.directionChangeCounter += globals.deltaTime;
+
+    if(sprite.directionChangeCounter > sprite.maxTimeToChangeDirection){
+        
+        sprite.directionChangeCounter = 0;
+        sprite.maxTimeToChangeDirection = Math.floor(Math.random()*8)+1;
+
+        swapDirectio(sprite);
+    }
 }
 
 }
