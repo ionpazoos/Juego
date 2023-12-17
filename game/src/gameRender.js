@@ -296,13 +296,10 @@ function renderHUD(){
 
      // rage
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("RAGE", 305, 16);
-   //botellas
-    globals.ctxHUD.drawImage(globals.tileSets[1], 304,352 , 16, 16, 305, 18, 16, 16);
-    globals.ctxHUD.drawImage(globals.tileSets[1], 256,352 , 16, 16, 320, 18, 16, 16);
-    globals.ctxHUD.drawImage(globals.tileSets[1], 288,352 , 16, 16, 335, 18, 16, 16);
+    globals.ctxHUD.fillText("RAGE", 305, 25);
+
     //erudito
-    globals.ctxHUD.drawImage(globals.tileSets[0], 30,0 , 32, 32, 360, 5, 32, 32);
+    globals.ctxHUD.drawImage(globals.tileSets[0], 0,1837 , 36, 36, 360, 5, 36, 36);
     
 
 

@@ -93,7 +93,7 @@ function loadHandler(){
         console.log("Assets finished loading");
 
         //Start the game
-        globals.gameState = Game.PLAYING;
+        globals.gameState = Game.HIGHSCORE;
         console.log("modo cambiado");
     }
 }
