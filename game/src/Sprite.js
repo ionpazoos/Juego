@@ -1,3 +1,5 @@
+import { Colisions } from "./constants.js";
+
 //Clase gestora de los sprites
 export default class Sprite{
 
@@ -22,5 +24,15 @@ export class Ladron extends Sprite
 
         this.directionChangeCounter = 0;
         this.maxTimeToChangeDirection = maxTimeToChangeDirection;
+    }
+}
+
+export class Ladron_j extends Sprite
+{
+    constructor(id,state,xPos,yPos,imageSet,frames,physics)
+    {
+        super(id,state,xPos,yPos,imageSet,frames,physics);
+
+        this.collisionBorder = Colisions.NO_COLISIONS;
     }
 }

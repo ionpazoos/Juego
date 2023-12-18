@@ -1,4 +1,4 @@
-import { Game, SpriteID, State } from "./constants.js";
+import { Colisions, Game, SpriteID, State } from "./constants.js";
 import globals from "./globals.js";
 
 
@@ -81,7 +81,9 @@ function updateSprite(sprite){
         case SpriteID.VILLAN:
                 updatevillan(sprite);
                 break;
-
+        case SpriteID.CABALLERO:
+                    updateCaballero(sprite);
+                    break;
         //Otros
         default:
             break;
@@ -152,23 +154,44 @@ function updatevillan(sprite){
 
     //  sprite.state = State.RUNNING_LEFT_ESKELETON;
 
-    // switch (sprite.state){
-    //     case State.RUNNING_RIGHT_ESKELETON:
-    //         sprite.physics.vx = sprite.physics.vlimit;
-    //         break;
-    //     case State.RUNNING_LEFT_ESKELETON:
-    //             sprite.physics.vx = -sprite.physics.vlimit;
-    //             break;
-    //     default: sprite.physics.vx = 0;
-    //         break;
-    // }
-    // sprite.xPos += sprite.physics.vx * globals.deltaTime;
+     switch (sprite.collisionBorder){
+         case Colisions.BORDER_RIGHT:
+            sprite.physics.vx = -sprite.physics.vlimit;
+            sprite.state = State.RUNNING_RIGHT_VILLAN;
+          
+            break;
+         case Colisions.BORDER_LEFT:
+                 sprite.physics.vx = sprite.physics.vlimit;
+                 sprite.state = State.RUNNING_LEFT_VILLAN;
+                 
+                 break;
+        default: 
+        
+            
+     }
+     sprite.xPos += sprite.physics.vx * globals.deltaTime;
     updateAnimationFrame(sprite);
 
-    //  updateDirectionRandom(sprite);
+
+   calculateColision(sprite);
 
 
 
+}
+
+function calculateColision(sprite){
+    if(sprite.xPos + sprite.imageSet.xSize > globals.canvas.width){
+        sprite.collisionBorder = Colisions.BORDER_RIGHT;
+
+    }
+
+    else if(sprite.xPos < 0 ){
+        sprite.collisionBorder = Colisions.BORDER_LEFT;
+    }
+
+    else{
+        sprite.collisionBorder = Colisions.NO_COLISIONS;
+    }
 }
 
 function updatebee(sprite){
@@ -176,6 +199,27 @@ function updatebee(sprite){
 
     sprite.physics.angle += sprite.physics.omega * globals.deltaTime;
     setPositionBee(sprite);
+
+
+    updateAnimationFrame(sprite);
+
+
+
+
+}
+
+
+function updateCaballero(sprite){
+
+const amplitud = 10;
+
+sprite.physics.vx = -sprite.physics.vlimit;
+sprite.physics.angle += sprite.physics.omega * globals.deltaTime;
+
+sprite.xPos += sprite.physics.vx * globals.deltaTime;
+sprite.yPos = sprite.physics.yRef + amplitud * Math.sin(sprite.physics.angle);
+   
+    
 
 
     updateAnimationFrame(sprite);

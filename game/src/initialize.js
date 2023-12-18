@@ -1,7 +1,7 @@
 import Frames from "./Frames.js";
 import ImageSet from "./ImageSet.js";
 import physics from "./Physics.js";
-import Sprite, { Ladron } from "./Sprite.js";
+import Sprite, { Ladron, Ladron_j } from "./Sprite.js";
 import { FPS, Game, SpriteID, State } from "./constants.js";
 import globals from "./globals.js";
 import { Level, level1,menu,highScore,controls} from "./levels.js";
@@ -93,7 +93,7 @@ function loadHandler(){
         console.log("Assets finished loading");
 
         //Start the game
-        globals.gameState = Game.HIGHSCORE;
+        globals.gameState = Game.PLAYING;
         console.log("modo cambiado");
     }
 }
@@ -104,7 +104,7 @@ function initSprites() {
     initvillan();
     initskeleton();
     initbee();
-    
+    initcaballero();
     initbook();
 
 }
@@ -128,17 +128,22 @@ function initplayer(){
 function initvillan(){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 32, 32, 32, 32, 220,0);
+    const imageSet = new ImageSet(0, 0, 32, 32, 32, 0, -3,0);
 
     //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(3,3);
+    const frames = new Frames(6,3);
 
-    const physics = new Physics(40);
+    const physics = new Physics(80);
 
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
+
     //Creamos nuestro sprite
-    const villan = new Ladron (SpriteID.VILLAN, State.IDLE, 60, 110, imageSet, frames,physics,initTimeToChancheDirection);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,initTimeToChancheDirection);
+
+    villan.physics.vx = 80;
+   
+
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(villan);
@@ -170,7 +175,7 @@ function initbee(){
     const frames = new Frames(3,2);
 
     const initangle = 90*Math.PI * 180;
-    const omega = 0.5;
+    const omega = 1.5;
     const xRotorCenter = globals.canvas.width/2;
     const yRotorCenter = globals.canvas.height/2;
 
@@ -183,6 +188,29 @@ function initbee(){
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(bee);
+}
+
+function initcaballero(){
+
+    //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(0, 0, 32, 32, 32,0, 0,0);
+
+    //Creamos los datos de la animacion. 8 frames / state
+    const frames = new Frames(3,2);
+
+    const initangle = 90*Math.PI * 180;
+    const omega = 1.5;
+    const yRef = 20;
+
+    const physics = new Physics(30,omega,initangle,0,0,yRef);
+
+    //Creamos nuestro sprite
+    const caballero = new Sprite(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics);
+
+
+
+    //Añadimos el pirata al array de sprites
+    globals.sprites.push(caballero);
 }
 
 
