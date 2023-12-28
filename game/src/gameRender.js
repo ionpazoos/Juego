@@ -107,9 +107,14 @@ function historia (){
 }
 
 function GAMEOVER(){
-    
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+
+
 
 }
+
+
 
 function renderbook(){
 
@@ -257,7 +262,19 @@ function drawSprites(){
         drawSpriteRectangle(sprite);
 
         renderSprite(sprite);
+
+        drawHitbox(sprite);
     }
+}
+
+function drawHitbox(sprite){
+    const x1 = Math.floor(sprite.xPos) + Math.floor(sprite.hitbox.xOffset);
+    const y1 = Math.floor(sprite.yPos) + Math.floor(sprite.hitbox.yOffset);
+    const w1 = sprite.hitbox.xSize;
+    const h1 = sprite.hitbox.ySize;
+
+    globals.ctx.strokeStyle = "red";
+    globals.ctx.strokeRect(x1,y1,w1,h1);
 }
 
 function drawSpriteRectangle(sprite){

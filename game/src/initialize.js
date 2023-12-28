@@ -8,6 +8,7 @@ import { Level, level1,menu,highScore,controls} from "./levels.js";
 import Time from "./timer.js"
 import Physics from "./Physics.js";
 import { keyDownHandeler,keyupHandeler } from "./events.js";
+import HitBox from "./Hitbox.js";
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
 
@@ -118,9 +119,10 @@ function initplayer(){
     const frames = new Frames(5, 4);
 
     const physics = new Physics(40,0,0,0,0,0,-150);
+    const hitbox =  new HitBox(13,30,8,0);
 
     //Creamos nuestro sprite
-    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 110, imageSet, frames,physics);
+    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 110, imageSet, frames,physics,hitbox);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
@@ -134,12 +136,11 @@ function initvillan(){
     const frames = new Frames(6,3);
 
     const physics = new Physics(80);
-
-    const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
+    const hitbox =  new HitBox(13,32,5,0);
 
 
     //Creamos nuestro sprite
-    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,initTimeToChancheDirection);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox);
 
     villan.physics.vx = 80;
    
@@ -157,11 +158,12 @@ function initskeleton(){
     const frames = new Frames(4,4);
 
     const physics = new Physics(30);
+    const hitbox =  new HitBox(13,32,8,0);
 
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 110, imageSet, frames,physics,initTimeToChancheDirection);
+    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 110, imageSet, frames,physics,initTimeToChancheDirection,hitbox);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
@@ -180,9 +182,10 @@ function initbee(){
     const yRotorCenter = globals.canvas.height/2;
 
     const physics = new Physics(30,omega,initangle,xRotorCenter,yRotorCenter);
+    const hitbox =  new HitBox(20,28,0,13);
 
     //Creamos nuestro sprite
-    const bee = new Sprite(SpriteID.BEE, State.STILL_RIGHT, 420, 15, imageSet, frames,physics);
+    const bee = new Sprite(SpriteID.BEE, State.STILL_RIGHT, 420, 15, imageSet, frames,physics,hitbox);
 
 
 
@@ -203,9 +206,10 @@ function initcaballero(){
     const yRef = 20;
 
     const physics = new Physics(30,omega,initangle,0,0,yRef);
+    const hitbox =  new HitBox(20,32,0,0);
 
     //Creamos nuestro sprite
-    const caballero = new Sprite(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics);
+    const caballero = new Sprite(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics,hitbox);
 
 
 
@@ -222,8 +226,9 @@ function initbook(){
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(1);
 
+
     //Creamos nuestro sprite
-    const book = new Sprite(SpriteID.BOOK, State.IDLE, 500, 10, imageSet, frames);
+    const book = new Sprite(SpriteID.BOOK, State.IDLE, 500, 10, imageSet, frames,0,0);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(book);
