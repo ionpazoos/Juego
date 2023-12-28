@@ -10,7 +10,8 @@ export const Game = {
     OVER:       5,
     HISTORIA:   6,
     CONTROLS:   3,
-    HIGHSCORE:  4
+    HIGHSCORE:  4,
+    GAMEOVER:   7
 };
 
 //Identificador de tipo Sprite (ID)
@@ -40,7 +41,9 @@ export const State = {
     RIGHT: 3,
     STILL_DOWN: 30,
     STILL_LEFT:52.1,
-    STILL_RIGHT:0
+    STILL_RIGHT:0,
+    AIR_WIZZARD_UP:60.5,
+    AIR_WIZZARD_down:61.5
 
 }
 

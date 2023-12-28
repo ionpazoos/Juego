@@ -112,12 +112,12 @@ function initSprites() {
 function initplayer(){
 
     //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
-    const imageSet = new ImageSet(0, 0,  32, 32, 32, 0, 0);
+    const imageSet = new ImageSet(0, 0,  32, 32, 32, 0, -1);
 
     //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(4, 3);
+    const frames = new Frames(5, 4);
 
-    const physics = new Physics(40);
+    const physics = new Physics(40,0,0,0,0,0,-150);
 
     //Creamos nuestro sprite
     const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 110, imageSet, frames,physics);

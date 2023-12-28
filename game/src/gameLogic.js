@@ -102,7 +102,7 @@ function updateplayer(sprite){
       //sprite.state = State.RUNNING_LEFT;
 
       readKeyboardAndAssignState(sprite);
-
+ 
     switch (sprite.state){
         case State.RUNNING_RIGHT:
             sprite.physics.vx = sprite.physics.vlimit;
@@ -116,8 +116,41 @@ function updateplayer(sprite){
     }
 
     sprite.xPos += sprite.physics.vx * globals.deltaTime;
+
+
+    
+    
+
+    if(!sprite.physics.isOnGround){
+        if( sprite.physics.vy < 0){sprite.state = State.AIR_WIZZARD_UP;}
+        else{sprite.state = State.AIR_WIZZARD_down;}
+        
+
+        sprite.physics.vy += 250 * globals.deltaTime;
+
+    }
+    else{
+        
+        if(globals.action.moveUp){
+            sprite.physics.isOnGround = false;
+            sprite.physics.vy += sprite.physics.jumpforce;
+
+        }
+    }
+    if(sprite.yPos > 110 ){
+        sprite.physics.isOnGround = true;
+        sprite.yPos = 110 ;
+        sprite.physics.vy = 0;
+        sprite.state = State.IDLE;
+
+    }
+
+    sprite.yPos += sprite.physics.vy * globals.deltaTime;
+    
+
+
     updateAnimationFrame(sprite);
-    updateDirectionRandom(sprite);
+    
 
 
 }
@@ -211,7 +244,7 @@ function updatebee(sprite){
 
 function updateCaballero(sprite){
 
-const amplitud = 10;
+const amplitud = 20;
 
 sprite.physics.vx = -sprite.physics.vlimit;
 sprite.physics.angle += sprite.physics.omega * globals.deltaTime;

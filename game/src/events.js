@@ -7,6 +7,7 @@ export function keyDownHandeler(event){
     switch(event.keyCode){
         case Key.UP:
             globals.action.moveUp = true;
+            console.log("up");
             break;
 
             case Key.DOWN:
@@ -35,7 +36,6 @@ export function keyupHandeler(event){
                 break;
             case Key.LEFT:
                     globals.action.moveLeft = false;
-                    console.log("levantar");
                     break;
             case Key.RIGHT:
                     globals.action.moveRight = false;

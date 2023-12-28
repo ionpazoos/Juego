@@ -30,6 +30,9 @@ export default function render(){
         case Game.HIGHSCORE:
                 highScore();
                 break;
+        case Game.GAMEOVER:
+                GAMEOVER();
+                break;
 
         default:
             console.error("Error: Game State invalid");
@@ -101,6 +104,11 @@ function historia (){
     renderTitle();
     renderbook();
  
+}
+
+function GAMEOVER(){
+    
+
 }
 
 function renderbook(){
@@ -316,14 +324,14 @@ function renderTitle(){
 function rendercontrols(){
 
     //Flechas
-    globals.ctx.drawImage(globals.tileSets[0], 3, 1317, 16, 16, 150, 5, 32, 32);
-    globals.ctx.drawImage(globals.tileSets[0], 22, 1317, 16, 16, 155, 32, 32, 32);
-    globals.ctx.drawImage(globals.tileSets[0], 54, 1317, 16, 16, 185, 32, 32, 32);
-    globals.ctx.drawImage(globals.tileSets[0], 39, 1317, 16, 16, 128, 32, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 5, 1315, 16, 16, 150, 5, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 24, 1315, 16, 16, 155, 32, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 56, 1315, 16, 16, 185, 32, 32, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 40, 1315, 16, 16, 128, 32, 32, 32);
     globals.ctx.font = '15px upheavtt';
     globals.ctx.fillText("Move", 145, 76);
 
-    globals.ctx.drawImage(globals.tileSets[0], 65, 1574, 32, 16, 250, 32, 64, 32);
+    globals.ctx.drawImage(globals.tileSets[0], 68, 1569, 32, 16, 250, 32, 64, 32);
     globals.ctx.font = '15px upheavtt';
     globals.ctx.fillText("Interact", 250, 76);
 
