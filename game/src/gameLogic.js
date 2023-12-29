@@ -1,5 +1,6 @@
 import { Colisions, Game, SpriteID, State } from "./constants.js";
 import globals from "./globals.js";
+import  detectCollision from "./collisions.js"
 
 
 export default function update(){
@@ -35,6 +36,9 @@ function playGame(){
     // ... A completar
     updateSprites();
     updateLevelTime();
+    detectCollision();
+    updatelife();
+    
 }
 function playhistori(){
     // ... A completar
@@ -46,6 +50,15 @@ function updateSprites(){
 
         const sprite = globals.sprites[i];
         updateSprite(sprite);
+    }
+}
+function updatelife(){
+    for(let i= 1 ; i < globals.sprites.length;i++){
+        const sprite = globals.sprites[i];
+
+        if (sprite.isColisionPlayer){
+            globals.life--;
+        }
     }
 }
 function updateLevelTime(){

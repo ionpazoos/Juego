@@ -41,5 +41,7 @@ export default {
 
     action: {},
 
+    life: 0,
+
 
 };

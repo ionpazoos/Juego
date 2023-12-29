@@ -32,6 +32,7 @@ function initVars(){
     globals.previousCycleMilliSecons = 0;
     globals.deltaTime = 0;
     globals.frameTimeObj = 1 / FPS; //Frame time in seconds
+    globals.life = 400;
 
     //Inicializamos el estado del juego
     globals.gameState = Game.PLAYING
@@ -42,6 +43,8 @@ function initVars(){
         moveUp:false,
         moveDown:false
     }
+
+
     
 }
 function initEvents(){
@@ -106,7 +109,8 @@ function initSprites() {
     initskeleton();
     initbee();
     initcaballero();
-    initbook();
+    // initbook();
+    //error por que el libro aun que no lo pinte en el playing lo coge y detecta que siempre hay collision
 
 }
 

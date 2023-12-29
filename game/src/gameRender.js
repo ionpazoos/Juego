@@ -295,7 +295,6 @@ function renderHUD(){
     //TEST: Datos metidos en bruto
     const score = 1500;
     const highScore = 130000;
-    const life = 40;
     const time = globals.leveltime.value;
 
 
@@ -311,7 +310,9 @@ function renderHUD(){
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("HIGH SCORE", 72, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
-    globals.ctxHUD.fillText(" " + highScore, 77, 32);
+    // globals.ctxHUD.fillText(" " + highScore, 77, 32);
+
+    globals.ctxHUD.fillText(" " + globals.life, 77, 32);
 
     
     //Draw time
