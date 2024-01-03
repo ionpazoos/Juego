@@ -46,6 +46,12 @@ export const State = {
     AIR_WIZZARD_down:61.5
 
 }
+export const Block = {
+  
+    GRASS: 2,
+    WATER: 457,
+    TREE:  161
+}
 
 export const Colisions = {
     NO_COLISIONS: -1,

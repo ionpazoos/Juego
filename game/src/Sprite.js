@@ -14,6 +14,11 @@ export default class Sprite{
         this.physics    = physics; 
         this.hitbox     = hitbox;
         this.isColisionPlayer = false;
+        this.isColisionTop = false;
+        this.isColisionBotton = false;
+        this.isColisionLeft = false;
+        this.isColisionRight = false;
+        
     }
 
 

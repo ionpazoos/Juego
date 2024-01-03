@@ -108,11 +108,7 @@ function updateplayer(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
 
-     //sprite.xPos = 20;
-    // sprite.yPos = 110;
-    // sprite.physics.vLimit = 4;
-    
-      //sprite.state = State.RUNNING_LEFT;
+
 
       readKeyboardAndAssignState(sprite);
  
@@ -150,11 +146,11 @@ function updateplayer(sprite){
 
         }
     }
-    if(sprite.yPos > 110 ){
+    if( globals.sprites[0].isCollisionBottom){
+        console.log("entro");
         sprite.physics.isOnGround = true;
-        sprite.yPos = 110 ;
         sprite.physics.vy = 0;
-        sprite.state = State.IDLE;
+         sprite.state = State.IDLE;
 
     }
 
