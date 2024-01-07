@@ -61,7 +61,7 @@ function isCollisionWithObstacle(xPos,yPos, obstacleId){
 
 }
 
-function detectCollisionBetweenPlayerAndMapObstacle(){
+function detectCollisionBetweenPlayerAndMapObstacle() {
     const player = globals.sprites[0];
     player.isCollisionRight = false;
     player.isCollisionLeft = false;
@@ -70,147 +70,102 @@ function detectCollisionBetweenPlayerAndMapObstacle(){
 
     let xPos;
     let yPos;
-    let isCollidingOnPos1;
-    let isCollidingOnPos2;
-    let isCollidingOnPos3;
     let isColliding;
     let overlap;
 
-    const brickSize = globals.level[0].imageSet.gridSize ;
+    const brickSize = globals.level[0].imageSet.gridSize;
     const direction = player.state;
 
-for(let i= 0;i < Object.keys(Block).length;i++){
-    const obstacleType = Object.keys(Block)[i];
-    const obstacleId = Block[obstacleType];
-    
-    switch (direction) {
-        case State.RUNNING_RIGHT:
-            xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
-            yPos = player.yPos + player.hitbox.yOffset;
-            isCollidingOnPos1 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-            yPos = player.yPos + player.hitbox.yOffset + brickSize;
-            isCollidingOnPos2 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-            yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-            isCollidingOnPos3 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-            isColliding = isCollidingOnPos1 || isCollidingOnPos2 || isCollidingOnPos3;
-    
-            if (isColliding) {
-                player.isCollisionRight = true;
-                if (brickSize > 0) {
+    for (let i = 0; i < Object.keys(Block).length; i++) {
+        const obstacleType = Object.keys(Block)[i];
+        const obstacleId = Block[obstacleType];
+
+        switch (direction) {
+            case State.RUNNING_RIGHT:
+                xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
+                yPos = player.yPos + player.hitbox.yOffset;
+                isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
+
+                if (isColliding) {
+                    player.isCollisionRight = true;
                     overlap = (Math.floor(xPos) % brickSize) - 1;
-                    player.physics.vx = 0;  // Detener la velocidad en lugar de ajustar la posición directamente
                     player.xPos -= overlap;
-                } else {
-                    console.error("Invalid brickSize, cannot calculate overlap.");
+                    player.physics.vx = 0;  // Detener la velocidad
+                    console.log("collision right");
+                    player.physics.isOnGround = true;
+                    player.physics.vy = 0;
                 }
-                console.log("collision right");
-            }
-            
-            break;
-    
-        case State.RUNNING_LEFT:
-            // Similar logic for running left
-            xPos = player.xPos + player.hitbox.xOffset;
-            yPos = player.yPos + player.hitbox.yOffset;
-            isCollidingOnPos1 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-            yPos = player.yPos + player.hitbox.yOffset + brickSize;
-            isCollidingOnPos2 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-            yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-            isCollidingOnPos3 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-            isColliding = isCollidingOnPos1 || isCollidingOnPos2 || isCollidingOnPos3;
-    
-            if (isColliding) {
-                player.isCollisionLeft = true;
-                overlap = brickSize - (Math.floor(xPos) % brickSize);
-                player.xPos += overlap;
-                console.log("collision left");
-            }
-            break;
-    
-    
+                break;
 
-case State.AIR_WIZZARD_UP:
-    // Logic for running up (ascending during jump)
-    yPos = player.yPos + player.hitbox.yOffset;
-    xPos = player.xPos + player.hitbox.xOffset;
-    isCollidingOnPos1 = isCollisionWithObstacle(xPos, yPos, obstacleId);
+            case State.RUNNING_LEFT:
+                xPos = player.xPos + player.hitbox.xOffset;
+                yPos = player.yPos + player.hitbox.yOffset;
+                isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
 
-    xPos = player.xPos + player.hitbox.xOffset + brickSize;
-    isCollidingOnPos2 = isCollisionWithObstacle(xPos, yPos, obstacleId);
+                if (isColliding) {
+                    player.isCollisionLeft = true;
+                    overlap = brickSize - (Math.floor(xPos) % brickSize);
+                    player.xPos += overlap;
+                    console.log("collision left");
+                    player.physics.isOnGround = true;
+                    player.physics.vy = 0;
+                }
+                break;
 
-    xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
-    isCollidingOnPos3 = isCollisionWithObstacle(xPos, yPos, obstacleId);
+            case State.AIR_WIZZARD_UP:
+                yPos = player.yPos + player.hitbox.yOffset;
+                xPos = player.xPos + player.hitbox.xOffset;
+                isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
 
-    isColliding = isCollidingOnPos1 || isCollidingOnPos2 || isCollidingOnPos3;
+                if (isColliding) {
+                    player.isCollisionTop = true;
+                    overlap = brickSize - (Math.floor(yPos) % brickSize);
+                    player.yPos += overlap - 1;
+                    console.log("collision up");
+                    player.physics.vy = 0;
+                }
+                break;
 
-    if (isColliding) {
-        player.isCollisionTop = true;
-        overlap = brickSize - (Math.floor(yPos) % brickSize);
-        player.yPos += overlap - 1;
-        console.log("collision up");
-    }
-    break;
+ case State.AIR_WIZZARD_down:
+                yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
+                xPos = player.xPos + player.hitbox.xOffset;
+                isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
 
-case State.AIR_WIZZARD_down:
-    // Logic for running down (descending during jump)
-    yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-    xPos = player.xPos + player.hitbox.xOffset;
-    isCollidingOnPos1 = isCollisionWithObstacle(xPos, yPos, obstacleId);
+                if (isColliding) {
+                    player.isCollisionBottom = true;
+                    overlap = Math.floor(yPos) % brickSize - 1;
+                    player.yPos -= overlap;
 
-    xPos = player.xPos + player.hitbox.xOffset + brickSize;
-    isCollidingOnPos2 = isCollisionWithObstacle(xPos, yPos, obstacleId);
+                    // Ajustar velocidad vertical al tocar el suelo
+                    player.physics.isOnGround = true;
+                    player.physics.vy = 0;
+                }
 
-    xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
-    isCollidingOnPos3 = isCollisionWithObstacle(xPos, yPos, obstacleId);
+                break;
 
-    isColliding = isCollidingOnPos1 || isCollidingOnPos2 || isCollidingOnPos3;
+            case State.STILL_RIGHT:
+                yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
+                xPos = player.xPos + player.hitbox.xOffset;
+                isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
 
-    if (isColliding) {
-        player.isCollisionBottom = true;
-        overlap = Math.floor(yPos) % brickSize - 1;
-        player.yPos -= overlap - 1;
-        console.log("collision falling  down");
-    }
-    break;
-    
-    case State.IDLE:
-        // Similar logic for running down
-        yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        xPos = player.xPos + player.hitbox.xOffset;
-        isCollidingOnPos1 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-        yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos2 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-        yPos = player.yPos + player.hitbox.yOffset + brickSize;
-        isCollidingOnPos3 = isCollisionWithObstacle(xPos, yPos, obstacleId);
-    
-        isColliding = isCollidingOnPos1 || isCollidingOnPos2 || isCollidingOnPos3;
-    
-        if (isColliding) {
-            player.isCollisionBottom = true;
-            overlap = Math.floor(yPos) % brickSize ;
-            player.yPos -= overlap - 1;
-            console.log("collision down");
+                if (isColliding) {
+                    player.isCollisionBottom = true;
+                    overlap = Math.floor(yPos) % brickSize;
+                    player.yPos -= overlap + 1;
+                    console.log("collision down");
+                    
+                    player.physics.isOnGround = true;
+                    player.physics.vy = 0;
+                }
+                break;
+
+            default:
+                console.error("Unhandled player state:", direction);
+                break;
         }
-        break;
-    
-    
-        default:
-            // Handle other cases or do nothing if no direction is matched
-            break;
+
     }
 }
-
-
-            
-    }
 
 
 

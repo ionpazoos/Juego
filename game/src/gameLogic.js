@@ -99,6 +99,7 @@ function updateSprite(sprite){
                     break;
         //Otros
         default:
+            
             break;
     }
 }
@@ -128,35 +129,49 @@ function updateplayer(sprite){
 
 
     
-    
 
-    if(!sprite.physics.isOnGround){
-        if( sprite.physics.vy < 0){sprite.state = State.AIR_WIZZARD_UP;}
-        else{sprite.state = State.AIR_WIZZARD_down;}
+    if(!sprite.physics.isOnGround ){
         
-
-        sprite.physics.vy += 250 * globals.deltaTime;
+        if( sprite.physics.vy < 0 ){
+            sprite.state = State.AIR_WIZZARD_UP;}
+        else{sprite.state = State.AIR_WIZZARD_down;
+        }
+        
 
     }
     else{
         
         if(globals.action.moveUp){
-            sprite.physics.isOnGround = false;
+            // sprite.physics.isOnGround = false;
             sprite.physics.vy += sprite.physics.jumpforce;
 
         }
-    }
-    if( globals.sprites[0].isCollisionBottom){
-        console.log("entro");
-        sprite.physics.isOnGround = true;
-        sprite.physics.vy = 0;
-         sprite.state = State.IDLE;
+
 
     }
 
-    sprite.yPos += sprite.physics.vy * globals.deltaTime;
-    
+        // Aplicar gravedad solo si no está en el suelo
+if (!sprite.physics.isOnGround && !sprite.physics.isCollisionBottom) {
+    sprite.physics.vy += 250 * globals.deltaTime;
+}
 
+
+
+// Verificar si está en colisión y ajustar la posición hacia arriba
+if (sprite.isCollisionBottom && !sprite.physics.isOnGround) {
+    sprite.physics.isOnGround = true;
+
+    // Verificar si está en colisión y ajustar la posición hacia arriba
+    const brickSize = globals.level[0].imageSet.gridSize;
+    const yPos = sprite.yPos + sprite.hitbox.yOffset + sprite.hitbox.ySize - 1;
+    const overlap = Math.floor(yPos) % brickSize;
+    sprite.yPos -= overlap + 1;
+} else if(!sprite.isCollisionBottom  ) {
+    sprite.physics.isOnGround = false;
+    sprite.physics.vy += 250 * globals.deltaTime;
+}
+// Actualizar posición en el eje y
+sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
     updateAnimationFrame(sprite);
     
