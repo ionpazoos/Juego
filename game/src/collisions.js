@@ -66,7 +66,7 @@ function detectCollisionBetweenPlayerAndMapObstacle() {
     player.isCollisionRight = false;
     player.isCollisionLeft = false;
     player.isCollisionTop = false;
-    player.isCollisionBottom = false;
+    player.isColisionBotton = false;
 
     let xPos;
     let yPos;
@@ -110,6 +110,7 @@ function detectCollisionBetweenPlayerAndMapObstacle() {
                     player.physics.isOnGround = true;
                     player.physics.vy = 0;
                 }
+                
                 break;
 
             case State.AIR_WIZZARD_UP:
@@ -126,20 +127,21 @@ function detectCollisionBetweenPlayerAndMapObstacle() {
                 }
                 break;
 
- case State.AIR_WIZZARD_down:
+            case State.AIR_WIZZARD_down:
                 yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
                 xPos = player.xPos + player.hitbox.xOffset;
                 isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
 
                 if (isColliding) {
-                    player.isCollisionBottom = true;
+                    player.isColisionBotton = true;
                     overlap = Math.floor(yPos) % brickSize - 1;
-                    player.yPos -= overlap;
+                    player.yPos -= overlap+1;
 
                     // Ajustar velocidad vertical al tocar el suelo
                     player.physics.isOnGround = true;
                     player.physics.vy = 0;
                 }
+                
 
                 break;
 
@@ -147,16 +149,23 @@ function detectCollisionBetweenPlayerAndMapObstacle() {
                 yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
                 xPos = player.xPos + player.hitbox.xOffset;
                 isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
+                console.log(isColliding);
 
                 if (isColliding) {
-                    player.isCollisionBottom = true;
-                    overlap = Math.floor(yPos) % brickSize;
+                    player.isColisionBotton = true;
+                    overlap = Math.floor(yPos) % brickSize+1;
                     player.yPos -= overlap + 1;
                     console.log("collision down");
                     
                     player.physics.isOnGround = true;
                     player.physics.vy = 0;
                 }
+                else{
+                    player.physics.isOnGround = false;
+                    player.isColisionBotton = false;
+
+                }
+                
                 break;
 
             default:

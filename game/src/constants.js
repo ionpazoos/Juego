@@ -49,7 +49,7 @@ export const State = {
 export const Block = {
   
     GRASS: 27,
-    WATER: 457,
+    // WATER: 457,
     TREE:  161,
     TREE2: 109
 }

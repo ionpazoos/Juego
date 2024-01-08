@@ -109,6 +109,14 @@ function updateplayer(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
 
+    if( sprite.isColisionBotton){
+        sprite.physics.isOnGround = true;
+        
+    }
+    // else{
+    //     sprite.physics.isOnGround = false;
+    // }
+
 
 
       readKeyboardAndAssignState(sprite);
@@ -124,25 +132,33 @@ function updateplayer(sprite){
             break;
 
     }
+    
+    
 
     sprite.xPos += sprite.physics.vx * globals.deltaTime;
 
 
     
-
+    
+    
     if(!sprite.physics.isOnGround ){
         
         if( sprite.physics.vy < 0 ){
             sprite.state = State.AIR_WIZZARD_UP;}
-        else{sprite.state = State.AIR_WIZZARD_down;
+        else if(sprite.physics.vy > 0 ){sprite.state = State.AIR_WIZZARD_down;
+            
+        }
+        else if(sprite.physics.vy === 0 ){sprite.state = State.IDLE;
+            
         }
         
+
 
     }
     else{
         
         if(globals.action.moveUp){
-            // sprite.physics.isOnGround = false;
+             sprite.physics.isOnGround = false;
             sprite.physics.vy += sprite.physics.jumpforce;
 
         }
@@ -151,27 +167,30 @@ function updateplayer(sprite){
     }
 
         // Aplicar gravedad solo si no está en el suelo
-if (!sprite.physics.isOnGround && !sprite.physics.isCollisionBottom) {
+if (!sprite.physics.isOnGround && !sprite.physics.isColisionBotton) {
     sprite.physics.vy += 250 * globals.deltaTime;
 }
 
 
-
-// Verificar si está en colisión y ajustar la posición hacia arriba
-if (sprite.isCollisionBottom && !sprite.physics.isOnGround) {
-    sprite.physics.isOnGround = true;
-
-    // Verificar si está en colisión y ajustar la posición hacia arriba
-    const brickSize = globals.level[0].imageSet.gridSize;
-    const yPos = sprite.yPos + sprite.hitbox.yOffset + sprite.hitbox.ySize - 1;
-    const overlap = Math.floor(yPos) % brickSize;
-    sprite.yPos -= overlap + 1;
-} else if(!sprite.isCollisionBottom  ) {
-    sprite.physics.isOnGround = false;
-    sprite.physics.vy += 250 * globals.deltaTime;
-}
 // Actualizar posición en el eje y
 sprite.yPos += sprite.physics.vy * globals.deltaTime;
+
+
+
+// Verificar si está en colisixón y ajustar la posición hacia arriba
+// if (sprite.physics.isOnGround) {
+//     // sprite.physics.isOnGround = true;
+
+//     // // Verificar si está en colisión y ajustar la posición hacia arriba
+//     // const brickSize = globals.level[0].imageSet.gridSize;
+//     // const yPos = sprite.yPos + sprite.hitbox.yOffset + sprite.hitbox.ySize - 1;
+//     // const overlap = Math.floor(yPos) % brickSize;
+//     // sprite.yPos -= overlap + 1;
+// } 
+if(!sprite.physics.isOnGround) {
+     sprite.physics.vy += 250 * globals.deltaTime;
+ }
+
 
     updateAnimationFrame(sprite);
     

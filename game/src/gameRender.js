@@ -308,7 +308,7 @@ function renderHUD(){
 
     //Draw High Score
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("HIGH SCORE", 72, 16);
+    globals.ctxHUD.fillText("Health", 72, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
     // globals.ctxHUD.fillText(" " + highScore, 77, 32);
 
