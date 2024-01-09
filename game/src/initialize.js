@@ -122,7 +122,7 @@ function initplayer(){
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(5, 4);
 
-    const physics = new Physics(40,0,0,0,0,0,-200);
+    const physics = new Physics(40,0,0,0,0,0,-100,0,0);
     const hitbox =  new HitBox(13,30,8,0);
 
     //Creamos nuestro sprite

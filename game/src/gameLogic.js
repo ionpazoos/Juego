@@ -113,9 +113,9 @@ function updateplayer(sprite){
         sprite.physics.isOnGround = true;
         
     }
-    // else{
-    //     sprite.physics.isOnGround = false;
-    // }
+    else{
+        sprite.physics.isOnGround = false;
+    }
 
 
 
@@ -123,19 +123,24 @@ function updateplayer(sprite){
  
     switch (sprite.state){
         case State.RUNNING_RIGHT:
-            sprite.physics.vx = sprite.physics.vlimit;
+            sprite.physics.ax = 200;
             break;
         case State.RUNNING_LEFT:
-                sprite.physics.vx = -sprite.physics.vlimit;
+                sprite.physics.ax = -200;
                 break;
-        default: sprite.physics.vx = 0;
+        default: sprite.physics.ax = 0;
             break;
 
     }
     
     
 
-    sprite.xPos += sprite.physics.vx * globals.deltaTime;
+     sprite.physics.vx += sprite.physics.ax * globals.deltaTime;
+     sprite.physics.vy += sprite.physics.ay * globals.deltaTime;
+
+
+     
+
 
 
     
@@ -145,12 +150,10 @@ function updateplayer(sprite){
         
         if( sprite.physics.vy < 0 ){
             sprite.state = State.AIR_WIZZARD_UP;}
-        else if(sprite.physics.vy > 0 ){sprite.state = State.AIR_WIZZARD_down;
+        else if(sprite.physics.vy > 50){sprite.state = State.AIR_WIZZARD_down;
             
         }
-        else if(sprite.physics.vy === 0 ){sprite.state = State.IDLE;
-            
-        }
+        
         
 
 
@@ -165,32 +168,31 @@ function updateplayer(sprite){
 
 
     }
+//fricion
+    if (sprite.physics.isOnGround) {
+        // Coeficiente de fricción (ajusta según sea necesario)
+        const friction = 0.2;
+        
+        // Aplicar fricción en la dirección opuesta al movimiento
+        sprite.physics.vx -= sprite.physics.vx * friction;
 
-        // Aplicar gravedad solo si no está en el suelo
-if (!sprite.physics.isOnGround && !sprite.physics.isColisionBotton) {
-    sprite.physics.vy += 250 * globals.deltaTime;
-}
+        // Detener completamente la velocidad si es muy pequeña
+        if (Math.abs(sprite.physics.vx) < 0.1) {
+            sprite.physics.vx = 0;
+        }
+
+        if(sprite.physics.vx>0){sprite.state = State.RUNNING_RIGHT;}
+        else if(sprite.physics.vx < 0){sprite.state = State.RUNNING_LEFT;}
+    }
 
 
+
+sprite.physics.vy += 250 * globals.deltaTime;
 // Actualizar posición en el eje y
 sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
-
-
-// Verificar si está en colisixón y ajustar la posición hacia arriba
-// if (sprite.physics.isOnGround) {
-//     // sprite.physics.isOnGround = true;
-
-//     // // Verificar si está en colisión y ajustar la posición hacia arriba
-//     // const brickSize = globals.level[0].imageSet.gridSize;
-//     // const yPos = sprite.yPos + sprite.hitbox.yOffset + sprite.hitbox.ySize - 1;
-//     // const overlap = Math.floor(yPos) % brickSize;
-//     // sprite.yPos -= overlap + 1;
-// } 
-if(!sprite.physics.isOnGround) {
-     sprite.physics.vy += 250 * globals.deltaTime;
- }
-
+sprite.xPos += sprite.physics.vx * globals.deltaTime;
+sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
     updateAnimationFrame(sprite);
     

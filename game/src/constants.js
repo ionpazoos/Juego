@@ -49,9 +49,21 @@ export const State = {
 export const Block = {
   
     GRASS: 27,
+    GRASS2:29,
     // WATER: 457,
     TREE:  161,
-    TREE2: 109
+    TREE2: 109,
+    TREE3: 483,
+    TREE4: 484,
+    TREE5: 485,
+    TREE6: 134,
+    TREE7: 135,
+    TREE8: 110,
+    TREE9:  161,
+    TREE10:  162,
+    TREE11:  236,
+    TREE12:  237,
+    
 }
 
 export const Colisions = {
