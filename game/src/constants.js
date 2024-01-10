@@ -22,7 +22,8 @@ export const SpriteID = {
     BEE:3,
     ERUDITO:4,
     BOOK: 5,
-    CABALLERO:6
+    CABALLERO:6,
+    SUPER_SAYAN:7,
 }
 
 //Identificador de estado de sprite (direccion)
@@ -43,7 +44,8 @@ export const State = {
     STILL_LEFT:52.1,
     STILL_RIGHT:0,
     AIR_WIZZARD_UP:60.5,
-    AIR_WIZZARD_down:61.5
+    AIR_WIZZARD_down:61.5,
+    SUPER_SAYAN:57.4,
 
 }
 export const Block = {
@@ -53,9 +55,9 @@ export const Block = {
     // WATER: 457,
     TREE:  161,
     TREE2: 109,
-    TREE3: 483,
-    TREE4: 484,
-    TREE5: 485,
+    TREE3: 138,
+    TREE4: 38,
+    TREE5: 112,
     TREE6: 134,
     TREE7: 135,
     TREE8: 110,
@@ -63,6 +65,7 @@ export const Block = {
     TREE10:  162,
     TREE11:  236,
     TREE12:  237,
+    BEEHOUSE:88,
     
 }
 

@@ -15,6 +15,7 @@ export default function render(){
 
         case Game.PLAYING:
             drawGame();
+            
             break;
 
         case Game.NEWGAME:
@@ -52,9 +53,10 @@ function drawGame(){
 
     //  console.log(globals.deltaTime);
     drawSprites();
-
+    
     //Dibujamos el HUD
     renderHUD();
+    
 
 }
 
@@ -211,16 +213,6 @@ function renderMap() {
 
 
 
-
-
-
-// function calculateFil(xTile) {
-//     // Calculamos la fila actual y ajustamos xTile cuando llega a 384
-//     return Math.floor(xTile / 384);
-// }
-
-
-
     
 
 }
@@ -252,10 +244,37 @@ function renderSprite(sprite)
     
 }
 
+function renderSprite_hud(sprite)
+{
+    
+    //Calculamos la posicion del tile de inicio
+    const xPosInit = sprite.imageSet.initCol * sprite.imageSet.gridSize;
+    const yPosInit = sprite.imageSet.initFil * sprite.imageSet.gridSize;
+
+    //Calculamos la posicion en el tilemap a dibujar
+    const xTile = xPosInit + sprite.frames.frameCounter * sprite.imageSet.gridSize + sprite.imageSet.xOffset;
+    const yTile = yPosInit + sprite.state * sprite.imageSet.gridSize + sprite.imageSet.yOffset;
+
+    const xPos = Math.floor(sprite.xPos);
+    const yPos = Math.floor(sprite.yPos);
+
+
+    //Dibujamos el nuevo fotograma del sprite en la posicion adecuada
+    globals.ctxHUD.drawImage(
+        globals.tileSets[0],                 //The image file
+        xTile, yTile,                                   //The source x and y position
+        sprite.imageSet.xSize, sprite.imageSet.ySize,   //The source height and width
+        xPos, yPos,                                     //The destination x and y position
+        sprite.imageSet.xSize, sprite.imageSet.ySize    //The destination height and width
+    );
+
+    
+}
+
 function drawSprites(){
 
     for (let i = 0; i < globals.sprites.length; ++i){
-
+        
         const sprite = globals.sprites[i];
 
         //TEST: Dibuja un rectangulo alrededor del sprite
@@ -264,8 +283,26 @@ function drawSprites(){
         renderSprite(sprite);
 
         drawHitbox(sprite);
+    
     }
 }
+
+function drawSpriteshud(){
+
+    for (let i = 0; i < globals.sprites_hud.length; ++i){
+        
+        const sprite = globals.sprites_hud[i];
+
+        
+        drawSpriteRectangle_hud(sprite);
+
+        renderSprite_hud(sprite);
+
+        
+    
+    }
+}
+
 
 function drawHitbox(sprite){
     const x1 = Math.floor(sprite.xPos) + Math.floor(sprite.hitbox.xOffset);
@@ -287,6 +324,19 @@ function drawSpriteRectangle(sprite){
 
     globals.ctx.fillStyle = "transparent";
     globals.ctx.fillRect(x1, y1, w1, h1);
+
+}
+
+function drawSpriteRectangle_hud(sprite){
+
+    //Datos del sprite
+    const x1 = Math.floor(sprite.xPos);
+    const y1 = Math.floor(sprite.yPos);
+    const w1 = sprite.imageSet.xSize;
+    const h1 = sprite.imageSet.ySize;
+
+    globals.ctxHUD.fillStyle = "transparent";
+    globals.ctxHUD.fillRect(x1, y1, w1, h1);
 
 }
 
@@ -324,10 +374,8 @@ function renderHUD(){
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("RAGE", 305, 25);
 
-    //erudito
-    globals.ctxHUD.drawImage(globals.tileSets[0], 0,1837 , 36, 36, 360, 5, 36, 36);
     
-
+    drawSpriteshud();
 
 
 

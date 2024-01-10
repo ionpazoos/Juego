@@ -174,7 +174,7 @@ function detectCollisionBetweenPlayerAndMapObstacle() {
                 yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
                 xPos = player.xPos + player.hitbox.xOffset;
                 isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
-                console.log(isColliding);
+            
 
                 if (isColliding) {
                     player.isColisionBotton = true;

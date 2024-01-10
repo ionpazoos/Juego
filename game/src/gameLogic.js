@@ -36,6 +36,7 @@ function playGame(){
     // ... A completar
     updateSprites();
     updateLevelTime();
+    updatelifeTime();
     detectCollision();
     updatelife();
     
@@ -51,16 +52,29 @@ function updateSprites(){
         const sprite = globals.sprites[i];
         updateSprite(sprite);
     }
-}
-function updatelife(){
-    for(let i= 1 ; i < globals.sprites.length;i++){
-        const sprite = globals.sprites[i];
 
-        if (sprite.isColisionPlayer){
-            globals.life--;
-        }
-    }
+    updateSprite(globals.sprites_hud[0]);
 }
+
+function updatelife() {
+  
+        for (let i = 1; i < globals.sprites.length; i++) {
+            const sprite = globals.sprites[i];
+            console.log(globals.lifetime.value);
+            if (sprite.isColisionPlayer && globals.lifetime.value > 4) {
+                globals.life--;
+                globals.lifetime.value = 0;
+                whenPlayerGetHit(sprite)
+                
+            }
+        }
+    
+}
+
+function whenPlayerGetHit(sprite){
+    sprite
+}
+
 function updateLevelTime(){
     globals.leveltime.timeChangeCounter += globals.deltaTime;
     if(globals.leveltime.timeChangeCounter > globals.leveltime.timeChangeValue){
@@ -70,7 +84,19 @@ function updateLevelTime(){
     }
 
     if(globals.leveltime.value <= 0){
-        globals.leveltime.value=0;
+        globals.leveltime.value = 0;
+    }
+}
+function updatelifeTime(){
+    globals.lifetime.timeChangeCounter += globals.deltaTime;
+    if(globals.lifetime.timeChangeCounter > globals.lifetime.timeChangeValue){
+        globals.lifetime.value++;
+        globals.lifetime.timeChangeCounter = 0;
+
+    }
+
+    if(globals.lifetime.value <= 0){
+        globals.lifetime.value=0;
     }
 }
 
@@ -95,8 +121,11 @@ function updateSprite(sprite){
                 updatevillan(sprite);
                 break;
         case SpriteID.CABALLERO:
-                    updateCaballero(sprite);
+                updateCaballero(sprite);
                     break;
+        case SpriteID.SUPER_SAYAN:
+            updatesupersayan(sprite);
+            break;
         //Otros
         default:
             
@@ -117,8 +146,6 @@ function updateplayer(sprite){
         sprite.physics.isOnGround = false;
     }
 
-
-
       readKeyboardAndAssignState(sprite);
  
     switch (sprite.state){
@@ -132,19 +159,10 @@ function updateplayer(sprite){
             break;
 
     }
-    
-    
-
      sprite.physics.vx += sprite.physics.ax * globals.deltaTime;
      sprite.physics.vy += sprite.physics.ay * globals.deltaTime;
 
 
-     
-
-
-
-    
-    
     
     if(!sprite.physics.isOnGround ){
         
@@ -154,9 +172,6 @@ function updateplayer(sprite){
             
         }
         
-        
-
-
     }
     else{
         
@@ -166,12 +181,11 @@ function updateplayer(sprite){
 
         }
 
-
     }
 //fricion
     if (sprite.physics.isOnGround) {
         // Coeficiente de fricción (ajusta según sea necesario)
-        const friction = 0.2;
+        const friction = 0.15;
         
         // Aplicar fricción en la dirección opuesta al movimiento
         sprite.physics.vx -= sprite.physics.vx * friction;
@@ -305,6 +319,10 @@ sprite.yPos = sprite.physics.yRef + amplitud * Math.sin(sprite.physics.angle);
 
 
 
+}
+
+function updatesupersayan(sprite){
+updateAnimationFrame(sprite);
 }
 
  function setPositionBee(sprite){

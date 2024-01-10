@@ -33,11 +33,13 @@ export default {
 
     //Array con todos los sprites
     sprites: [],
+    sprites_hud: [],
 
     // Datos del nivel
     level: [],
 
     leveltime: {},
+    lifetime: {},
 
     action: {},
 

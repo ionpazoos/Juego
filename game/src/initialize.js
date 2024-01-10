@@ -32,7 +32,7 @@ function initVars(){
     globals.previousCycleMilliSecons = 0;
     globals.deltaTime = 0;
     globals.frameTimeObj = 1 / FPS; //Frame time in seconds
-    globals.life = 400;
+    globals.life = 3;
 
     //Inicializamos el estado del juego
     globals.gameState = Game.PLAYING
@@ -53,6 +53,7 @@ function initEvents(){
 }
 function initTimers(){
     globals.leveltime = new Time(200,0.5);
+    globals.lifetime = new Time(15,1)
 }
 
 //Carga de activos: TILEMAPS, IMAGES, SOUNDS
@@ -109,6 +110,7 @@ function initSprites() {
     initskeleton();
     initbee();
     initcaballero();
+    initsupersayan();
     // initbook();
     //error por que el libro aun que no lo pinte en el playing lo coge y detecta que siempre hay collision
 
@@ -220,6 +222,21 @@ function initcaballero(){
     //Añadimos el pirata al array de sprites
     globals.sprites.push(caballero);
 }
+function initsupersayan(){
+
+    //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(0, 0, 32, 32, 32, 1, 0,0);
+
+    //Creamos los datos de la animacion. 8 frames / state
+    const frames = new Frames(3,3);
+
+
+    //Creamos nuestro sprite
+    const super_sayan = new Sprite(SpriteID.SUPER_SAYAN, State.SUPER_SAYAN, 360, 10, imageSet, frames,0,0);
+
+    //Añadimos el pirata al array de sprites
+    globals.sprites_hud.push(super_sayan);
+}
 
 
 function initbook(){
@@ -241,9 +258,6 @@ function initLevel(){
 
     //Creamos las propiedades de las imagenes del mapa: initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
   
-    
-
-
 
                 //Creamos y guardamos nuestro nivel
      const imageSet = new ImageSet(0, 0, 16, 16, 16, 0, 0,2);
@@ -254,12 +268,6 @@ function initLevel(){
 
     globals.level[2] = new Level(controls, imageSet);
     globals.level[3] = new Level(highScore, imageSet);
-
-
-
-    
-
-    
 
 }
 
