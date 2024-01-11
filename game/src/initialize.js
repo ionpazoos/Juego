@@ -32,7 +32,7 @@ function initVars(){
     globals.previousCycleMilliSecons = 0;
     globals.deltaTime = 0;
     globals.frameTimeObj = 1 / FPS; //Frame time in seconds
-    globals.life = 3;
+    globals.life = 300;
 
     //Inicializamos el estado del juego
     globals.gameState = Game.PLAYING
@@ -124,7 +124,7 @@ function initplayer(){
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(5, 4);
 
-    const physics = new Physics(40,0,0,0,0,0,-100,0,0);
+    const physics = new Physics(40,0,0,0,0,0,-200,0,0);
     const hitbox =  new HitBox(13,30,8,0);
 
     //Creamos nuestro sprite
@@ -146,7 +146,7 @@ function initvillan(){
 
 
     //Creamos nuestro sprite
-    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox,50);
 
     villan.physics.vx = 80;
    
@@ -169,7 +169,7 @@ function initskeleton(){
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 110, imageSet, frames,physics,initTimeToChancheDirection,hitbox);
+    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 110, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
@@ -191,7 +191,7 @@ function initbee(){
     const hitbox =  new HitBox(20,28,0,13);
 
     //Creamos nuestro sprite
-    const bee = new Sprite(SpriteID.BEE, State.STILL_RIGHT, 420, 15, imageSet, frames,physics,hitbox);
+    const bee = new Ladron(SpriteID.BEE, State.STILL_RIGHT, 420, 15, imageSet, frames,physics,0,hitbox,100);
 
 
 
@@ -232,7 +232,7 @@ function initsupersayan(){
 
 
     //Creamos nuestro sprite
-    const super_sayan = new Sprite(SpriteID.SUPER_SAYAN, State.SUPER_SAYAN, 360, 10, imageSet, frames,0,0);
+    const super_sayan = new Sprite(SpriteID.SUPER_SAYAN, State.SUPER_SAYAN1, 360, 10, imageSet, frames,0,0);
 
     //Añadimos el pirata al array de sprites
     globals.sprites_hud.push(super_sayan);

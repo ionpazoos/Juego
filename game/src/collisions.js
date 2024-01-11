@@ -225,8 +225,8 @@ function detectCollisionBetweenPlayerAndSprites(sprite){
 
     const x1 = player.xPos + player.hitbox.xOffset;
     const y1 = player.yPos + player.hitbox.yOffset;
-    const h1 = player.hitbox.xSize;
-    const w1 = player.hitbox.ySize;
+    const h1 = player.hitbox.ySize;
+    const w1 = player.hitbox.xSize;
 
     //datos de los demas sprites
 

@@ -25,21 +25,23 @@ export default class Sprite{
 }
 export class Ladron extends Sprite
 {
-    constructor(id,state,xPos,yPos,imageSet,frames,physics,maxTimeToChangeDirection,hitbox)
+    constructor(id,state,xPos,yPos,imageSet,frames,physics,maxTimeToChangeDirection,hitbox,damage)
     {
         super(id,state,xPos,yPos,imageSet,frames,physics,hitbox);
 
         this.directionChangeCounter = 0;
         this.maxTimeToChangeDirection = maxTimeToChangeDirection;
+        this.damage = damage;
     }
 }
 
 export class Ladron_j extends Sprite
 {
-    constructor(id,state,xPos,yPos,imageSet,frames,physics,hitbox)
+    constructor(id,state,xPos,yPos,imageSet,frames,physics,hitbox,damage)
     {
         super(id,state,xPos,yPos,imageSet,frames,physics,hitbox);
 
         this.collisionBorder = Colisions.NO_COLISIONS;
+        this.damage = damage;
     }
 }

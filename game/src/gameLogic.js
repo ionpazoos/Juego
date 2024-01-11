@@ -62,17 +62,51 @@ function updatelife() {
             const sprite = globals.sprites[i];
             console.log(globals.lifetime.value);
             if (sprite.isColisionPlayer && globals.lifetime.value > 4) {
-                globals.life--;
+                damagecalculation(sprite);
                 globals.lifetime.value = 0;
-                whenPlayerGetHit(sprite)
+                whenPlayerGetHit(globals.sprites[0]);
                 
             }
+            if(globals.lifetime.value > 4){
+                globals.sprites[0].frames.framesPerState = 5;
+                globals.sprites[0].frames.speed = 4;
+            }
         }
+
+        updatelifesprite();
     
 }
+function updatelifesprite(){
+        let life = globals.life;
 
+        if(life >= 200 && life <= 300){
+            globals.sprites_hud[0].state = State.SUPER_SAYAN1;
+        }
+        else if(life >= 100 && life <= 200){
+            globals.sprites_hud[0].state = State.SUPER_SAYAN2;
+        }
+        else{
+            globals.sprites_hud[0].state = State.SUPER_SAYAN3;
+        }
+}
+function damagecalculation(sprite){
+    globals.life -= sprite.damage;
+}
 function whenPlayerGetHit(sprite){
-    sprite
+    sprite.physics.vy -= 150;
+    
+
+    if(sprite.physics.vx < 0){
+        sprite.physics.vx += 150;
+    }
+    else{
+        sprite.physics.vx -= 150;
+    }
+
+sprite.frames.framesPerState = 7;
+sprite.frames.speed = 4;
+
+
 }
 
 function updateLevelTime(){
@@ -203,7 +237,6 @@ function updateplayer(sprite){
 
 sprite.physics.vy += 250 * globals.deltaTime;
 // Actualizar posición en el eje y
-sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
 sprite.xPos += sprite.physics.vx * globals.deltaTime;
 sprite.yPos += sprite.physics.vy * globals.deltaTime;

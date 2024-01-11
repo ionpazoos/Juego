@@ -45,7 +45,9 @@ export const State = {
     STILL_RIGHT:0,
     AIR_WIZZARD_UP:60.5,
     AIR_WIZZARD_down:61.5,
-    SUPER_SAYAN:57.4,
+    SUPER_SAYAN3:57.4,
+    SUPER_SAYAN2:56.3,
+    SUPER_SAYAN1:55.2,
 
 }
 export const Block = {
