@@ -110,32 +110,32 @@ function detectCollisionBetweenPlayerAndMapObstacle() {
             
 
                 case State.RUNNING_LEFT:
-    xPos = player.xPos + player.hitbox.xOffset;
-    yPos = player.yPos + player.hitbox.yOffset;
-    isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
+                    xPos = player.xPos + player.hitbox.xOffset;
+                    yPos = player.yPos + player.hitbox.yOffset;
+                    isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
 
-    if (isColliding) {
-        player.isCollisionLeft = true;
-        overlap = (Math.floor(xPos) % brickSize) - player.hitbox.xOffset -1 ;
-        player.xPos += overlap;
-        console.log("collision left");
-        
-    }
+                    if (isColliding) {
+                        player.isCollisionLeft = true;
+                        overlap = (Math.floor(xPos) % brickSize) - player.hitbox.xOffset -1 ;
+                        player.xPos += overlap;
+                        console.log("collision left");
+                        
+                    }
 
-    yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-    xPos = player.xPos + player.hitbox.xOffset;
-    isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
+                    yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
+                    xPos = player.xPos + player.hitbox.xOffset;
+                    isColliding = isCollisionWithObstacle(xPos, yPos, obstacleId);
 
-    if (isColliding) {
-        player.isColisionBotton = true;
-        overlap = Math.floor(yPos) % brickSize - 1;
-        player.yPos -= overlap - 1;
+                    if (isColliding) {
+                        player.isColisionBotton = true;
+                        overlap = Math.floor(yPos) % brickSize - 1;
+                        player.yPos -= overlap - 1;
 
-        // Ajustar velocidad vertical al tocar el suelo
-        player.physics.isOnGround = true;
-        player.physics.vy = 0;
-    }
-    break;
+                        // Ajustar velocidad vertical al tocar el suelo
+                        player.physics.isOnGround = true;
+                        player.physics.vy = 0;
+                    }
+                    break;
 
 
             case State.AIR_WIZZARD_UP:
@@ -213,7 +213,62 @@ function detectCollisionBetweenPlayerAndMapObstacle() {
     }
 }
 
+function applyPhysics(sprite) {
+    const gravity = 0.5;  // Puedes ajustar este valor según tus necesidades
 
+    // Gravedad
+    sprite.physics.vy += gravity;
+
+    // Aplicar velocidad vertical
+    sprite.yPos += sprite.physics.vy;
+
+    // Aplicar velocidad horizontal
+    sprite.xPos += sprite.physics.vx;
+
+    // Detección de colisiones con el suelo y las paredes
+    detectCollisionBetweenSpriteAndMap(sprite);
+}
+
+function detectCollisionBetweenSpriteAndMap(sprite) {
+    const brickSize = globals.level[0].imageSet.gridSize;
+    const obstacleId = Block.WALL;  // Puedes ajustar esto según tus necesidades
+
+    // Obtener la posición del sprite en la cuadrícula del mapa
+    const col = Math.floor(sprite.xPos / brickSize);
+    const row = Math.floor(sprite.yPos / brickSize);
+
+    // Detección de colisiones con el suelo
+    const tileBelow = getMapTiled(sprite.xPos, sprite.yPos + sprite.hitbox.yOffset + sprite.hitbox.ySize);
+    if (tileBelow === obstacleId) {
+        sprite.isCollisionBottom = true;
+        sprite.yPos -= sprite.physics.vy; // Retroceder para evitar la colisión
+        sprite.physics.vy = 0; // Detener la velocidad vertical
+    }
+
+    // Detección de colisiones con las paredes
+    const tileLeft = getMapTiled(sprite.xPos + sprite.hitbox.xOffset, sprite.yPos + sprite.hitbox.yOffset);
+    const tileRight = getMapTiled(sprite.xPos + sprite.hitbox.xOffset + sprite.hitbox.xSize, sprite.yPos + sprite.hitbox.yOffset);
+    
+    if (tileLeft === obstacleId || tileRight === obstacleId) {
+        sprite.isCollisionWall = true;
+        sprite.xPos -= sprite.physics.vx; // Retroceder para evitar la colisión
+        sprite.physics.vx = 0; // Detener la velocidad horizontal
+    }
+}
+
+export function updateSprites() {
+    for (let i = 1; i < globals.sprites.length; i++) {
+        const sprite = globals.sprites[i];
+
+        // Realizar la detección de colisiones con el jugador
+        detectCollisionBetweenPlayerAndSprites(sprite);
+
+        // Aplicar físicas a los sprites
+        applyPhysics(sprite);
+    }
+
+    detectCollisionBetweenPlayerAndMapObstacle();
+}
 
 function detectCollisionBetweenPlayerAndSprites(sprite){
 

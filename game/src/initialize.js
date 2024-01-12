@@ -9,6 +9,7 @@ import Time from "./timer.js"
 import Physics from "./Physics.js";
 import { keyDownHandeler,keyupHandeler } from "./events.js";
 import HitBox from "./Hitbox.js";
+import Camera from "./camara.js";
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
 
@@ -215,7 +216,7 @@ function initcaballero(){
     const hitbox =  new HitBox(20,32,0,0);
 
     //Creamos nuestro sprite
-    const caballero = new Sprite(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics,hitbox);
+    const caballero = new Sprite(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics,hitbox,100);
 
 
 
@@ -271,10 +272,14 @@ function initLevel(){
 
 }
 
+function initCamera(){
+    globals.Camara = new Camera(0,0);
+}
+
 
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents
+    initVars, loadAssets, initTimers, initEvents,initCamera
 };
 

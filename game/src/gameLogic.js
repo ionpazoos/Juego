@@ -39,6 +39,7 @@ function playGame(){
     updatelifeTime();
     detectCollision();
     updatelife();
+    updateCamera();
     
 }
 function playhistori(){
@@ -181,18 +182,19 @@ function updateplayer(sprite){
     }
 
       readKeyboardAndAssignState(sprite);
- 
+ if(sprite.physics.isOnGround){
     switch (sprite.state){
         case State.RUNNING_RIGHT:
-            sprite.physics.ax = 200;
+            sprite.physics.ax = 250;
             break;
         case State.RUNNING_LEFT:
-                sprite.physics.ax = -200;
+                sprite.physics.ax = -250;
                 break;
         default: sprite.physics.ax = 0;
             break;
 
     }
+}
      sprite.physics.vx += sprite.physics.ax * globals.deltaTime;
      sprite.physics.vy += sprite.physics.ay * globals.deltaTime;
 
@@ -216,13 +218,14 @@ function updateplayer(sprite){
         }
 
     }
+    const friction = 0.15;
+        
+    // Aplicar fricción en la dirección opuesta al movimiento
+    sprite.physics.vx -= sprite.physics.vx * friction;
 //fricion
     if (sprite.physics.isOnGround) {
         // Coeficiente de fricción (ajusta según sea necesario)
-        const friction = 0.15;
-        
-        // Aplicar fricción en la dirección opuesta al movimiento
-        sprite.physics.vx -= sprite.physics.vx * friction;
+
 
         // Detener completamente la velocidad si es muy pequeña
         if (Math.abs(sprite.physics.vx) < 0.1) {
@@ -409,6 +412,15 @@ function updateDirectionRandom(sprite){
 
         swapDirectio(sprite);
     }
+}
+
+function updateCamera(){
+    const player = globals.sprites[0];
+
+    globals.camara.x = Math.floor(player.xPos) + Math.floor((player.imageSet.xSize - globals.canvas.width/2));
+    globals.camara.y = Math.floor(player.yPos) + Math.floor((player.imageSet.ySize - globals.canvas.height/2));
+
+
 }
 
 }

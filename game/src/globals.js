@@ -45,5 +45,9 @@ export default {
 
     life: 0,
 
+    camara:{},
+
+
+
 
 };

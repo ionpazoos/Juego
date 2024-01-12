@@ -45,6 +45,8 @@ function drawGame(){
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
 
+    moveCamera();
+
     // Dibujamos el mapa (nivel)
     renderMap();
 
@@ -53,7 +55,7 @@ function drawGame(){
 
     //  console.log(globals.deltaTime);
     drawSprites();
-    
+    restoreCamera();
     //Dibujamos el HUD
     renderHUD();
     
@@ -401,6 +403,19 @@ function rendercontrols(){
     globals.ctx.font = '15px upheavtt';
     globals.ctx.fillText("Interact", 250, 76);
 
+
+}
+
+function moveCamera(){
+    const xTranslation = -globals.camara.x;
+    const yTranslation = -globals.camara.y+20;
+
+
+    globals.ctx.translate(xTranslation,yTranslation);
+}
+
+function restoreCamera(){
+    globals.ctx.setTransform(1,0,0,1,0,0);
 
 }
 
