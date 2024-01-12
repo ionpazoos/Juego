@@ -2,7 +2,7 @@ import Frames from "./Frames.js";
 import ImageSet from "./ImageSet.js";
 import physics from "./Physics.js";
 import Sprite, { Ladron, Ladron_j } from "./Sprite.js";
-import { FPS, Game, SpriteID, State } from "./constants.js";
+import { FPS, Game, SpriteID, State,particleID,particleState } from "./constants.js";
 import globals from "./globals.js";
 import { Level, level1,menu,highScore,controls} from "./levels.js";
 import Time from "./timer.js"
@@ -10,6 +10,7 @@ import Physics from "./Physics.js";
 import { keyDownHandeler,keyupHandeler } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
+import ExplosionParticles from "./particle.js";
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
 
@@ -185,14 +186,14 @@ function initbee(){
 
     const initangle = 90*Math.PI * 180;
     const omega = 1.5;
-    const xRotorCenter = globals.canvas.width/2;
-    const yRotorCenter = globals.canvas.height/2;
+    const xRotorCenter = 460;
+    const yRotorCenter = 80;
 
     const physics = new Physics(30,omega,initangle,xRotorCenter,yRotorCenter);
     const hitbox =  new HitBox(20,28,0,13);
 
     //Creamos nuestro sprite
-    const bee = new Ladron(SpriteID.BEE, State.STILL_RIGHT, 420, 15, imageSet, frames,physics,0,hitbox,100);
+    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT, 10, 10, imageSet, frames,physics,hitbox,100);
 
 
 
@@ -273,13 +274,34 @@ function initLevel(){
 }
 
 function initCamera(){
-    globals.Camara = new Camera(0,0);
+    globals.camara = new Camera(0,0);
+}
+
+function initparticles(){
+    initExplosion();
+}
+function initExplosion(){
+    const numparticles = 4;
+    const xInit = 100;
+    const yInit = 100;
+    const timeToFadeMax =5;
+    const alpha = 1.0;
+
+    for(let i = 0; i< numparticles;i++){
+        const velocity = Math.random()*25 + 5;
+        const physics = new Physics(velocity);
+
+        const timeToFade = timeToFadeMax * Math.random()+1;
+        const particle = new ExplosionParticles(particleID.GRASS,particleState.ON,xInit,yInit,alpha,physics,timeToFade);
+        
+        globals.particles.push(particle);
+    }
 }
 
 
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles
 };
 

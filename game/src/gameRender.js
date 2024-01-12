@@ -1,4 +1,4 @@
-import { Game, Tile } from "./constants.js";
+import { Game, Tile,particleState,particleID } from "./constants.js";
 import globals from "./globals.js";
 import { initLevel } from "./initialize.js";
 import { Level } from "./levels.js";
@@ -417,6 +417,27 @@ function moveCamera(){
 function restoreCamera(){
     globals.ctx.setTransform(1,0,0,1,0,0);
 
+}
+function renderParticles(){
+    for(let i = 0; i< globals.particles.length;i++){
+        const particle = globals.particles[i];
+        renderParticle(particle);
+    }
+}
+function renderParticle(particle){
+    const type = particle.id;
+
+    switch(type){
+        case particleID.GRASS:
+            rendergrassparticle(particle);
+            break;
+        default:
+            break;
+    }
+}
+
+function rendergrassparticle(particle){
+    
 }
 
 

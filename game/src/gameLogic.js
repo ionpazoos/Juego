@@ -61,7 +61,6 @@ function updatelife() {
   
         for (let i = 1; i < globals.sprites.length; i++) {
             const sprite = globals.sprites[i];
-            console.log(globals.lifetime.value);
             if (sprite.isColisionPlayer && globals.lifetime.value > 4) {
                 damagecalculation(sprite);
                 globals.lifetime.value = 0;
@@ -369,6 +368,7 @@ updateAnimationFrame(sprite);
 
     sprite.xPos -= sprite.imageSet.xSize /2;
     sprite.yPos -= sprite.imageSet.ySize /2;
+    console.log(sprite.xPos);
 
 }
 

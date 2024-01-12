@@ -100,3 +100,12 @@ LEFT:   37
 //Velocidad del juego
 export const FPS = 30;
 
+export const particleID = {
+    GRASS: 0,
+
+}
+export const particleState = {
+    ON:1,
+    OFF:0
+
+}
