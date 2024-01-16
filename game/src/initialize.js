@@ -130,7 +130,7 @@ function initplayer(){
     const hitbox =  new HitBox(13,30,8,0);
 
     //Creamos nuestro sprite
-    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 110, imageSet, frames,physics,hitbox);
+    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 100, imageSet, frames,physics,hitbox);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
@@ -293,6 +293,10 @@ function initExplosion(){
 
         const timeToFade = timeToFadeMax * Math.random()+1;
         const particle = new ExplosionParticles(particleID.GRASS,particleState.ON,xInit,yInit,alpha,physics,timeToFade);
+
+        const angle = 40 * Math.PI * 2;
+        particle.physics.vx = particle.physics.vLimit * Math.cos(angle);
+        particle.physics.vy = particle.physics.vLimit * Math.sin(angle);
         
         globals.particles.push(particle);
     }

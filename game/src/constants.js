@@ -54,6 +54,7 @@ export const Block = {
   
     GRASS: 27,
     GRASS2:29,
+    GRASS3:26,
     // WATER: 457,
     TREE:  161,
     TREE2: 109,
@@ -67,7 +68,26 @@ export const Block = {
     TREE10:  162,
     TREE11:  236,
     TREE12:  237,
+    TREE13:  160,
+    TREE14:  235,
+    TREE15:  236,
     BEEHOUSE:88,
+    ROCK:151,
+    ROCK2:152,
+    ROCK3:278,
+    ROCK4:253,
+    ROCK5:150,
+    ROCK6:153,
+    ROCK7:154,
+    ROCK8:180,
+    ROCK9:205,
+    ROCK10:278,
+    ROCK11:178,
+    WOOD_BRIDGE:230,
+    WOOD_BRIDGE2:231,
+    WOOD_BRIDGE3:232,
+    WOOD_BRIDGE4:233,
+
     
 }
 

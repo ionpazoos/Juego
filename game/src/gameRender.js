@@ -58,6 +58,7 @@ function drawGame(){
     restoreCamera();
     //Dibujamos el HUD
     renderHUD();
+    renderParticles();
     
 
 }
@@ -111,9 +112,46 @@ function historia (){
 }
 
 function GAMEOVER(){
-    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height); // Limpia todo el canvas
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
 
+    renderTitle();
+
+    // Rellena el fondo negro
+    globals.ctx.fillStyle = 'black';
+    globals.ctx.fillRect(0, 0, globals.canvas.width, globals.canvas.height);
+
+    // Estilo del texto "Game Over"
+    globals.ctx.fillStyle = 'darkturquoise'; // Cambié el color a azul turquesa oscuro
+    globals.ctx.font = 'bold 24px monospace'; // Usé la fuente genérica "monospace"
+
+    // Centrar el texto horizontalmente y verticalmente
+    globals.ctx.textAlign = 'center';
+    globals.ctx.textBaseline = 'middle';
+
+    // Agregar efecto 3D con sombras cuadradas
+    globals.ctx.shadowColor = 'darkturquoise'; // Cambié el color de la sombra a azul turquesa oscuro
+    globals.ctx.shadowBlur = 5; // Difuminado de la sombra
+    globals.ctx.shadowOffsetX = 0; // Desplazamiento X de la sombra (sin desplazamiento)
+    globals.ctx.shadowOffsetY = 0; // Desplazamiento Y de la sombra (sin desplazamiento)
+
+    // Dibujar el texto en el centro
+    globals.ctx.fillText("Game Over", globals.canvas.width / 2, globals.canvas.height / 2 - 40);
+
+    // Texto "Try again?"
+    globals.ctx.fillStyle = 'white';
+    globals.ctx.font = '16px monospace'; // Usé la misma fuente genérica "monospace" para el texto "Try again?"
+
+    // Restaurar el estilo de sombra
+    globals.ctx.shadowColor = 'transparent';
+    globals.ctx.shadowBlur = 0;
+    globals.ctx.shadowOffsetX = 0;
+    globals.ctx.shadowOffsetY = 0;
+    
+    globals.ctx.fillText("Insert coin", globals.canvas.width / 2, globals.canvas.height / 2 + 20);
+    
+    
+    
 
 
 }
@@ -176,7 +214,7 @@ function renderMap() {
     const brickSize = globals.level[globals.gameState-1].imageSet.gridSize;
     const levelData = globals.level[globals.gameState-1].data;
     const imagepath = globals.level[globals.gameState -1].imageSet.imgpath;
-    globals.ctx.drawImage(globals.tileSets[0],0,490,480,272,0,0,490,272);
+  
 
     // Dibujamos el mapa
     const num_fil = levelData.length;
@@ -345,8 +383,8 @@ function drawSpriteRectangle_hud(sprite){
 function renderHUD(){
 
     //TEST: Datos metidos en bruto
-    const score = 1500;
-    const highScore = 130000;
+    const score = Math.floor(globals.score);
+    const highScore = Math.floor(globals.highScore);
     const time = globals.leveltime.value;
 
 
@@ -361,8 +399,9 @@ function renderHUD(){
     //Draw High Score
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("Health", 72, 16);
+    globals.ctxHUD.fillText("High Score", 125, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
-    // globals.ctxHUD.fillText(" " + highScore, 77, 32);
+    globals.ctxHUD.fillText(" " + highScore, 120, 32);
 
     globals.ctxHUD.fillText(" " + globals.life, 77, 32);
 
@@ -412,6 +451,14 @@ function moveCamera(){
 
 
     globals.ctx.translate(xTranslation,yTranslation);
+
+      //fondo
+     // Ajusta la posición del fondo en relación con la posición de la cámara
+    const backgroundX = globals.camara.x-10;  // Ajusta según las necesidades
+    const backgroundY = globals.camara.y -20;  // Ajusta según las necesidades
+
+    // Dibuja la imagen de fondo ajustada a la posición de la cámara
+    globals.ctx.drawImage(globals.tileSets[0], 0, globals.canvas.width +20, globals.canvas.height, 200, backgroundX, backgroundY, globals.canvas.width+20, globals.canvas.height);
 }
 
 function restoreCamera(){
@@ -429,16 +476,38 @@ function renderParticle(particle){
 
     switch(type){
         case particleID.GRASS:
-            rendergrassparticle(particle);
+            //  renderGrassParticle(particle);
             break;
         default:
             break;
     }
 }
 
-function rendergrassparticle(particle){
-    
+ function renderGrassParticle(particle) {
+    if (particle.state === particleState.ON) {
+        // Calcular posición con efecto parabólico
+        const initialY = calculateParabolicY(particle);
+
+        particle.xPos = globals.sprites[0].xPos - globals.camara.x;
+        particle.yPos = initialY;
+
+        console.log("particle");
+        globals.ctx.fillStyle = "Green";
+        globals.ctx.globalAlpha = particle.alpha;
+        globals.ctx.beginPath();
+        globals.ctx.rect(particle.xPos, particle.yPos, 3, 3);
+        globals.ctx.closePath();
+        globals.ctx.fill();
+    } else {
+        console.log("particle off");
+    }
 }
 
+function calculateParabolicY(particle) {
+    const initialY = globals.sprites[0].yPos - globals.camara.y + 45;
+    const time = particle.fadecounter * globals.deltaTime;
+    const velocityY = -100; // Puedes ajustar la velocidad vertical según sea necesario
+    const accelerationY = 50; // Puedes ajustar la aceleración vertical según sea necesario
 
-
+    return initialY + velocityY * time + 0.5 * accelerationY * Math.pow(time, 2);
+}

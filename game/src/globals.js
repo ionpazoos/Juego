@@ -49,6 +49,9 @@ export default {
 
     particles: [],
 
+    score: 50,
+    highScore: 100,
+
 
 
 

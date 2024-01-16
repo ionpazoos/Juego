@@ -1,6 +1,7 @@
-import { Colisions, Game, SpriteID, State } from "./constants.js";
+import { Colisions, Game, SpriteID, State, particleState } from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
+
 
 
 export default function update(){
@@ -40,6 +41,7 @@ function playGame(){
     detectCollision();
     updatelife();
     updateCamera();
+    updatescore();
     
 }
 function playhistori(){
@@ -74,7 +76,24 @@ function updatelife() {
         }
 
         updatelifesprite();
+
+
     
+}
+ 
+function gameover(){
+
+    const brickSize = globals.level[0].imageSet.gridSize;
+    const row = Math.floor(globals.sprites[0].yPos / brickSize);
+
+    if(globals.life <=0){
+        globals.gameState = Game.GAMEOVER;
+    }
+    if(row >= 30){
+
+        globals.gameState = Game.GAMEOVER;
+
+    }
 }
 function updatelifesprite(){
         let life = globals.life;
@@ -172,32 +191,30 @@ function updateplayer(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
 
-    if( sprite.isColisionBotton){
-        sprite.physics.isOnGround = true;
-        
-    }
-    else{
-        sprite.physics.isOnGround = false;
-    }
+
 
       readKeyboardAndAssignState(sprite);
- if(sprite.physics.isOnGround){
+
     switch (sprite.state){
         case State.RUNNING_RIGHT:
-            sprite.physics.ax = 250;
+            sprite.physics.ax = 350;
+           
             break;
         case State.RUNNING_LEFT:
-                sprite.physics.ax = -250;
+                sprite.physics.ax = -350;
                 break;
         default: sprite.physics.ax = 0;
+   
             break;
 
-    }
+    
+
+    
 }
      sprite.physics.vx += sprite.physics.ax * globals.deltaTime;
      sprite.physics.vy += sprite.physics.ay * globals.deltaTime;
 
-
+     console.log(sprite.physics.isOnGround);
     
     if(!sprite.physics.isOnGround ){
         
@@ -209,12 +226,14 @@ function updateplayer(sprite){
         
     }
     else{
-        
         if(globals.action.moveUp){
-             sprite.physics.isOnGround = false;
-            sprite.physics.vy += sprite.physics.jumpforce;
-
+            sprite.physics.isOnGround = false;
+           sprite.physics.vy += sprite.physics.jumpforce;
+            console.log("saltito");
+        
         }
+
+        
 
     }
     const friction = 0.15;
@@ -225,7 +244,7 @@ function updateplayer(sprite){
     if (sprite.physics.isOnGround) {
         // Coeficiente de fricción (ajusta según sea necesario)
 
-
+        
         // Detener completamente la velocidad si es muy pequeña
         if (Math.abs(sprite.physics.vx) < 0.1) {
             sprite.physics.vx = 0;
@@ -244,9 +263,19 @@ sprite.xPos += sprite.physics.vx * globals.deltaTime;
 sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
     updateAnimationFrame(sprite);
+    gameover();
     
 
 
+}
+
+function updatescore(){
+    
+    globals.score += globals.deltaTime * 10  ;
+
+    if(globals.score > globals.highScore){
+        globals.highScore =  globals.score;
+    }
 }
 function updateenemi(sprite){
 
@@ -267,6 +296,7 @@ function updateenemi(sprite){
     }
     sprite.xPos += sprite.physics.vx * globals.deltaTime;
     updateAnimationFrame(sprite);
+    
 
      updateDirectionRandom(sprite);
 
@@ -368,7 +398,7 @@ updateAnimationFrame(sprite);
 
     sprite.xPos -= sprite.imageSet.xSize /2;
     sprite.yPos -= sprite.imageSet.ySize /2;
-    console.log(sprite.xPos);
+
 
 }
 
@@ -414,11 +444,22 @@ function updateDirectionRandom(sprite){
     }
 }
 
-function updateCamera(){
+function updateCamera() {
     const player = globals.sprites[0];
+    const brickSize = globals.level[0].imageSet.gridSize;
+    const nivelAncho = 300 * brickSize;
 
-    globals.camara.x = Math.floor(player.xPos) + Math.floor((player.imageSet.xSize - globals.canvas.width/2));
-    globals.camara.y = Math.floor(player.yPos) + Math.floor((player.imageSet.ySize - globals.canvas.height/2));
+    // Calcular la posición deseada de la cámara centrada en el jugador
+    const desiredX = Math.floor(player.xPos) + Math.floor((player.imageSet.xSize - globals.canvas.width / 2));
+    const desiredY = Math.floor(player.yPos) + Math.floor((player.imageSet.ySize - globals.canvas.height / 2));
+
+    // Establecer límites para la posición de la cámara
+    const minX = 0;  // Límite mínimo en el eje X
+    const maxX = nivelAncho - globals.canvas.width;  // Límite máximo en el eje X
+
+    // Ajustar la posición de la cámara dentro de los límites
+    globals.camara.x = Math.max(minX, Math.min(maxX, desiredX));
+    globals.camara.y = desiredY;
 
 
 }
