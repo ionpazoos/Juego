@@ -3,7 +3,7 @@ import { Colisions } from "./constants.js";
 //Clase gestora de los sprites
 export default class Sprite{
 
-    constructor(id, state, xPos, yPos, imageSet, frames,physics,hitbox){
+    constructor(id, state, xPos, yPos, imageSet, frames,physics,hitbox,hitbox2,deadTimer){
 
         this.id         = id;               //Tipo de Sprite
         this.state      = state;            //Estado de animacion del sprite
@@ -13,11 +13,13 @@ export default class Sprite{
         this.frames     = frames;           //Datos de los frames de animacion
         this.physics    = physics; 
         this.hitbox     = hitbox;
+        this.hitbox2    = hitbox2;
         this.isColisionPlayer = false;
         this.isColisionTop = false;
         this.isColisionBotton = false;
         this.isColisionLeft = false;
         this.isColisionRight = false;
+        this.deadTimer = deadTimer;
         
     }
 
@@ -25,25 +27,28 @@ export default class Sprite{
 }
 export class Ladron extends Sprite
 {
-    constructor(id,state,xPos,yPos,imageSet,frames,physics,maxTimeToChangeDirection,hitbox,damage,hitbox2)
+    constructor(id,state,xPos,yPos,imageSet,frames,physics,maxTimeToChangeDirection,hitbox,damage,hitbox2,deadTimer)
     {
-        super(id,state,xPos,yPos,imageSet,frames,physics,hitbox);
+        super(id,state,xPos,yPos,imageSet,frames,physics,hitbox,hitbox2,deadTimer);
 
         this.directionChangeCounter = 0;
         this.maxTimeToChangeDirection = maxTimeToChangeDirection;
         this.damage = damage;
-        this.hitbox2 = hitbox2;
+       
+       
+        this.isColidingHead = false;
     }
 }
 
 export class Ladron_j extends Sprite
 {
-    constructor(id,state,xPos,yPos,imageSet,frames,physics,hitbox,damage,hitbox2)
+    constructor(id,state,xPos,yPos,imageSet,frames,physics,hitbox,damage,hitbox2,deadTimer)
     {
-        super(id,state,xPos,yPos,imageSet,frames,physics,hitbox);
+        super(id,state,xPos,yPos,imageSet,frames,physics,hitbox,hitbox2,deadTimer);
 
         this.collisionBorder = Colisions.NO_COLISIONS;
         this.damage = damage;
-        this.hitbox2 = hitbox2;
+    
+        this.isColidingHead = false;
     }
 }

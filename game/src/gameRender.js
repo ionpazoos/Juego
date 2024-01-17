@@ -355,8 +355,8 @@ function drawHitbox(sprite){
 
    
 
-    if(sprite.id != SpriteID.PLAYER && sprite.id != SpriteID.SUPER_SAYAN && sprite.id != SpriteID.CABALLERO ){
-        console.log("id:" + sprite.id);
+   
+        
         const x2 = Math.floor(sprite.xPos) + Math.floor(sprite.hitbox2.xOffset);
         const y2 = Math.floor(sprite.yPos) + Math.floor(sprite.hitbox2.yOffset);
         const w2 = sprite.hitbox2.xSize;
@@ -364,7 +364,7 @@ function drawHitbox(sprite){
     
         globals.ctx.strokeStyle = "blue";
         globals.ctx.strokeRect(x2,y2,w2,h2);
-    }
+    
 
 
 }
@@ -424,7 +424,7 @@ function renderHUD(){
     //Draw time
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("TIME", 221, 16);
-    globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 190, 14, time/3, 32);
+    globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 200, 14, time/3, 32);
 
      // rage
     globals.ctxHUD.fillStyle = 'pink';

@@ -48,6 +48,7 @@ export const State = {
     SUPER_SAYAN3:57.4,
     SUPER_SAYAN2:56.3,
     SUPER_SAYAN1:55.2,
+    DEAD_ESKELETON:51.9,
 
 }
 export const Block = {

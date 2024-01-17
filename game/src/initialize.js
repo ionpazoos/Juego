@@ -55,7 +55,8 @@ function initEvents(){
 }
 function initTimers(){
     globals.leveltime = new Time(360,0.5);
-    globals.lifetime = new Time(15,1)
+    globals.lifetime = new Time(15,1);
+    
 }
 
 //Carga de activos: TILEMAPS, IMAGES, SOUNDS
@@ -127,10 +128,12 @@ function initplayer(){
     const frames = new Frames(5, 4);
 
     const physics = new Physics(40,0,0,0,0,0,-200,0,0);
-    const hitbox =  new HitBox(13,30,8,0);
+    const hitbox =  new HitBox(13,32,8,0);
+    const hitbox2 =  new HitBox(13,1,8,32);
+    const deadtime = new Time(3,1);
 
     //Creamos nuestro sprite
-    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 100, imageSet, frames,physics,hitbox);
+    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 100, imageSet, frames,physics,hitbox,hitbox2,deadtime);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
@@ -143,15 +146,16 @@ function initvillan(){
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(6,3);
 
-    const physics = new Physics(80);
+    const physics = new Physics(20);
     const hitbox =  new HitBox(13,25,5,7);
     const hitbox2 =  new HitBox(13,7,5,0);
+    const deadtime = new Time(3,1);
 
 
     //Creamos nuestro sprite
-    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox,50,hitbox2);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
 
-    villan.physics.vx = 80;
+    villan.physics.vx = 20;
    
 
 
@@ -167,13 +171,14 @@ function initskeleton(){
     const frames = new Frames(4,4);
 
     const physics = new Physics(30);
-    const hitbox =  new HitBox(13,32,8,0);
+    const hitbox =  new HitBox(13,25,8,7);
     const hitbox2 =  new HitBox(13,7,5,0);
+    const deadtime = new Time(3,1);
 
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 110, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2);
+    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 0, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2,deadtime);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
@@ -192,11 +197,12 @@ function initbee(){
     const yRotorCenter = 80;
 
     const physics = new Physics(30,omega,initangle,xRotorCenter,yRotorCenter);
-    const hitbox =  new HitBox(20,28,0,13);
-    const hitbox2 =  new HitBox(13,7,5,0);
+    const hitbox =  new HitBox(20,15,0,23);
+    const hitbox2 =  new HitBox(20,7,0,15);
+    const deadtime = new Time(3,1);
 
     //Creamos nuestro sprite
-    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT, 10, 10, imageSet, frames,physics,hitbox,100,hitbox2);
+    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT, 10, 10, imageSet, frames,physics,hitbox,100,hitbox2,deadtime);
 
 
 
@@ -219,9 +225,10 @@ function initcaballero(){
     const physics = new Physics(30,omega,initangle,0,0,yRef);
     const hitbox =  new HitBox(20,32,0,0);
     const hitbox2 =  new HitBox(13,7,5,0);
+    const deadtime = new Time(3,1);
 
     //Creamos nuestro sprite
-    const caballero = new Sprite(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics,hitbox,100);
+    const caballero = new Ladron_j(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics,hitbox,100,hitbox2,deadtime);
 
 
 
@@ -236,9 +243,9 @@ function initsupersayan(){
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(3,3);
 
-
+    const deadtime = new Time(3,1);
     //Creamos nuestro sprite
-    const super_sayan = new Sprite(SpriteID.SUPER_SAYAN, State.SUPER_SAYAN1, 360, 10, imageSet, frames,0,0);
+    const super_sayan = new Sprite(SpriteID.SUPER_SAYAN, State.SUPER_SAYAN1, 360, 10, imageSet, frames,0,0,0,deadtime);
 
     //Añadimos el pirata al array de sprites
     globals.sprites_hud.push(super_sayan);
@@ -255,7 +262,7 @@ function initbook(){
 
 
     //Creamos nuestro sprite
-    const book = new Sprite(SpriteID.BOOK, State.IDLE, 500, 10, imageSet, frames,0,0);
+    const book = new Sprite(SpriteID.BOOK, State.IDLE, 500, 10, imageSet, frames,0,0,0,0);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(book);

@@ -152,7 +152,15 @@ function updatelifeTime(){
         globals.lifetime.value=0;
     }
 }
+function updatedeadtimer(sprite){
+    console.log(sprite.deadTimer.value);
+    sprite.deadTimer.timeChangeCounter += globals.deltaTime;
+    if(sprite.deadTimer.timeChangeCounter > sprite.deadTimer.timeChangeValue){
+        sprite.deadTimer.value--;
+        sprite.deadTimer.timeChangeCounter = 0;
 
+    }
+}
 function updateSprite(sprite){
 
     const type = sprite.id;
@@ -194,7 +202,7 @@ function updateplayer(sprite){
 
 
       readKeyboardAndAssignState(sprite);
-if(sprite.physics.isOnGround){
+
     switch (sprite.state){
         case State.RUNNING_RIGHT:
             sprite.physics.ax = 350;
@@ -210,11 +218,10 @@ if(sprite.physics.isOnGround){
     
 
     
-}
+
      sprite.physics.vx += sprite.physics.ax * globals.deltaTime;
      sprite.physics.vy += sprite.physics.ay * globals.deltaTime;
 
-     console.log(sprite.physics.isOnGround);
     
     if(!sprite.physics.isOnGround ){
         
@@ -229,7 +236,7 @@ if(sprite.physics.isOnGround){
         if(globals.action.moveUp){
             sprite.physics.isOnGround = false;
            sprite.physics.vy += sprite.physics.jumpforce;
-            console.log("saltito");
+            
         
         }
 
@@ -295,12 +302,20 @@ function updateenemi(sprite){
             break;
     }
     sprite.xPos += sprite.physics.vx * globals.deltaTime;
+
+    sprite.physics.vy += 250 * globals.deltaTime;
+// Actualizar posición en el eje y
+
+sprite.xPos += sprite.physics.vx * globals.deltaTime;
+sprite.yPos += sprite.physics.vy * globals.deltaTime;
+
+    
     updateAnimationFrame(sprite);
     
 
      updateDirectionRandom(sprite);
 
-
+     verifyIfSpriteIsDead(sprite);
 
 }
 
@@ -323,15 +338,22 @@ function updatevillan(sprite){
                  
                  break;
         default: 
+        break;
+
         
             
      }
+    
+     sprite.physics.vy += 250 * globals.deltaTime;
+     // Actualizar posición en el eje y
+     
      sprite.xPos += sprite.physics.vx * globals.deltaTime;
+     sprite.yPos += sprite.physics.vy * globals.deltaTime;
     updateAnimationFrame(sprite);
-
+    
 
    calculateColision(sprite);
-
+   verifyIfSpriteIsDead(sprite);
 
 
 }
@@ -360,7 +382,7 @@ function updatebee(sprite){
 
     updateAnimationFrame(sprite);
 
-
+    verifyIfSpriteIsDead(sprite);
 
 
 }
@@ -381,7 +403,7 @@ sprite.yPos = sprite.physics.yRef + amplitud * Math.sin(sprite.physics.angle);
 
     updateAnimationFrame(sprite);
 
-
+    verifyIfSpriteIsDead(sprite);
 
 
 }
@@ -464,5 +486,35 @@ function updateCamera() {
 
 }
 
+function verifyIfSpriteIsDead(sprite){
+    if(sprite.isColidingHead){
+// Si el sprite es First_Aid, se elimina
+        updatedeadtimer(sprite);
+        
+        switch (sprite.id){
+            case SpriteID.VILLAN: 
+                break;
+            case SpriteID.SKELETON:
+                sprite.state = State.DEAD_ESKELETON;
+                
+                sprite.frames.framesPerState = 6;
+                sprite.frames.speed = 18;
+
+                break;
+        }
+            
+    }
+
+    if(sprite.deadTimer.value <=0){
+        const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
+        globals.sprites.splice(indexSpriteRemove1, 1);
+    }
+    if(sprite.deadTimer.value === 3){
+        sprite.frames.frameChangeCounter = 0;
+    }
+
 }
 
+}
+
+    
