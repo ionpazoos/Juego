@@ -194,7 +194,7 @@ function updateplayer(sprite){
 
 
       readKeyboardAndAssignState(sprite);
-
+if(sprite.physics.isOnGround){
     switch (sprite.state){
         case State.RUNNING_RIGHT:
             sprite.physics.ax = 350;
@@ -206,7 +206,7 @@ function updateplayer(sprite){
         default: sprite.physics.ax = 0;
    
             break;
-
+        }
     
 
     

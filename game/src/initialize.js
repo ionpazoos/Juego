@@ -54,7 +54,7 @@ function initEvents(){
     window.addEventListener("keyup",keyupHandeler,false);
 }
 function initTimers(){
-    globals.leveltime = new Time(200,0.5);
+    globals.leveltime = new Time(360,0.5);
     globals.lifetime = new Time(15,1)
 }
 
@@ -144,11 +144,12 @@ function initvillan(){
     const frames = new Frames(6,3);
 
     const physics = new Physics(80);
-    const hitbox =  new HitBox(13,32,5,0);
+    const hitbox =  new HitBox(13,25,5,7);
+    const hitbox2 =  new HitBox(13,7,5,0);
 
 
     //Creamos nuestro sprite
-    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox,50);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox,50,hitbox2);
 
     villan.physics.vx = 80;
    
@@ -167,11 +168,12 @@ function initskeleton(){
 
     const physics = new Physics(30);
     const hitbox =  new HitBox(13,32,8,0);
+    const hitbox2 =  new HitBox(13,7,5,0);
 
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 110, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30);
+    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 110, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
@@ -191,9 +193,10 @@ function initbee(){
 
     const physics = new Physics(30,omega,initangle,xRotorCenter,yRotorCenter);
     const hitbox =  new HitBox(20,28,0,13);
+    const hitbox2 =  new HitBox(13,7,5,0);
 
     //Creamos nuestro sprite
-    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT, 10, 10, imageSet, frames,physics,hitbox,100);
+    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT, 10, 10, imageSet, frames,physics,hitbox,100,hitbox2);
 
 
 
@@ -215,6 +218,7 @@ function initcaballero(){
 
     const physics = new Physics(30,omega,initangle,0,0,yRef);
     const hitbox =  new HitBox(20,32,0,0);
+    const hitbox2 =  new HitBox(13,7,5,0);
 
     //Creamos nuestro sprite
     const caballero = new Sprite(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics,hitbox,100);

@@ -44,24 +44,33 @@ function getMapTiled(xPos, yPos) {
 }
 
 
-function isCollidingWithObstacleAt(xPos, yPos, obstacleId){
+function isCollidingWithObstacleAt(xPos, yPos){
 
     let isColliding;
 
     const id = getMapTiled(xPos, yPos);
+    const blockIDs = Object.values(Block);
+    const totalObstacles = blockIDs.length;
+    
+    
 
-    console.log(id);
+    for (let i = 0; i < totalObstacles; ++i){
+       
+        const obstacleId = blockIDs[i] ;
 
     //Calculamos colision con bloque de tierra de la izquierda
     if (id === obstacleId){
         isColliding = true;
+        break;
         
     }
     else{
         isColliding = false;
     }
 
-    return isColliding;
+    
+}
+return isColliding;
 }
 
 
@@ -80,8 +89,8 @@ function detectCollisionBetweenPlayerAndObstacles(){
     const brickSize = globals.level[0].imageSet.gridSize;
 
     //Obtener la cantidad de bloques
-    const blockIDs = Object.values(Block);
-    const totalObstacles = blockIDs.length;
+   
+    
 
     //Reset collision state
     player.isCollidingWithObstacleOnTheBottom   = false;
@@ -102,8 +111,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
     
     //Calculamos colisiones en los 4 puntos
 
-for (let i = 0; i < totalObstacles; ++i){
-    const obstacleId = blockIDs[i] ;
+
 
     if (player.physics.vx >= 0){ //Movimiento derecha
 
@@ -111,7 +119,7 @@ for (let i = 0; i < totalObstacles; ++i){
         //Primera coloision en (xPos, yPos)
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos, obstacleId);
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos4){ //Hay colision en punto 4
 
@@ -130,7 +138,7 @@ for (let i = 0; i < totalObstacles; ++i){
         //Ultima colision en (xPos, yPos + ySize -1)
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos, obstacleId);
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos);
         
         if (isCollidingOnPos3){ //Hay colision en punto 3
 
@@ -153,7 +161,7 @@ for (let i = 0; i < totalObstacles; ++i){
         //Vemos si hay colision en (xPos + xSize - 1, yPos)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos, obstacleId);
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos, );
 
         if (isCollidingOnPos1){ //Hay colision en punto 1
 
@@ -188,7 +196,7 @@ for (let i = 0; i < totalObstacles; ++i){
         //Vemos si hay colision en (xPos + xSize - 1, yPos + ySize - 1)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos, obstacleId);
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos, );
 
         // console.log("Abajo derecha hacia la derecha: " +isCollidingOnPos2);
         if (isCollidingOnPos2) { // Hay colision en punto 2
@@ -227,7 +235,7 @@ for (let i = 0; i < totalObstacles; ++i){
         // Vemos si hay colisión en (xPos - 1, yPos)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos, obstacleId);
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos, );
 
         if (isCollidingOnPos1){ //Hay colision en punto 1
 
@@ -244,7 +252,7 @@ for (let i = 0; i < totalObstacles; ++i){
         // Punto 2
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos, obstacleId);
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos, );
 
         if (isCollidingOnPos2){ //Hay colision en punto 3
 
@@ -264,7 +272,7 @@ for (let i = 0; i < totalObstacles; ++i){
         // Punto 3
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos, obstacleId);
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos, );
 
         if (isCollidingOnPos3) { // Hay colision en punto 3
 
@@ -299,7 +307,7 @@ for (let i = 0; i < totalObstacles; ++i){
         // Punto 4
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos, obstacleId);
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos, );
 
         if (isCollidingOnPos4){ //Hay colision en punto 4
 
@@ -332,11 +340,12 @@ for (let i = 0; i < totalObstacles; ++i){
 
     }
 
-}
+
 if(player.isCollidingWithObstacleOnTheBottom){
     player.physics.isOnGround = true;
 }
 }
+
 
 function applyPhysics(sprite) {
     const gravity = 0.5;  // Puedes ajustar este valor según tus necesidades
@@ -356,7 +365,7 @@ function applyPhysics(sprite) {
 
 function detectCollisionBetweenSpriteAndMap(sprite) {
     const brickSize = globals.level[0].imageSet.gridSize;
-    const obstacleId = Block.WALL;  // Puedes ajustar esto según tus necesidades
+    const blockIDs = Block.WALL;  // Puedes ajustar esto según tus necesidades
 
     // Obtener la posición del sprite en la cuadrícula del mapa
     const col = Math.floor(sprite.xPos / brickSize);
