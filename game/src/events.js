@@ -18,6 +18,10 @@ export function keyDownHandeler(event){
                     break;
             case Key.RIGHT:
                     globals.action.moveRight = true;
+
+            case Key.Space:
+                globals.action.space = true;
+                        
                     
                     break;
     }
@@ -39,6 +43,11 @@ export function keyupHandeler(event){
                     break;
             case Key.RIGHT:
                     globals.action.moveRight = false;
+                    break;
+
+            case Key.Space:
+                globals.action.space = false;
+                    
                     break;
     }
 }

@@ -19,7 +19,7 @@ export default function update(){
             break;
 
         case Game.NEWGAME:
-                playGame();
+                newgame();
                 break;
         case Game.HISTORIA:
              playhistori();
@@ -38,11 +38,20 @@ function playGame(){
     updateSprites();
     updateLevelTime();
     updatelifeTime();
-    detectCollision();
+    detectCollision(0);
     updatelife();
     updateCamera();
     updatescore();
     
+}
+
+function newgame(){
+    
+    detectCollision(1);
+    updateCamera();
+    updateSprite(globals.sprites[1]);
+    updateSprite(globals.sprites[0]);
+    interactMenu();
 }
 function playhistori(){
     // ... A completar
@@ -72,6 +81,10 @@ function updatelife() {
             if(globals.lifetime.value > 4){
                 globals.sprites[0].frames.framesPerState = 5;
                 globals.sprites[0].frames.speed = 4;
+               if( globals.sprites[0].frames.frameCounter > 4){
+                globals.sprites[0].frames.frameCounter = 0;
+               }
+
             }
         }
 
@@ -112,14 +125,17 @@ function damagecalculation(sprite){
     globals.life -= sprite.damage;
 }
 function whenPlayerGetHit(sprite){
-    sprite.physics.vy -= 150;
+    if(sprite.physics.isOnGround){
+        sprite.physics.vy -= 50;
+    }
+   
     
 
     if(sprite.physics.vx < 0){
-        sprite.physics.vx += 150;
+        sprite.physics.vx += 250;
     }
     else{
-        sprite.physics.vx -= 150;
+        sprite.physics.vx -= 250;
     }
 
 sprite.frames.framesPerState = 7;
@@ -318,6 +334,45 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
      verifyIfSpriteIsDead(sprite);
 
 }
+function interactMenu(){
+    if(globals.gameState === Game.NEWGAME){
+        if(globals.action.moveUp){
+
+            globals.selectedOption--;
+
+        }
+        else if(globals.action.moveDown){
+            globals.selectedOption++;
+
+        }
+
+        if(globals.selectedOption > globals.menuOptions.length -1){
+            globals.selectedOption = globals.menuOptions.length-1;
+        }
+        else if(globals.selectedOption < 0){
+
+            globals.selectedOption = 0;
+
+        }
+
+        if(globals.action.space){
+            if(globals.selectedOption === 0){
+                globals.gameState = Game.PLAYING;
+            }
+            else if(globals.selectedOption === 1){
+                globals.gameState = Game.CONTROLS;
+            }
+            else if(globals.selectedOption === 2){
+                globals.gameState = Game.HISTORIA;
+            }
+            else if(globals.selectedOption === 3){
+                globals.gameState = Game.HIGHSCORE;
+            }
+        }
+    }
+
+
+}
 
 function updatevillan(sprite){
 
@@ -338,6 +393,7 @@ function updatevillan(sprite){
                  
                  break;
         default: 
+       
         break;
 
         
@@ -359,7 +415,7 @@ function updatevillan(sprite){
 }
 
 function calculateColision(sprite){
-    if(sprite.xPos + sprite.imageSet.xSize > globals.canvas.width){
+    if(sprite.xPos + sprite.imageSet.xSize > globals.canvas.width-10){
         sprite.collisionBorder = Colisions.BORDER_RIGHT;
 
     }
@@ -493,14 +549,42 @@ function verifyIfSpriteIsDead(sprite){
         
         switch (sprite.id){
             case SpriteID.VILLAN: 
+            if(sprite.deadTimer.value === 3 ){
+                sprite.frames.frameCounter = 0;
+            }
+            sprite.state = State.DEAD_VILLAN;
+            sprite.physics.vx = 0;
+            sprite.damage = 0;
+            
+            sprite.frames.framesPerState = 6;
+            sprite.frames.speed = 15;
                 break;
             case SpriteID.SKELETON:
+                if(sprite.deadTimer.value === 3 ){
+                    sprite.frames.frameCounter = 0;
+                }
                 sprite.state = State.DEAD_ESKELETON;
+
+                sprite.damage = 0;
                 
                 sprite.frames.framesPerState = 6;
-                sprite.frames.speed = 18;
+                sprite.frames.speed = 11;
 
                 break;
+            case SpriteID.BEE:
+                    if(sprite.deadTimer.value === 3 ){
+                        sprite.frames.frameCounter = 0;
+                    }
+                    sprite.state = State.DEAD_BEE;
+    
+                    sprite.damage = 0;
+                    sprite.physics.vx = 0;
+                    sprite.physics.vy = 0;
+                    sprite.physics.omega = 0;
+                    sprite.frames.framesPerState = 6;
+                    sprite.frames.speed = 11;
+    
+                    break;
         }
             
     }
@@ -509,9 +593,7 @@ function verifyIfSpriteIsDead(sprite){
         const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
         globals.sprites.splice(indexSpriteRemove1, 1);
     }
-    if(sprite.deadTimer.value === 3){
-        sprite.frames.frameChangeCounter = 0;
-    }
+
 
 }
 

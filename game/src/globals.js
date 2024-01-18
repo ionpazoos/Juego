@@ -34,6 +34,7 @@ export default {
     //Array con todos los sprites
     sprites: [],
     sprites_hud: [],
+    spritesMenu: [],
 
     // Datos del nivel
     level: [],
@@ -51,6 +52,8 @@ export default {
 
     score: 50,
     highScore: 100,
+    menuOptions : ["New Game", "Controls", "History", "High Score"],
+    selectedOption:0,
 
 
 

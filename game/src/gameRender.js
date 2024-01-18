@@ -70,8 +70,17 @@ function drawNewGame(){
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
 
     renderTitle();
-    renderMap();
-    renderText();
+
+
+globals.ctx.drawImage(globals.tileSets[0], 10, globals.canvas.width +30, globals.canvas.height, 200, 0, 0, globals.canvas.width+20, globals.canvas.height);
+drawSpriteRectangle(globals.sprites[1]);
+
+  
+renderMap();
+renderSprite(globals.sprites[1]);  
+
+    renderMenu();
+
 
 }
 
@@ -189,12 +198,41 @@ function renderbook(){
 
 }
 
-function renderText(){
-    globals.ctx.font = '16px ';
-    globals.ctx.fillText("New Game", 60, 80); 
-    globals.ctx.fillText("History", 210, 80);
-    globals.ctx.fillText("Controls", 330, 80);  
+function renderMenu() {
+   
+    const ctx = globals.canvas.getContext("2d");
+
+    
+    const optionHeight = 8;
+    const optionSpacing = 20;
+    const selectedOption = globals.selectedOption; // Índice de la opción seleccionada
+
+
+    // Establecemos el estilo de fuente y alineación
+    ctx.fillStyle = "black";
+    ctx.font = "15px Arial";
+    ctx.textAlign = "center";
+
+    // Ciclo para dibujar las opciones del menú
+    for (let i = 0; i < globals.menuOptions.length; i++) {
+        const text = globals.menuOptions[i];
+        const x = globals.canvas.width / 2;
+        const y = 20 + i * (optionHeight + optionSpacing);
+
+        
+
+        // Si es la opción seleccionada, resaltamos con un rectángulo
+        if (i === selectedOption) {
+            ctx.fillStyle = "blue";
+            ctx.fillRect(x - 50, y - 10, 8, optionHeight);
+            ctx.fillStyle = "#fff"; // Restauramos el color de relleno
+        }
+        ctx.fillStyle = "black"; // Restauramos el color de relleno
+        // Dibujamos el texto de la opción
+        ctx.fillText(text, x, y);
+    }
 }
+
 
 function renderscore(){
     let score = 500;

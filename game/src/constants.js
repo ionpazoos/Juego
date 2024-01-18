@@ -33,22 +33,25 @@ export const State = {
     IDLE: 0 ,
     IDLE_CABALLERO:59.5,
     RUNNING_RIGHT: 1,
-    RUNNING_RIGHT_ESKELETON: 1.2,
+    RUNNING_RIGHT_ESKELETON: 11.8,
     RUNNING_RIGHT_VILLAN: 58.6,
     RUNNING_LEFT: 53.1,
-    RUNNING_LEFT_ESKELETON: 43.53,
+    RUNNING_LEFT_ESKELETON: 54.1,
     RUNNING_LEFT_VILLAN: 8.2,
     STILL_UP: 20,
     RIGHT: 3,
     STILL_DOWN: 30,
     STILL_LEFT:52.1,
     STILL_RIGHT:0,
+    STILL_RIGHT_BEE:2.17,
     AIR_WIZZARD_UP:60.5,
     AIR_WIZZARD_down:61.5,
     SUPER_SAYAN3:57.4,
     SUPER_SAYAN2:56.3,
     SUPER_SAYAN1:55.2,
-    DEAD_ESKELETON:51.9,
+    DEAD_ESKELETON:62.6,
+    DEAD_VILLAN:9.5,
+    DEAD_BEE:2.8,
 
 }
 export const Block = {
@@ -56,6 +59,8 @@ export const Block = {
     GRASS: 27,
     GRASS2:29,
     GRASS3:26,
+    GRASS4:28,
+    GRASS5:30,
     // WATER: 457,
     TREE:  161,
     TREE2: 109,
@@ -114,7 +119,8 @@ export const Key = {
 UP:     38,
 DOWN:   40,
 RIGHT:  39,
-LEFT:   37
+LEFT:   37,
+Space: 32,
 
 }
 

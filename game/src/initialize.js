@@ -101,13 +101,15 @@ function loadHandler(){
         console.log("Assets finished loading");
 
         //Start the game
-        globals.gameState = Game.PLAYING;
+        globals.gameState = Game.NEWGAME;
         console.log("modo cambiado");
     }
 }
 
 function initSprites() {
+if(globals.gameState === Game.PLAYING){}
     //Añadimos
+    
     initplayer();
     initvillan();
     initskeleton();
@@ -115,9 +117,10 @@ function initSprites() {
     initcaballero();
     initsupersayan();
     // initbook();
-    //error por que el libro aun que no lo pinte en el playing lo coge y detecta que siempre hay collision
-
 }
+
+
+
 
 function initplayer(){
 
@@ -146,7 +149,7 @@ function initvillan(){
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(6,3);
 
-    const physics = new Physics(20);
+    const physics = new Physics(50);
     const hitbox =  new HitBox(13,25,5,7);
     const hitbox2 =  new HitBox(13,7,5,0);
     const deadtime = new Time(3,1);
@@ -155,17 +158,18 @@ function initvillan(){
     //Creamos nuestro sprite
     const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
 
-    villan.physics.vx = 20;
+     villan.physics.vx = 50;
    
 
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(villan);
 }
+
 function initskeleton(){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 32, 32, 32, 25, 340,0);
+    const imageSet = new ImageSet(0, 0, 32, 32, 32, 0, 0,0);
 
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(4,4);
@@ -178,7 +182,7 @@ function initskeleton(){
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 100, 0, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2,deadtime);
+    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 700, 0, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2,deadtime);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
@@ -186,7 +190,7 @@ function initskeleton(){
 function initbee(){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 64, 40, 64, 64, 140,0);
+    const imageSet = new ImageSet(0, 0, 64, 40, 64, 0, 0,0);
 
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(3,2);
@@ -202,7 +206,7 @@ function initbee(){
     const deadtime = new Time(3,1);
 
     //Creamos nuestro sprite
-    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT, 10, 10, imageSet, frames,physics,hitbox,100,hitbox2,deadtime);
+    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT_BEE, 10, 10, imageSet, frames,physics,hitbox,100,hitbox2,deadtime);
 
 
 
