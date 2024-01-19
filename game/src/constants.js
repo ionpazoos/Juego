@@ -24,6 +24,7 @@ export const SpriteID = {
     BOOK: 5,
     CABALLERO:6,
     SUPER_SAYAN:7,
+    MONEDA:8,
 }
 
 //Identificador de estado de sprite (direccion)
@@ -52,6 +53,7 @@ export const State = {
     DEAD_ESKELETON:62.6,
     DEAD_VILLAN:9.5,
     DEAD_BEE:2.8,
+    MONEDA:136.73,
 
 }
 export const Block = {
@@ -68,8 +70,8 @@ export const Block = {
     TREE4: 38,
     TREE5: 112,
     TREE6: 134,
-    TREE7: 135,
-    TREE8: 110,
+    TREE7: 136,
+    TREE8: 111,
     TREE9:  161,
     TREE10:  162,
     TREE11:  236,
@@ -77,6 +79,16 @@ export const Block = {
     TREE13:  160,
     TREE14:  235,
     TREE15:  236,
+    TREE16:  135,
+    TREE17:  110,
+    TREE18:  85,
+    TREE19:  84,
+    TREE20:  60,
+    TREE21:  86,
+    TREE22:  61,
+    TREE23:  35,
+    TREE24:  36,
+
     BEEHOUSE:88,
     ROCK:151,
     ROCK2:152,
@@ -93,6 +105,18 @@ export const Block = {
     WOOD_BRIDGE2:231,
     WOOD_BRIDGE3:232,
     WOOD_BRIDGE4:233,
+    WOOD_BRIDGE5:234,
+    MUD1:76,
+    MUD2:77,
+    MUD3:78,
+    MUD4:176,
+    MUD5:177,
+    MUD6:178,
+    STONE:360,
+    STONE2:385,
+    STONE3:410,
+    STONE4:388,
+    STONE5:387,
 
     
 }
@@ -121,6 +145,7 @@ DOWN:   40,
 RIGHT:  39,
 LEFT:   37,
 Space: 32,
+esc:  27,
 
 }
 

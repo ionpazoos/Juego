@@ -21,9 +21,14 @@ export function keyDownHandeler(event){
 
             case Key.Space:
                 globals.action.space = true;
+                break;
+            case Key.esc:
+                    globals.action.esc = true;
+                        
+                        break;
                         
                     
-                    break;
+                    
     }
 }
 
@@ -49,5 +54,9 @@ export function keyupHandeler(event){
                 globals.action.space = false;
                     
                     break;
+            case Key.esc:
+                        globals.action.esc = false;
+                            
+                            break;
     }
 }

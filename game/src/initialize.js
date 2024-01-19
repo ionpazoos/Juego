@@ -114,16 +114,17 @@ if(globals.gameState === Game.PLAYING){}
     initbee();
     initcaballero();
     initsupersayan();
+    // initmoneda();
     // initbook();
 }
 function initSpritesNewGame(){
     initplayer();
-    initvillan();
+    initvillan(60);
 }
 function initsprites260(){
-    for(let i = 0;i<5;i++){
+    
         initskeleton(100);
-    }
+    
 
 
 
@@ -157,7 +158,24 @@ function initplayer(){
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
 }
-function initvillan(){
+function initmoneda(){
+
+    //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
+    const imageSet = new ImageSet(0, 0,  15, 15, 15, 0, 0);
+
+    //Creamos los datos de la animacion. 8 frames / state
+    const frames = new Frames(4, 4);
+    
+    const hitbox =  new HitBox(15,15,0,0);
+    const deadtime = new Time(3,1);
+
+    //Creamos nuestro sprite
+    const Moneda = new Ladron_j(SpriteID.MONEDA, State.MONEDA, 1590, 100, imageSet, frames,0,0,-50,hitbox,deadtime);
+
+    //Añadimos el pirata al array de sprites
+    globals.sprites.push(Moneda);
+}
+function initvillan(x){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(0, 0, 32, 32, 32, 0, -3,0);
@@ -172,7 +190,7 @@ function initvillan(){
 
 
     //Creamos nuestro sprite
-    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 10, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, x, 10, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
 
      villan.physics.vx = 50;
    
@@ -240,15 +258,15 @@ function initcaballero(){
 
     const initangle = 90*Math.PI * 180;
     const omega = 1.5;
-    const yRef = 20;
+    const yRef = 100;
 
     const physics = new Physics(30,omega,initangle,0,0,yRef);
-    const hitbox =  new HitBox(20,32,0,0);
+    const hitbox =  new HitBox(20,25,0,7);
     const hitbox2 =  new HitBox(13,7,5,0);
     const deadtime = new Time(3,1);
 
     //Creamos nuestro sprite
-    const caballero = new Ladron_j(SpriteID.CABALLERO, State.IDLE_CABALLERO, 450, 15, imageSet, frames,physics,hitbox,100,hitbox2,deadtime);
+    const caballero = new Ladron_j(SpriteID.CABALLERO, State.IDLE_CABALLERO, 1250, 105, imageSet, frames,physics,hitbox,100,hitbox2,deadtime);
 
 
 
@@ -338,6 +356,6 @@ function initExplosion(){
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initsprites260,initspritespos300
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initsprites260,initspritespos300,initcaballero,initskeleton,initvillan
 };
 

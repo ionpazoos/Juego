@@ -1,7 +1,7 @@
 import { Colisions, Game, SpriteID, State, particleState } from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites, initsprites260,initspritespos300 } from "./initialize.js";
+import { initSprites, initsprites260,initspritespos300,initcaballero,initskeleton,initvillan } from "./initialize.js";
 
 
 
@@ -17,17 +17,24 @@ export default function update(){
         case Game.PLAYING:
             
             playGame();
+            interactMenu();
             break;
 
         case Game.NEWGAME:
                 newgame();
+                
                 break;
         case Game.HISTORIA:
              playhistori();
+             interactMenu();
               break;
         case Game.HIGHSCORE:
                 playhistori();
-                 break;   
+                interactMenu();
+                 break; 
+        case   Game.CONTROLS:
+            interactMenu();
+        break;
     
 
         default:
@@ -90,6 +97,9 @@ function updatelife() {
 
             }
         }
+
+        
+    
 
         updatelifesprite();
 
@@ -206,6 +216,9 @@ function updateSprite(sprite){
         case SpriteID.SUPER_SAYAN:
             updatesupersayan(sprite);
             break;
+            case SpriteID.MONEDA:
+                // updateMoneda(sprite);
+                break;
         //Otros
         default:
             
@@ -218,7 +231,7 @@ function updateplayer(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
 
-
+console.log(sprite.yPos);
 
       readKeyboardAndAssignState(sprite);
 
@@ -380,6 +393,12 @@ function interactMenu(){
 
     }
 
+    else{
+        if( globals.action.esc){
+            globals.gameState = Game.NEWGAME;
+        }
+    }
+
 
 }
 function interactstory(){
@@ -418,10 +437,33 @@ function dificulti(){
         initsprites260();    
     }
 
-    if(globals.sprites[0].xPos > 300 && globals.sprites[0].xPos < 305 ){
+    if(globals.sprites[0].xPos > 300 && globals.sprites[0].xPos < 303 ){
         initspritespos300();
         console.log("spawn");
     }
+
+    if(globals.sprites[0].xPos > 500 && globals.sprites[0].xPos < 503 ){
+        for(let i =0 ; i <5;i++){
+            initskeleton(800 +(i*32));
+            console.log("spawn");
+        }
+       
+    }
+
+    if(globals.sprites[0].xPos > 900 && globals.sprites[0].xPos < 902 ){
+        initcaballero();    
+        console.log("spawn caballero");
+    }
+
+    if(globals.sprites[0].xPos > 1500 && globals.sprites[0].xPos < 1502 ){
+        for(let i =0 ; i <5;i++){
+            initvillan(1700 + (i*32)); 
+            console.log("spawn");
+        }
+        console.log("spawn caballero");
+    }
+
+    console.log(globals.sprites[0].xPos);
 }
 
 function updatevillan(sprite){
@@ -529,6 +571,18 @@ updateAnimationFrame(sprite);
 
 
 }
+function updateMoneda(sprite){
+    
+    verifyIfSpriteIsDead(sprite);
+    updateAnimationFrame(sprite);
+
+    
+    }
+    
+  
+    
+    
+    
 
 
 function updateAnimationFrame(sprite){
@@ -635,14 +689,27 @@ function verifyIfSpriteIsDead(sprite){
                     sprite.frames.speed = 11;
     
                     break;
+                // case SpriteID.MONEDA:
+                //     const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
+                //     globals.sprites.splice(indexSpriteRemove1, 1);
+                //     console.log("entro");
+                //     break;
+
+            
+
+  
+        
         }
             
     }
+
+    console.log(sprite.deadTimer.value);
 
     if(sprite.deadTimer.value <=0){
         const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
         globals.sprites.splice(indexSpriteRemove1, 1);
     }
+
 
 
 }
