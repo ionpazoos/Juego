@@ -11,7 +11,7 @@ import { keyDownHandeler,keyupHandeler } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
 import ExplosionParticles from "./particle.js";
-import Paper from "./papers.js"
+
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
 
@@ -110,7 +110,7 @@ function loadHandler(){
 function initSprites() {
 if(globals.gameState === Game.PLAYING){}
     //Añadimos
-    initskeleton();
+    initskeleton(150);
     initbee();
     initcaballero();
     initsupersayan();
@@ -119,6 +119,20 @@ if(globals.gameState === Game.PLAYING){}
 function initSpritesNewGame(){
     initplayer();
     initvillan();
+}
+function initsprites260(){
+    for(let i = 0;i<5;i++){
+        initskeleton(100);
+    }
+
+
+
+}
+function initspritespos300(){
+    
+        initskeleton(500);
+    
+
 }
 
 
@@ -158,7 +172,7 @@ function initvillan(){
 
 
     //Creamos nuestro sprite
-    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 110, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, 60, 10, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
 
      villan.physics.vx = 50;
    
@@ -168,7 +182,7 @@ function initvillan(){
     globals.sprites.push(villan);
 }
 
-function initskeleton(){
+function initskeleton(x){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(0, 0, 32, 32, 32, 0, 0,0);
@@ -184,7 +198,7 @@ function initskeleton(){
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, 700, 0, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2,deadtime);
+    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, x, 0, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2,deadtime);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
@@ -319,18 +333,11 @@ function initExplosion(){
     }
 }
 
-function initpapers(){
-    const paper = new Paper(0, 0, 0, 0);
-    const paper2 = new Paper(7, 880, 130, 240);
-    globals.Papers.push(paper2);
-    globals.Papers.push(paper);
-
-}
 
 
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initpapers
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initsprites260,initspritespos300
 };
 

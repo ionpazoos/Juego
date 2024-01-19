@@ -1,7 +1,7 @@
 import { Colisions, Game, SpriteID, State, particleState } from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites, initSpritesNewGame } from "./initialize.js";
+import { initSprites, initsprites260,initspritespos300 } from "./initialize.js";
 
 
 
@@ -43,6 +43,7 @@ function playGame(){
     updatelife();
     updateCamera();
     updatescore();
+    dificulti()
     
 }
 
@@ -287,6 +288,7 @@ sprite.physics.vy += 250 * globals.deltaTime;
 sprite.xPos += sprite.physics.vx * globals.deltaTime;
 sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
+
     updateAnimationFrame(sprite);
     if(globals.gameState === Game.PLAYING){gameover();}
     
@@ -410,6 +412,16 @@ function interactstory(){
     }
 
 
+}
+function dificulti(){
+    if(globals.timeChangeValue < 260 ){
+        initsprites260();    
+    }
+
+    if(globals.sprites[0].xPos > 300 && globals.sprites[0].xPos < 305 ){
+        initspritespos300();
+        console.log("spawn");
+    }
 }
 
 function updatevillan(sprite){

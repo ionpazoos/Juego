@@ -89,6 +89,8 @@ function controls(){
     // Borramos la pantalla entera
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+    globals.ctx.drawImage(globals.tileSets[0], 10, globals.canvas.width +30, globals.canvas.height, 200, 0, 0, globals.canvas.width+20, globals.canvas.height);
+
 
     renderTitle();
     renderMap();
@@ -101,6 +103,8 @@ function highScore(){
     // Borramos la pantalla entera
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+    globals.ctx.drawImage(globals.tileSets[0], 10, globals.canvas.width +30, globals.canvas.height, 200, 0, 0, globals.canvas.width+20, globals.canvas.height);
+
 
     renderTitle();
     renderMap();
@@ -172,52 +176,126 @@ function renderbook(selectedPaper) {
     globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
 
     const separatedBySpaces = globals.story.split(' ');
-    var texty = 50;
-    var textx = 120;
-    var count = 0;
-    selectedPaper = 1;
+
+    
 if(selectedPaper === 1 ){
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
 globals.ctx.setTransform(2.1, 0, 0, 2, -110, -70);
 
-globals.ctx.font = 'bold 5px monospace';
-const lineHeight = 5;
 
-for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 3; j++) {
-        const word = separatedBySpaces[count];
-        
-        // Medir el ancho de la palabra
-        const wordWidth = globals.ctx.measureText(word).width;
+const maxWidth = 50;  // Ancho máximo por línea
+let currentLine = '';
+let texty = 50;
 
-        // Dibujar la palabra en el canvas
-        globals.ctx.fillText(word, textx, texty);
+globals.ctx.font = '5px Arial';
+globals.ctx.fillStyle = '#000';
 
-        // Actualizar posición para la próxima palabra
-        textx += wordWidth +1;
-        count++;
+for (let i = 0; i < 40; i++) {
+    const word = separatedBySpaces[i];
+    const wordWidth = globals.ctx.measureText(word).width;
+
+    // Verificar si agregar la palabra excede la anchura máxima
+    if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
+        globals.ctx.fillText(currentLine, 130, texty);
+        texty += 5;  // Ajusta según el espaciado entre líneas
+        currentLine = word + ' ';
+    } else {
+        currentLine += word + ' ';
     }
-    
-    // Nueva línea para la siguiente fila de palabras
-    texty += lineHeight;
-    textx = 120;
 }
+
+// Dibujar la última línea
+ctx.fillText(currentLine, 20, texty);
+
 
 
 }
 else if(selectedPaper === 2 ){
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
 globals.ctx.setTransform(2.1, 0, 0, 2.1, -110, -170);
+
 }
 else if(selectedPaper === 3 ){
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
 globals.ctx.setTransform(2.8, 0, 0, 2.8, -550, -50);
+
+
+const maxWidth = 40;  // Ancho máximo por línea
+let currentLine = '';
+let texty = 42;
+
+globals.ctx.font = '5px Arial';
+globals.ctx.fillStyle = '#000';
+
+for (let i = 40; i < 50; i++) {
+    const word = separatedBySpaces[i];
+    const wordWidth = globals.ctx.measureText(word).width;
+
+    // Verificar si agregar la palabra excede la anchura máxima
+    if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
+        globals.ctx.fillText(currentLine, 300, texty);
+        texty += 5;  // Ajusta según el espaciado entre líneas
+        currentLine = word + ' ';
+    } else {
+        currentLine += word + ' ';
+    }
+}
+
+
 }
 
 else if(selectedPaper === 4 ){
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
 globals.ctx.setTransform(2, 0, 0, 2, -450, -130);
+
+const maxWidth = 40;  // Ancho máximo por línea
+let currentLine = '';
+let texty = 90;
+
+globals.ctx.font = '5px Arial';
+globals.ctx.fillStyle = '#000';
+
+for (let i = 50; i < 75 ; i++) {
+    const word = separatedBySpaces[i];
+    const wordWidth = globals.ctx.measureText(word).width;
+
+    // Verificar si agregar la palabra excede la anchura máxima
+    if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
+        globals.ctx.fillText(currentLine, 300, texty);
+        texty += 5;  // Ajusta según el espaciado entre líneas
+        currentLine = word + ' ';
+    } else {
+        currentLine += word + ' ';
+    }
 }
+}
+else if(selectedPaper === 5 ){
+    // Restablecer la transformación a la identidad al final para evitar problemas futuros
+globals.ctx.setTransform(2, 0, 0, 2, -550, -180);
+
+const maxWidth = 80;  // Ancho máximo por línea
+let currentLine = '';
+let texty = 130;
+
+globals.ctx.font = '6px Arial';
+globals.ctx.fillStyle = '#000';
+
+for (let i = 75; i < 87 ; i++) {
+    const word = separatedBySpaces[i];
+    const wordWidth = globals.ctx.measureText(word).width;
+
+    // Verificar si agregar la palabra excede la anchura máxima
+    if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
+        globals.ctx.fillText(currentLine, 385, texty);
+        texty += 5;  // Ajusta según el espaciado entre líneas
+        currentLine = word + ' ';
+    } else {
+        currentLine += word + ' ';
+    }
+}
+}
+
+
 else{
     globals.ctx.setTransform(1, 0, 0, 1, 0, 0);
 }

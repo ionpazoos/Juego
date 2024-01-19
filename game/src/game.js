@@ -1,7 +1,7 @@
 import globals from "./globals.js";
 
 // Importamos loadAssets
-import { initHTMLelements, initLevel, initSprites, initVars, loadAssets,initTimers ,initEvents,initCamera,initparticles, initSpritesNewGame, initpapers} from "./initialize.js";
+import { initHTMLelements, initLevel, initSprites, initVars, loadAssets,initTimers ,initEvents,initCamera,initparticles, initSpritesNewGame} from "./initialize.js";
 
 import update from "./gameLogic.js";
 import render from "./gameRender.js";
@@ -36,7 +36,6 @@ function init(){
 
     initCamera();
     initparticles();
-    initpapers();
     //Start the first frame request
     window.requestAnimationFrame(gameLoop);
 
