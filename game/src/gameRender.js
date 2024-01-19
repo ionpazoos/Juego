@@ -165,21 +165,45 @@ function GAMEOVER(){
 
 
 }
-const paperZoomStates = {
-    0: 1,  // Estado de zoom para el primer papel
-    1: 1,  // Estado de zoom para el segundo papel
-    2: 1   // Estado de zoom para el tercer papel
-};
-
 
 
 function renderbook(selectedPaper) {
     // Dibujar el fondo del libro
     globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
-   
+
+    const separatedBySpaces = globals.story.split(' ');
+    var texty = 50;
+    var textx = 120;
+    var count = 0;
+    selectedPaper = 1;
 if(selectedPaper === 1 ){
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
 globals.ctx.setTransform(2.1, 0, 0, 2, -110, -70);
+
+globals.ctx.font = 'bold 5px monospace';
+const lineHeight = 5;
+
+for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 3; j++) {
+        const word = separatedBySpaces[count];
+        
+        // Medir el ancho de la palabra
+        const wordWidth = globals.ctx.measureText(word).width;
+
+        // Dibujar la palabra en el canvas
+        globals.ctx.fillText(word, textx, texty);
+
+        // Actualizar posición para la próxima palabra
+        textx += wordWidth +1;
+        count++;
+    }
+    
+    // Nueva línea para la siguiente fila de palabras
+    texty += lineHeight;
+    textx = 120;
+}
+
+
 }
 else if(selectedPaper === 2 ){
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
