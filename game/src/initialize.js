@@ -11,6 +11,7 @@ import { keyDownHandeler,keyupHandeler } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
 import ExplosionParticles from "./particle.js";
+import Paper from "./papers.js"
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
 
@@ -109,14 +110,15 @@ function loadHandler(){
 function initSprites() {
 if(globals.gameState === Game.PLAYING){}
     //Añadimos
-    
-    initplayer();
-    initvillan();
     initskeleton();
     initbee();
     initcaballero();
     initsupersayan();
     // initbook();
+}
+function initSpritesNewGame(){
+    initplayer();
+    initvillan();
 }
 
 
@@ -317,10 +319,18 @@ function initExplosion(){
     }
 }
 
+function initpapers(){
+    const paper = new Paper(0, 0, 0, 0);
+    const paper2 = new Paper(7, 880, 130, 240);
+    globals.Papers.push(paper2);
+    globals.Papers.push(paper);
+
+}
+
 
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initpapers
 };
 

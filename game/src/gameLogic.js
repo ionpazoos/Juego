@@ -1,6 +1,7 @@
 import { Colisions, Game, SpriteID, State, particleState } from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
+import { initSprites, initSpritesNewGame } from "./initialize.js";
 
 
 
@@ -55,7 +56,8 @@ function newgame(){
 }
 function playhistori(){
     // ... A completar
-     updateSprites();
+    
+     interactstory();
 }
 
 function updateSprites(){
@@ -286,7 +288,8 @@ sprite.xPos += sprite.physics.vx * globals.deltaTime;
 sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
     updateAnimationFrame(sprite);
-    gameover();
+    if(globals.gameState === Game.PLAYING){gameover();}
+    
     
 
 
@@ -358,6 +361,8 @@ function interactMenu(){
         if(globals.action.space){
             if(globals.selectedOption === 0){
                 globals.gameState = Game.PLAYING;
+
+                initSprites();
             }
             else if(globals.selectedOption === 1){
                 globals.gameState = Game.CONTROLS;
@@ -369,6 +374,39 @@ function interactMenu(){
                 globals.gameState = Game.HIGHSCORE;
             }
         }
+
+
+    }
+
+
+}
+function interactstory(){
+    if(globals.gameState === Game.HISTORIA){
+        if(globals.action.moveRight){
+
+            globals.selectedPaperIndex++;
+            
+        }
+        
+        else if(globals.action.moveLeft){
+            globals.selectedPaperIndex--;
+
+        }
+
+       
+        else if(globals.selectedPaperIndex < 0){
+
+            globals.selectedPaperIndex = 0;
+
+        }
+        if(globals.selectedPaperIndex > 4){
+            globals.selectedPaperIndex = 4;
+        }
+
+        console.log( globals.selectedPaperIndex);
+        
+
+        
     }
 
 

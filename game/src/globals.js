@@ -55,6 +55,11 @@ export default {
     menuOptions : ["New Game", "Controls", "History", "High Score"],
     selectedOption:0,
 
+    //papers
+    Papers:[],
+    selectedPaperIndex: 0,
+    zoomProgress:0.01,
+
 
 
 

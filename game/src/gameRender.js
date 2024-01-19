@@ -116,7 +116,8 @@ function historia (){
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
     renderTitle();
-    renderbook();
+   
+    renderbook(globals.selectedPaperIndex);
  
 }
 
@@ -164,39 +165,53 @@ function GAMEOVER(){
 
 
 }
+const paperZoomStates = {
+    0: 1,  // Estado de zoom para el primer papel
+    1: 1,  // Estado de zoom para el segundo papel
+    2: 1   // Estado de zoom para el tercer papel
+};
 
 
 
-function renderbook(){
-
-
-    globals.ctx.drawImage(globals.tileSets[0], 0,769 , 1920, 1080, 0, 0, 1000, 360);
-    globals.ctx.font = '10px upheavtt';
-    globals.ctx.fillText("Mihi Gaiztoen Hirian", 120, 40); 
-    globals.ctx.fillText("mago zurtzen familiaren oinordekoa", 93, 52); 
-    globals.ctx.fillText("jaiotzen da, El Erudito X.G", 90, 64); 
-    globals.ctx.fillText("Txikitatik, bere bulkada psikotikoak ", 80, 76); 
-    globals.ctx.fillText("inguruan kaosa sortuz.Bere kontrolik ", 80, 88); 
-    globals.ctx.fillText("ezaz kezkatuta, familiako zaharrek ", 80, 100); 
-    globals.ctx.fillText("maisu zahar bati bidaltzen diote ", 80, 112);
-    globals.ctx.fillText("X.G, Silvano maisua bezala ezaguna", 80, 124); 
-    globals.ctx.fillText("ezaguna, material islatzailearen ", 80, 136); 
-    globals.ctx.fillText("urregintzan aditua.", 80, 148); 
-
-    globals.ctx.fillText("Maisu Silvanok X.G Mihi ", 270, 40); 
-    globals.ctx.fillText("Labirintorantz gidatzen du bere haserrea", 270, 52); 
-    globals.ctx.fillText("kontrolatzen irakasteko.Ilusioz eta ", 270, 64); 
-    globals.ctx.fillText("beteriko labirinto magiko honek ", 270, 76); 
-    globals.ctx.fillText("Erudito gaztearen barne-oinazeak  ", 270, 88); 
-    globals.ctx.fillText("irudikatzen ditu.Pazientziaz eta", 270, 100); 
-    globals.ctx.fillText("jakinduriaz, Maisu Silvanok", 270, 112); 
-    globals.ctx.fillText("barne-hausnarketaren eta autokontrolaren", 269, 124); 
-    globals.ctx.fillText("irakasten dio X.G. Aurrera egin ahala", 269, 136); 
-    globals.ctx.fillText("Silvano maisuak familiaren historia ", 269, 148); 
-
-
-
+function renderbook(selectedPaper) {
+    // Dibujar el fondo del libro
+    globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
+   
+if(selectedPaper === 1 ){
+    // Restablecer la transformación a la identidad al final para evitar problemas futuros
+globals.ctx.setTransform(2.1, 0, 0, 2, -110, -70);
 }
+else if(selectedPaper === 2 ){
+    // Restablecer la transformación a la identidad al final para evitar problemas futuros
+globals.ctx.setTransform(2.1, 0, 0, 2.1, -110, -170);
+}
+else if(selectedPaper === 3 ){
+    // Restablecer la transformación a la identidad al final para evitar problemas futuros
+globals.ctx.setTransform(2.8, 0, 0, 2.8, -550, -50);
+}
+
+else if(selectedPaper === 4 ){
+    // Restablecer la transformación a la identidad al final para evitar problemas futuros
+globals.ctx.setTransform(2, 0, 0, 2, -450, -130);
+}
+else{
+    globals.ctx.setTransform(1, 0, 0, 1, 0, 0);
+}
+    
+
+
+
+    }
+
+    
+
+
+
+
+
+
+
+
 
 function renderMenu() {
    
