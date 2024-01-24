@@ -1,7 +1,7 @@
-import { Colisions, Game, SpriteID, State, particleState } from "./constants.js";
+import { Colisions, Game, SpriteID, State, particleID, particleState } from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites, initsprites260,initspritespos300,initcaballero,initskeleton,initvillan } from "./initialize.js";
+import { initSprites, initsprites260,initspritespos300,initcaballero,initskeleton,initvillan,initExplosion } from "./initialize.js";
 
 
 
@@ -26,7 +26,7 @@ export default function update(){
                 break;
         case Game.HISTORIA:
              playhistori();
-             interactMenu();
+             
               break;
         case Game.HIGHSCORE:
                 playhistori();
@@ -50,7 +50,8 @@ function playGame(){
     updatelife();
     updateCamera();
     updatescore();
-    dificulti()
+    dificulti();
+    updateparticles();
     
 }
 
@@ -61,9 +62,10 @@ function newgame(){
     updateSprite(globals.sprites[1]);
     updateSprite(globals.sprites[0]);
     interactMenu();
+    
 }
 function playhistori(){
-    // ... A completar
+   
     
      interactstory();
 }
@@ -181,14 +183,28 @@ function updatelifeTime(){
         globals.lifetime.value=0;
     }
 }
+function updatekeyTime(){
+    globals.keytime.timeChangeCounter += globals.deltaTime;
+    if(globals.keytime.timeChangeCounter > globals.keytime.timeChangeValue){
+        globals.keytime.value--;
+        globals.keytime.timeChangeCounter = 0;
+
+    }
+
+    if(globals.keytime.value <= 0){
+        globals.keytime.value=0;
+    }
+}
 function updatedeadtimer(sprite){
-    console.log(sprite.deadTimer.value);
+    
     sprite.deadTimer.timeChangeCounter += globals.deltaTime;
     if(sprite.deadTimer.timeChangeCounter > sprite.deadTimer.timeChangeValue){
         sprite.deadTimer.value--;
         sprite.deadTimer.timeChangeCounter = 0;
 
     }
+
+    
 }
 function updateSprite(sprite){
 
@@ -226,31 +242,47 @@ function updateSprite(sprite){
     }
 }
 
+function updateparticles(){
+    for (let i = 0; i < globals.particles.length; ++i){
+
+        const particle = globals.particles[i];
+        updateParticle(particle);
+    }
+}
+function updateParticle(particle){
+    const type = particle.id;
+    switch(type){
+        case particleID.EXPLOSION:
+            updateExplosion(particle);
+            break;
+    }
+}
+
 //Funcion que actualiza el personaje
 function updateplayer(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
 
-console.log(sprite.yPos);
+
 
       readKeyboardAndAssignState(sprite);
 
     switch (sprite.state){
         case State.RUNNING_RIGHT:
-            sprite.physics.ax = 350;
-           
+            sprite.physics.ax = 350;          
             break;
         case State.RUNNING_LEFT:
                 sprite.physics.ax = -350;
                 break;
         default: sprite.physics.ax = 0;
+ 
    
             break;
         }
     
 
     
-
+        
      sprite.physics.vx += sprite.physics.ax * globals.deltaTime;
      sprite.physics.vy += sprite.physics.ay * globals.deltaTime;
 
@@ -297,6 +329,10 @@ console.log(sprite.yPos);
 
 sprite.physics.vy += 250 * globals.deltaTime;
 // Actualizar posición en el eje y
+
+if(sprite.physics.vy < -300){
+    sprite.physics.vy = -300
+}
 
 sprite.xPos += sprite.physics.vx * globals.deltaTime;
 sprite.yPos += sprite.physics.vy * globals.deltaTime;
@@ -353,7 +389,11 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
 }
 function interactMenu(){
-    if(globals.gameState === Game.NEWGAME){
+    
+    updatekeyTime();
+    if(globals.gameState === Game.NEWGAME && globals.keytime.value === 0 ){
+         
+        
         if(globals.action.moveUp){
 
             globals.selectedOption--;
@@ -398,11 +438,14 @@ function interactMenu(){
             globals.gameState = Game.NEWGAME;
         }
     }
-
+    globals.keytime.value = 1;
 
 }
 function interactstory(){
-    if(globals.gameState === Game.HISTORIA){
+    updatekeyTime();
+    console.log(globals.keytime.value);
+    if(globals.gameState === Game.HISTORIA && globals.keytime.value === 0){
+        
         if(globals.action.moveRight){
 
             globals.selectedPaperIndex++;
@@ -420,15 +463,16 @@ function interactstory(){
             globals.selectedPaperIndex = 0;
 
         }
-        if(globals.selectedPaperIndex > 4){
-            globals.selectedPaperIndex = 4;
+        if(globals.selectedPaperIndex > 5){
+            globals.selectedPaperIndex = 5;
         }
-
-        console.log( globals.selectedPaperIndex);
+        if( globals.action.esc){
+            globals.gameState = Game.NEWGAME;
+        }
         
-
         
     }
+    globals.keytime.value = 1;
 
 
 }
@@ -463,7 +507,6 @@ function dificulti(){
         console.log("spawn caballero");
     }
 
-    console.log(globals.sprites[0].xPos);
 }
 
 function updatevillan(sprite){
@@ -703,12 +746,61 @@ function verifyIfSpriteIsDead(sprite){
             
     }
 
-    console.log(sprite.deadTimer.value);
-
-    if(sprite.deadTimer.value <=0){
+    if(sprite.deadTimer.value <= 0){
+        console.log("explosion");
+        const explosionX = sprite.xPos + (sprite.hitbox.xSize/2) ;
+        const explosionY = sprite.yPos + (sprite.hitbox.ySize/2) ;
+        initExplosion(explosionX, explosionY);
         const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
         globals.sprites.splice(indexSpriteRemove1, 1);
+        
     }
+
+
+
+}
+
+function updateExplosion(particle){
+
+    particle.fadeCounter += globals.deltaTime;
+
+    switch(particle.state){
+        case particleState.ON:
+            if(particle.fadeCounter > particle.timeToFade ){
+                particle.fadeCounter = 0;
+                particle.state = particleState.FADE;
+            } 
+            break;
+
+        case particleState.FADE:
+            particle.alpha -= 0.25;
+
+            if(particle.alpha <= 0){
+                particle.state = particleState.OFF;
+            }
+            break;
+
+        case particleState.OFF:
+            break;
+            default:
+    }
+
+   
+   
+    particle.physics.vx += particle.physics.ax * globals.deltaTime;
+    particle.physics.vy += particle.physics.ay * globals.deltaTime;
+    console.log("update:"+ particle.physics.vx);
+    const velModule = Math.sqrt(Math.pow(particle.physics.vx,2) + Math.pow(particle.physics.vy,2));
+
+    if(velModule < 1 ){
+        particle.physics.vx = 0;
+        particle.physics.vy = 0;
+
+    }
+
+    particle.xPos += (particle.physics.vx * globals.deltaTime);
+    particle.yPos += (particle.physics.vy * globals.deltaTime);
+
 
 
 

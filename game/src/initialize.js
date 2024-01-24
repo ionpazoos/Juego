@@ -57,6 +57,7 @@ function initEvents(){
 function initTimers(){
     globals.leveltime = new Time(360,0.5);
     globals.lifetime = new Time(15,1);
+    globals.keytime = new Time(1,0.05);
     
 }
 
@@ -147,7 +148,7 @@ function initplayer(){
     //Creamos los datos de la animacion. 8 frames / state
     const frames = new Frames(5, 4);
 
-    const physics = new Physics(40,0,0,0,0,0,-200,0,0);
+    const physics = new Physics(40,0,0,0,0,0,0,-200,0,0);
     const hitbox =  new HitBox(13,32,8,0);
     const hitbox2 =  new HitBox(13,1,8,32);
     const deadtime = new Time(3,1);
@@ -210,7 +211,7 @@ function initskeleton(x){
 
     const physics = new Physics(30);
     const hitbox =  new HitBox(13,25,8,7);
-    const hitbox2 =  new HitBox(13,7,5,0);
+    const hitbox2 =  new HitBox(13,7,8,0);
     const deadtime = new Time(3,1);
 
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
@@ -234,7 +235,7 @@ function initbee(){
     const xRotorCenter = 460;
     const yRotorCenter = 80;
 
-    const physics = new Physics(30,omega,initangle,xRotorCenter,yRotorCenter);
+    const physics = new Physics(30,0,omega,initangle,xRotorCenter,yRotorCenter);
     const hitbox =  new HitBox(20,15,0,23);
     const hitbox2 =  new HitBox(20,7,0,15);
     const deadtime = new Time(3,1);
@@ -260,7 +261,7 @@ function initcaballero(){
     const omega = 1.5;
     const yRef = 100;
 
-    const physics = new Physics(30,omega,initangle,0,0,yRef);
+    const physics = new Physics(30,0,omega,initangle,0,0,yRef);
     const hitbox =  new HitBox(20,25,0,7);
     const hitbox2 =  new HitBox(13,7,5,0);
     const deadtime = new Time(3,1);
@@ -289,22 +290,6 @@ function initsupersayan(){
     globals.sprites_hud.push(super_sayan);
 }
 
-
-function initbook(){
-
-    //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0, 0, 1920, 1080, 400, 100, 100,1);
-
-    //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(1);
-
-
-    //Creamos nuestro sprite
-    const book = new Sprite(SpriteID.BOOK, State.IDLE, 500, 10, imageSet, frames,0,0,0,0);
-
-    //Añadimos el pirata al array de sprites
-    globals.sprites.push(book);
-}
 function initLevel(){
 
     //Creamos las propiedades de las imagenes del mapa: initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
@@ -327,25 +312,32 @@ function initCamera(){
 }
 
 function initparticles(){
-    initExplosion();
+    // initExplosion();
 }
-function initExplosion(){
-    const numparticles = 4;
-    const xInit = 100;
-    const yInit = 100;
-    const timeToFadeMax =5;
+function initExplosion(x,y){
+    const numparticles = 300;
+    const xInit = x;
+    const yInit = y;
+    const radius = 1;
+    const timeToFadeMax = 2;
     const alpha = 1.0;
 
     for(let i = 0; i< numparticles;i++){
         const velocity = Math.random()*25 + 5;
-        const physics = new Physics(velocity);
+        const aceleration = 2;
+        const physics = new Physics(velocity,aceleration);
 
-        const timeToFade = timeToFadeMax * Math.random()+1;
-        const particle = new ExplosionParticles(particleID.GRASS,particleState.ON,xInit,yInit,alpha,physics,timeToFade);
+    
 
-        const angle = 40 * Math.PI * 2;
-        particle.physics.vx = particle.physics.vLimit * Math.cos(angle);
-        particle.physics.vy = particle.physics.vLimit * Math.sin(angle);
+        const timeToFade = timeToFadeMax * Math.random() + 1;
+        const particle = new ExplosionParticles(particleID.EXPLOSION,particleState.ON,xInit,yInit,radius,alpha,physics,timeToFade);
+
+        const angle = Math.random() * Math.PI * 2;
+        particle.physics.vx = particle.physics.vlimit * Math.cos(angle);
+        particle.physics.vy = particle.physics.vlimit * Math.sin(angle);
+        
+        particle.physics.ax = particle.physics.aLimit * Math.cos(angle);
+        particle.physics.ay = particle.physics.aLimit * Math.sin(angle);
         
         globals.particles.push(particle);
     }
@@ -356,6 +348,6 @@ function initExplosion(){
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initsprites260,initspritespos300,initcaballero,initskeleton,initvillan
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initsprites260,initspritespos300,initcaballero,initskeleton,initvillan,initExplosion
 };
 

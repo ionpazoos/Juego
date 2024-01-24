@@ -204,8 +204,6 @@ for (let i = 0; i < 40; i++) {
     }
 }
 
-// Dibujar la última línea
-ctx.fillText(currentLine, 20, texty);
 
 
 
@@ -477,7 +475,7 @@ function drawSprites(){
 
         renderSprite(sprite);
 
-        drawHitbox(sprite);
+        // drawHitbox(sprite);
     
     }
 }
@@ -645,9 +643,12 @@ function renderParticle(particle){
     const type = particle.id;
 
     switch(type){
-        case particleID.GRASS:
-            //  renderGrassParticle(particle);
-            break;
+        // case particleID.GRASS:
+        //      renderGrassParticle(particle);
+            // break;
+        case particleID.EXPLOSION:
+                renderExplison(particle);
+               break;
         default:
             break;
     }
@@ -656,7 +657,7 @@ function renderParticle(particle){
  function renderGrassParticle(particle) {
     if (particle.state === particleState.ON) {
         // Calcular posición con efecto parabólico
-        const initialY = calculateParabolicY(particle);
+        const initialY = calculateParabolicY(particle) +5;
 
         particle.xPos = globals.sprites[0].xPos - globals.camara.x;
         particle.yPos = initialY;
@@ -665,7 +666,7 @@ function renderParticle(particle){
         globals.ctx.fillStyle = "Green";
         globals.ctx.globalAlpha = particle.alpha;
         globals.ctx.beginPath();
-        globals.ctx.rect(particle.xPos, particle.yPos, 3, 3);
+        globals.ctx.rect(particle.xPos, particle.yPos, 2, 2);
         globals.ctx.closePath();
         globals.ctx.fill();
     } else {
@@ -676,8 +677,23 @@ function renderParticle(particle){
 function calculateParabolicY(particle) {
     const initialY = globals.sprites[0].yPos - globals.camara.y + 45;
     const time = particle.fadecounter * globals.deltaTime;
-    const velocityY = -100; // Puedes ajustar la velocidad vertical según sea necesario
-    const accelerationY = 50; // Puedes ajustar la aceleración vertical según sea necesario
+    const velocityY = -50; // Puedes ajustar la velocidad vertical según sea necesario
+    const accelerationY = 100; // Puedes ajustar la aceleración vertical según sea necesario
 
     return initialY + velocityY * time + 0.5 * accelerationY * Math.pow(time, 2);
+}
+
+
+function renderExplison(particle){
+    if (particle.state === particleState.ON) {
+        globals.ctx.fillStyle = "red";
+        globals.ctx.globalAlpha = particle.alpha;
+        globals.ctx.beginPath();
+        console.log(particle.yPos);
+        globals.ctx.arc(particle.xPos - globals.camara.x, particle.yPos - globals.camara.y, particle.radius, 0,2 * Math.PI);
+        globals.ctx.fill();
+        globals.ctx.globalAlpha = 1.0;
+    } else {
+        console.log("particle off");
+    }
 }

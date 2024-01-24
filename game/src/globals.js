@@ -9,6 +9,8 @@ export default {
     canvasHUD: {},
     ctxHUD: {},
 
+    cycleRealTime:0,
+
     //Estado de juego. Inicializamos a INVALIDO
     gameState: Game.INVALID,
 
@@ -41,6 +43,7 @@ export default {
 
     leveltime: {},
     lifetime: {},
+    keytime:{},
 
     action: {},
 

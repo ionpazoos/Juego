@@ -41,7 +41,7 @@ function getMapTiled(xPos, yPos,level) {
     if (row >= 0 && row < levelData.length && col >= 0 && col < levelData[0].length) {
         return levelData[row][col];
     } else {
-        console.error("Player is out of bounds or level data is incorrect.");
+       
         return undefined; // or handle the case appropriately based on your needs
     }
 }
@@ -673,6 +673,7 @@ function detectCollisionBetweenPlayerAndSprites(sprite){
     if(isOverlap){
         sprite.isColidingHead = true;
         console.log("Le he dado en la cabeza "+ sprite.id + sprite.isColidingHead );
+        player.physics.vy -= 300;
     }
 
 

@@ -63,6 +63,7 @@ export const Block = {
     GRASS3:26,
     GRASS4:28,
     GRASS5:30,
+  
     // WATER: 457,
     TREE:  161,
     TREE2: 109,
@@ -112,6 +113,9 @@ export const Block = {
     MUD4:176,
     MUD5:177,
     MUD6:178,
+    MUD6:51,
+    MUD6:79,
+
     STONE:360,
     STONE2:385,
     STONE3:410,
@@ -154,10 +158,12 @@ export const FPS = 30;
 
 export const particleID = {
     GRASS: 0,
+    EXPLOSION: 1,
 
 }
 export const particleState = {
     ON:1,
-    OFF:0
+    OFF:0,
+    FADE: -1
 
 }

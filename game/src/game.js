@@ -1,7 +1,7 @@
 import globals from "./globals.js";
 
 // Importamos loadAssets
-import { initHTMLelements, initLevel, initSprites, initVars, loadAssets,initTimers ,initEvents,initCamera,initparticles, initSpritesNewGame} from "./initialize.js";
+import { initHTMLelements, initLevel, initSprites, initVars, loadAssets,initTimers ,initEvents,initCamera,initparticles, initSpritesNewGame,initExplosion} from "./initialize.js";
 
 import update from "./gameLogic.js";
 import render from "./gameRender.js";
@@ -33,9 +33,9 @@ function init(){
     initTimers();
 
     initEvents();
-
+    
     initCamera();
-    initparticles();
+    
     //Start the first frame request
     window.requestAnimationFrame(gameLoop);
 
@@ -64,7 +64,9 @@ function gameLoop(timeStamp){
     // console.log("elapsed: " + elapsedCycleSeconds);
     // console.log("frame time object: " + globals.frameTimeObj);
 
-    if (globals.deltaTime >= globals.frameTimeObj){
+    globals.cycleRealTime += elapsedCycleSeconds;
+
+    if (globals.cycleRealTime >= globals.frameTimeObj){
 
         //Update the game logic. gameLogic.js
         update();
@@ -76,6 +78,9 @@ function gameLoop(timeStamp){
         //globals.deltaTime -= globals.frameTimeObj;
         globals.deltaTime = 0;
         // console.log("DeltaTime finish: " + globals.deltaTime);
+
+        globals.cycleRealTime -= globals.frameTimeObj;
+        globals.deltaTime = 0;
         
     }
 }
