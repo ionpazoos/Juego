@@ -1,7 +1,7 @@
 import { Colisions, Game, SpriteID, State, particleID, particleState } from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites, initsprites260,initspritespos300,initcaballero,initskeleton,initvillan,initExplosion } from "./initialize.js";
+import { initSprites,initExplosion, initSpritesNewGame } from "./initialize.js";
 
 
 
@@ -17,23 +17,37 @@ export default function update(){
         case Game.PLAYING:
             
             playGame();
-            interactMenu();
+           
             break;
+            case Game.LOADING_MENU:
+                globals.sprites = [];
+                loadNewGame();
+                console.log("Loading Menu assets");
+                break;
+    
+            case Game.LOADING_PLAY:
+                restoreDefaultValues();
+                console.log("Loading game...");
+                globals.level = globals.levels[0];
+                initSprites();
+                globals.gameState = Game.PLAYING
+                console.log("GAME LOADED");
+                break;
 
         case Game.NEWGAME:
                 newgame();
-                
+          
                 break;
         case Game.HISTORIA:
              playhistori();
              
               break;
         case Game.HIGHSCORE:
-                playhistori();
-                interactMenu();
+               
+               
                  break; 
-        case   Game.CONTROLS:
-            interactMenu();
+        case Game.CONTROLS:
+           
         break;
     
 
@@ -46,21 +60,18 @@ function playGame(){
     updateSprites();
     updateLevelTime();
     updatelifeTime();
-    detectCollision(0);
+    detectCollision();
     updatelife();
     updateCamera();
     updatescore();
-    dificulti();
     updateparticles();
     
 }
 
 function newgame(){
     
-    detectCollision(1);
-    updateCamera();
-    updateSprite(globals.sprites[1]);
-    updateSprite(globals.sprites[0]);
+    updateSprites();
+    detectCollision();
     interactMenu();
     
 }
@@ -69,15 +80,31 @@ function playhistori(){
     
      interactstory();
 }
+function loadNewGame(){
+    console.log("Ha entrado en loadNewGame");
+    globals.level = globals.levels[1];
+    initSpritesNewGame();
+    
+    globals.gameState = Game.NEWGAME;
+}
 
 function updateSprites(){
     for (let i = 0; i < globals.sprites.length; ++i){
 
         const sprite = globals.sprites[i];
-        updateSprite(sprite);
+
+        if(sprite.state === State.DEAD){
+            const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
+            globals.sprites.splice(indexSpriteRemove1, 1);
+        }
+        else{
+            updateSprite(sprite);
+        }
+        
+        
     }
 
-    updateSprite(globals.sprites_hud[0]);
+    // updateSprite(globals.sprites_hud[0]);
 }
 
 function updatelife() {
@@ -111,7 +138,7 @@ function updatelife() {
  
 function gameover(){
 
-    const brickSize = globals.level[0].imageSet.gridSize;
+    const brickSize = globals.level.imageSet.gridSize;
     const row = Math.floor(globals.sprites[0].yPos / brickSize);
 
     if(globals.life <=0){
@@ -384,14 +411,35 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
     
 
      updateDirectionRandom(sprite);
+     if(sprite.isColidingHead){
+        updatedeadtimer(sprite);
+        if(sprite.deadTimer.value === 3 ){
+            sprite.frames.frameCounter = 0;
+        }
+        sprite.state = State.DEAD_ESKELETON;
+    
+        sprite.damage = 0;
+        
+        sprite.frames.framesPerState = 6;
+        sprite.frames.speed = 11;
+    
+        if(sprite.deadTimer.value <= 0){
+            console.log("explosion");
+            const explosionX = sprite.xPos + (sprite.hitbox.xSize/2) ;
+            const explosionY = sprite.yPos + (sprite.hitbox.ySize/2) ;
+            initExplosion(explosionX, explosionY);
+            sprite.state = State.DEAD;
+           
+        }
+     }
 
-     verifyIfSpriteIsDead(sprite);
+
 
 }
 function interactMenu(){
     
     updatekeyTime();
-    if(globals.gameState === Game.NEWGAME && globals.keytime.value === 0 ){
+    if( globals.keytime.value === 0 ){
          
         
         if(globals.action.moveUp){
@@ -415,9 +463,7 @@ function interactMenu(){
 
         if(globals.action.space){
             if(globals.selectedOption === 0){
-                globals.gameState = Game.PLAYING;
-
-                initSprites();
+                globals.gameState = Game.LOADING_PLAY;
             }
             else if(globals.selectedOption === 1){
                 globals.gameState = Game.CONTROLS;
@@ -444,7 +490,7 @@ function interactMenu(){
 function interactstory(){
     updatekeyTime();
     console.log(globals.keytime.value);
-    if(globals.gameState === Game.HISTORIA && globals.keytime.value === 0){
+    
         
         if(globals.action.moveRight){
 
@@ -471,43 +517,12 @@ function interactstory(){
         }
         
         
-    }
+    
     globals.keytime.value = 1;
 
 
 }
-function dificulti(){
-    if(globals.timeChangeValue < 260 ){
-        initsprites260();    
-    }
 
-    if(globals.sprites[0].xPos > 300 && globals.sprites[0].xPos < 303 ){
-        initspritespos300();
-        console.log("spawn");
-    }
-
-    if(globals.sprites[0].xPos > 500 && globals.sprites[0].xPos < 503 ){
-        for(let i =0 ; i <5;i++){
-            initskeleton(800 +(i*32));
-            console.log("spawn");
-        }
-       
-    }
-
-    if(globals.sprites[0].xPos > 900 && globals.sprites[0].xPos < 902 ){
-        initcaballero();    
-        console.log("spawn caballero");
-    }
-
-    if(globals.sprites[0].xPos > 1500 && globals.sprites[0].xPos < 1502 ){
-        for(let i =0 ; i <5;i++){
-            initvillan(1700 + (i*32)); 
-            console.log("spawn");
-        }
-        console.log("spawn caballero");
-    }
-
-}
 
 function updatevillan(sprite){
 
@@ -531,7 +546,6 @@ function updatevillan(sprite){
        
         break;
 
-        
             
      }
     
@@ -544,7 +558,28 @@ function updatevillan(sprite){
     
 
    calculateColision(sprite);
-   verifyIfSpriteIsDead(sprite);
+   if(sprite.isColidingHead){
+    updatedeadtimer(sprite);
+    if(sprite.deadTimer.value === 3 ){
+        sprite.frames.frameCounter = 0;
+    
+        }
+    
+        sprite.state = State.DEAD_VILLAN;
+        sprite.physics.vx = 0;
+        sprite.damage = 0;
+    
+        sprite.frames.framesPerState = 6;
+        sprite.frames.speed = 15;
+   }
+   if(sprite.deadTimer.value <= 0){
+    console.log("explosion");
+    const explosionX = sprite.xPos + (sprite.hitbox.xSize/2) ;
+    const explosionY = sprite.yPos + (sprite.hitbox.ySize/2) ;
+    initExplosion(explosionX, explosionY);   
+    sprite.state = State.DEAD;        
+}
+
 
 
 }
@@ -571,10 +606,37 @@ function updatebee(sprite){
     setPositionBee(sprite);
 
 
+    
+
+    if(sprite.isColidingHead){
+        updatedeadtimer(sprite);
+        if(sprite.deadTimer.value === 3 ){
+            sprite.frames.frameCounter = 0;
+        }
+
+        if(sprite.isColidingHead){
+            sprite.state = State.DEAD_BEE;
+    
+            sprite.damage = 0;
+            sprite.physics.vx = 0;
+            sprite.physics.vy = 0;
+            sprite.physics.omega = 0;
+            sprite.frames.framesPerState = 6;
+            sprite.frames.speed = 11;
+        
+            if(sprite.deadTimer.value <= 0){
+                console.log("explosion");
+                const explosionX = sprite.xPos + (sprite.hitbox.xSize/2) ;
+                const explosionY = sprite.yPos + (sprite.hitbox.ySize/2) ;
+                initExplosion(explosionX, explosionY);   
+                sprite.state = State.DEAD;        
+            }
+        }
+
+    }
     updateAnimationFrame(sprite);
 
-    verifyIfSpriteIsDead(sprite);
-
+  
 
 }
 
@@ -589,17 +651,36 @@ sprite.physics.angle += sprite.physics.omega * globals.deltaTime;
 sprite.xPos += sprite.physics.vx * globals.deltaTime;
 sprite.yPos = sprite.physics.yRef + amplitud * Math.sin(sprite.physics.angle);
    
-    
+if(sprite.isColidingHead){
+    updatedeadtimer(sprite);
+    sprite.state = State.DEAD_CABALLERO;
+
+    sprite.damage = 0;
+    sprite.physics.vx = 0;
+    sprite.physics.vy = 0;
+    sprite.physics.omega = 0;
+    sprite.frames.framesPerState = 6;
+    sprite.frames.speed = 11;
+
+    if(sprite.deadTimer.value <= 0){
+        console.log("explosion");
+        const explosionX = sprite.xPos + (sprite.hitbox.xSize/2) ;
+        const explosionY = sprite.yPos + (sprite.hitbox.ySize/2) ;
+        initExplosion(explosionX, explosionY);   
+        sprite.state = State.DEAD;        
+    }
+}
 
 
     updateAnimationFrame(sprite);
 
-    verifyIfSpriteIsDead(sprite);
+
 
 
 }
 
 function updatesupersayan(sprite){
+
 updateAnimationFrame(sprite);
 }
 
@@ -671,7 +752,7 @@ function updateDirectionRandom(sprite){
 
 function updateCamera() {
     const player = globals.sprites[0];
-    const brickSize = globals.level[0].imageSet.gridSize;
+    const brickSize = globals.level.imageSet.gridSize;
     const nivelAncho = 300 * brickSize;
 
     // Calcular la posición deseada de la cámara centrada en el jugador
@@ -689,72 +770,9 @@ function updateCamera() {
 
 }
 
-function verifyIfSpriteIsDead(sprite){
-    if(sprite.isColidingHead){
-// Si el sprite es First_Aid, se elimina
-        updatedeadtimer(sprite);
-        
-        switch (sprite.id){
-            case SpriteID.VILLAN: 
-            if(sprite.deadTimer.value === 3 ){
-                sprite.frames.frameCounter = 0;
-            }
-            sprite.state = State.DEAD_VILLAN;
-            sprite.physics.vx = 0;
-            sprite.damage = 0;
-            
-            sprite.frames.framesPerState = 6;
-            sprite.frames.speed = 15;
-                break;
-            case SpriteID.SKELETON:
-                if(sprite.deadTimer.value === 3 ){
-                    sprite.frames.frameCounter = 0;
-                }
-                sprite.state = State.DEAD_ESKELETON;
 
-                sprite.damage = 0;
-                
-                sprite.frames.framesPerState = 6;
-                sprite.frames.speed = 11;
 
-                break;
-            case SpriteID.BEE:
-                    if(sprite.deadTimer.value === 3 ){
-                        sprite.frames.frameCounter = 0;
-                    }
-                    sprite.state = State.DEAD_BEE;
-    
-                    sprite.damage = 0;
-                    sprite.physics.vx = 0;
-                    sprite.physics.vy = 0;
-                    sprite.physics.omega = 0;
-                    sprite.frames.framesPerState = 6;
-                    sprite.frames.speed = 11;
-    
-                    break;
-                // case SpriteID.MONEDA:
-                //     const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
-                //     globals.sprites.splice(indexSpriteRemove1, 1);
-                //     console.log("entro");
-                //     break;
 
-            
-
-  
-        
-        }
-            
-    }
-
-    if(sprite.deadTimer.value <= 0){
-        console.log("explosion");
-        const explosionX = sprite.xPos + (sprite.hitbox.xSize/2) ;
-        const explosionY = sprite.yPos + (sprite.hitbox.ySize/2) ;
-        initExplosion(explosionX, explosionY);
-        const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
-        globals.sprites.splice(indexSpriteRemove1, 1);
-        
-    }
 
 
 
@@ -806,6 +824,21 @@ function updateExplosion(particle){
 
 }
 
+function restoreDefaultValues() {
+    globals.leveltime.value     = 360
+    globals.leveltime.timeChangeCounter = 0
+
+    globals.sprites             = []
+
+    globals.life                = 300
+
+    globals.score               = 0
+
+    globals.particles           = []
+
+    globals.level               = []
 }
+
+
 
     

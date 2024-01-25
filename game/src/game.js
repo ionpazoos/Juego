@@ -21,9 +21,6 @@ function init(){
     //Cargamos todos los activos: TILEMAPS, IMAGES, SOUNDS
     loadAssets();
 
-    //Inicializamos los sprites
-    initSpritesNewGame();
-
     //Inicializacion de variables del juego
     initVars();
 

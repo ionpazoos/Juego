@@ -73,14 +73,14 @@ function drawNewGame(){
 
 
 globals.ctx.drawImage(globals.tileSets[0], 10, globals.canvas.width +30, globals.canvas.height, 200, 0, 0, globals.canvas.width+20, globals.canvas.height);
-drawSpriteRectangle(globals.sprites[1]);
+
 
   
-renderMap();
-renderSprite(globals.sprites[1]);  
+    renderMap();
+ 
 
     renderMenu();
-
+    drawSprites();
 
 }
 
@@ -364,9 +364,9 @@ function renderscore(){
 }
 
 function renderMap() {
-    const brickSize = globals.level[globals.gameState-1].imageSet.gridSize;
-    const levelData = globals.level[globals.gameState-1].data;
-    const imagepath = globals.level[globals.gameState -1].imageSet.imgpath;
+    const brickSize = globals.level.imageSet.gridSize;
+    const levelData = globals.level.data;
+    const imagepath = globals.level.imageSet.imgpath;
   
 
     // Dibujamos el mapa

@@ -38,7 +38,7 @@ function initVars(){
     globals.life = 300;
 
     //Inicializamos el estado del juego
-    globals.gameState = Game.PLAYING
+    globals.gameState = Game.LOADING_MENU
 
     globals.action = {
         moveLeft: false,
@@ -103,41 +103,24 @@ function loadHandler(){
         console.log("Assets finished loading");
 
         //Start the game
-        globals.gameState = Game.NEWGAME;
+        globals.gameState = Game.LOADING_MENU;
         console.log("modo cambiado");
     }
 }
 
 function initSprites() {
-if(globals.gameState === Game.PLAYING){}
-    //Añadimos
+    //funcion para iniciar sprites del playing
+    initplayer();
     initskeleton(150);
     initbee();
     initcaballero();
     initsupersayan();
     // initmoneda();
-    // initbook();
 }
 function initSpritesNewGame(){
-    initplayer();
     initvillan(60);
+    
 }
-function initsprites260(){
-    
-        initskeleton(100);
-    
-
-
-
-}
-function initspritespos300(){
-    
-        initskeleton(500);
-    
-
-}
-
-
 
 
 function initplayer(){
@@ -191,7 +174,7 @@ function initvillan(x){
 
 
     //Creamos nuestro sprite
-    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, x, 10, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, x, 5, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
 
      villan.physics.vx = 50;
    
@@ -297,13 +280,10 @@ function initLevel(){
 
                 //Creamos y guardamos nuestro nivel
      const imageSet = new ImageSet(0, 0, 16, 16, 16, 0, 0,2);
-    globals.level[0] = new Level(level1, imageSet);
-
-
-    globals.level[1] = new Level(menu, imageSet);
-
-    globals.level[2] = new Level(controls, imageSet);
-    globals.level[3] = new Level(highScore, imageSet);
+    globals.levels[0] = new Level(level1, imageSet);
+    globals.levels[1] = new Level(menu, imageSet);
+    globals.levels[2] = new Level(controls, imageSet);
+    globals.levels[3] = new Level(highScore, imageSet);
 
 }
 
@@ -348,6 +328,6 @@ function initExplosion(x,y){
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initsprites260,initspritespos300,initcaballero,initskeleton,initvillan,initExplosion
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion
 };
 

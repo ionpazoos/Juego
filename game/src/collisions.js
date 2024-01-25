@@ -14,22 +14,26 @@ function rectIntersect(x1,y1,w1,h1,x2,y2,w2,h2){
     return isOverlap;
 }
 
-export default function detectCollision(level){
-    if(globals.gameState === Game.PLAYING ){
+export default function detectCollision(){
+   
     for(let i = 1; i < globals.sprites.length;i++){
         const sprite = globals.sprites[i];
-        detectCollisionBetweenPlayerAndSprites(sprite);
+         detectCollisionBetweenPlayerAndSprites(sprite);
+         detectCollisionBetweenSpriteAndMap(sprite);
+       
         
     }
-}
-         detectCollisionBetweenSpriteAndMap(level);
-    detectCollisionBetweenPlayerAndObstacles(level);
+
+         
+    detectCollisionBetweenPlayerAndObstacles();
     
     
+    
 }
-function getMapTiled(xPos, yPos,level) {
-    const brickSize = globals.level[level].imageSet.gridSize;
-    const levelData = globals.level[level].data;
+
+function getMapTiled(xPos, yPos) {
+    const brickSize = globals.level.imageSet.gridSize;
+    const levelData = globals.level.data;
 
     // Calculate the grid position based on player's position
     const col = Math.floor(xPos / brickSize);
@@ -47,11 +51,11 @@ function getMapTiled(xPos, yPos,level) {
 }
 
 
-function isCollidingWithObstacleAt(xPos, yPos,level){
+function isCollidingWithObstacleAt(xPos, yPos){
 
     let isColliding;
 
-    const id = getMapTiled(xPos, yPos,level);
+    const id = getMapTiled(xPos, yPos);
     const blockIDs = Object.values(Block);
     const totalObstacles = blockIDs.length;
     
@@ -77,7 +81,7 @@ return isColliding;
 }
 
 
-function detectCollisionBetweenPlayerAndObstacles(level){
+function detectCollisionBetweenPlayerAndObstacles(){
 
     const player = globals.sprites[0];
 
@@ -89,7 +93,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
     let isCollidingOnPos3; //Abajo izquierda
     let isCollidingOnPos4; //Arriba izquierda
 
-    const brickSize = globals.level[0].imageSet.gridSize;
+    const brickSize = globals.level.imageSet.gridSize;
 
     //Obtener la cantidad de bloques
    
@@ -122,7 +126,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
         //Primera coloision en (xPos, yPos)
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos,level);
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos4){ //Hay colision en punto 4
 
@@ -141,7 +145,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
         //Ultima colision en (xPos, yPos + ySize -1)
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos,level);
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos);
         
         if (isCollidingOnPos3){ //Hay colision en punto 3
 
@@ -164,7 +168,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
         //Vemos si hay colision en (xPos + xSize - 1, yPos)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos );
 
         if (isCollidingOnPos1){ //Hay colision en punto 1
 
@@ -199,7 +203,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
         //Vemos si hay colision en (xPos + xSize - 1, yPos + ySize - 1)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos );
 
         // console.log("Abajo derecha hacia la derecha: " +isCollidingOnPos2);
         if (isCollidingOnPos2) { // Hay colision en punto 2
@@ -238,7 +242,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
         // Vemos si hay colisión en (xPos - 1, yPos)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos );
 
         if (isCollidingOnPos1){ //Hay colision en punto 1
 
@@ -255,7 +259,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
         // Punto 2
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos2){ //Hay colision en punto 3
 
@@ -275,7 +279,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
         // Punto 3
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos3) { // Hay colision en punto 3
 
@@ -310,7 +314,7 @@ function detectCollisionBetweenPlayerAndObstacles(level){
         // Punto 4
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos );
 
         if (isCollidingOnPos4){ //Hay colision en punto 4
 
@@ -350,11 +354,11 @@ if(player.isCollidingWithObstacleOnTheBottom){
 }
 
 
-function detectCollisionBetweenSpriteAndMap(level) {
+function detectCollisionBetweenSpriteAndMap(sprite) {
 
-    for(let i = 1;i<globals.sprites.length;i++){
+  
         
-    const player = globals.sprites[i];
+    const player = sprite;
 
     
 
@@ -366,7 +370,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
     let isCollidingOnPos3; //Abajo izquierda
     let isCollidingOnPos4; //Arriba izquierda
 
-    const brickSize = globals.level[0].imageSet.gridSize;
+    const brickSize = globals.level.imageSet.gridSize;
 
     //Obtener la cantidad de bloques
    
@@ -399,7 +403,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
         //Primera coloision en (xPos, yPos)
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos,level);
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos4){ //Hay colision en punto 4
 
@@ -418,7 +422,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
         //Ultima colision en (xPos, yPos + ySize -1)
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos,level);
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos);
         
         if (isCollidingOnPos3){ //Hay colision en punto 3
 
@@ -441,7 +445,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
         //Vemos si hay colision en (xPos + xSize - 1, yPos)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos1){ //Hay colision en punto 1
 
@@ -476,7 +480,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
         //Vemos si hay colision en (xPos + xSize - 1, yPos + ySize - 1)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos);
 
         // console.log("Abajo derecha hacia la derecha: " +isCollidingOnPos2);
         if (isCollidingOnPos2) { // Hay colision en punto 2
@@ -515,7 +519,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
         // Vemos si hay colisión en (xPos - 1, yPos)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos1){ //Hay colision en punto 1
 
@@ -532,7 +536,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
         // Punto 2
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos2){ //Hay colision en punto 3
 
@@ -552,7 +556,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
         // Punto 3
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos3) { // Hay colision en punto 3
 
@@ -587,7 +591,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
         // Punto 4
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos,level );
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos);
 
         if (isCollidingOnPos4){ //Hay colision en punto 4
 
@@ -621,7 +625,7 @@ function detectCollisionBetweenSpriteAndMap(level) {
     }
 }
    
-}
+
 
 
 

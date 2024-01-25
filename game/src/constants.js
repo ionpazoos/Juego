@@ -11,7 +11,9 @@ export const Game = {
     HISTORIA:   6,
     CONTROLS:   3,
     HIGHSCORE:  4,
-    GAMEOVER:   7
+    GAMEOVER:   7,
+    LOADING_MENU: 8,
+    LOADING_PLAY: 9,
 };
 
 //Identificador de tipo Sprite (ID)
@@ -53,7 +55,9 @@ export const State = {
     DEAD_ESKELETON:62.6,
     DEAD_VILLAN:9.5,
     DEAD_BEE:2.8,
+    DEAD_CABALLERO:62.6,
     MONEDA:136.73,
+    DEAD: -1,
 
 }
 export const Block = {

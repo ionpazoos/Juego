@@ -39,7 +39,8 @@ export default {
     spritesMenu: [],
 
     // Datos del nivel
-    level: [],
+    level: {},
+    levels: [],
 
     leveltime: {},
     lifetime: {},
