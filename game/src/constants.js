@@ -99,7 +99,6 @@ export const Block = {
     ROCK2:152,
     ROCK3:278,
     ROCK4:253,
-    ROCK5:150,
     ROCK6:153,
     ROCK7:154,
     ROCK8:180,

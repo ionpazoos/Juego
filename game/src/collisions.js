@@ -152,7 +152,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
             //Se trata de una esquina. Puede haber overLap en X y en Y
 
             //Calculamos overlap solo en Y
-            overlapY = Math.floor(yPos) % brickSize;
+            overlapY = Math.floor(yPos) % brickSize + 1;
 
             //Colision en eje Y
             player.yPos -= overlapY;
@@ -211,14 +211,14 @@ function detectCollisionBetweenPlayerAndObstacles(){
             // Se trata de una esquina. Puede haber overlap en X y en Y
 
             // Calculamos overLap en X y en Y con el player
-            overlapX = brickSize - Math.floor(xPos) % brickSize;
-            overlapY = Math.floor(yPos) % brickSize;
+            overlapX = Math.floor(xPos) % brickSize +1;
+            overlapY = Math.floor(yPos) % brickSize +1;
 
             if (overlapX <= overlapY) {
                 
                 // Colision en eje X
 
-                player.xPos += overlapX;
+                player.xPos -= overlapX;
                 player.physics.vx = 0;
             } else {
 
@@ -248,7 +248,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
 
             //Su trata de una esquina. Puede haber overLap en X y en Y
             //Calculamos overlap solo en Y
-            overlapY = brickSize - Math.floor(yPos) % brickSize;
+            overlapY = brickSize - Math.floor(yPos) % brickSize + 1;
 
             //Colision en eje Y
             player.yPos += overlapY;
@@ -266,7 +266,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
             //Se trata de una esquina. Puede haber overLap en X y en Y
 
             //Calculamos overlap solo en Y
-            overlapY = Math.floor(yPos) % brickSize;
+            overlapY = Math.floor(yPos) % brickSize + 1;
 
             //Colision en eje Y
             player.yPos -= overlapY;
@@ -286,8 +286,8 @@ function detectCollisionBetweenPlayerAndObstacles(){
             // Se trata de una esquina. Puede haber overlap en X y en Y
 
             // Calculamos overLap en X y en Y con el player
-            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
-            overlapY = Math.floor(yPos) % brickSize;
+            overlapX = brickSize - Math.floor(xPos) % brickSize;
+            overlapY = Math.floor(yPos) % brickSize + 1;
 
             if (overlapX <= overlapY) {
                 
@@ -321,7 +321,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
             //Se trata de una esquina. Puede haber overLap en X y en Y
 
             //Calculamos overLap en X y en Y con el player
-            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapX = brickSize - Math.floor(xPos) % brickSize;
             overlapY = brickSize - Math.floor(yPos) % brickSize;
             
             if (overlapX <= overlapY){
@@ -335,7 +335,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
                 //Colision en eje Y
                 if (player.physics.vy > 0){
 
-                    player.yPos -= overlapY;
+                    player.yPos += overlapY;
 
                 } else {
 
@@ -361,7 +361,6 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
     const player = sprite;
 
     
-
     //Variables to use
     let xPos;
     let yPos;
@@ -429,7 +428,7 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
             //Se trata de una esquina. Puede haber overLap en X y en Y
 
             //Calculamos overlap solo en Y
-            overlapY = Math.floor(yPos) % brickSize;
+            overlapY = Math.floor(yPos) % brickSize + 1;
 
             //Colision en eje Y
             player.yPos -= overlapY;
@@ -445,7 +444,7 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
         //Vemos si hay colision en (xPos + xSize - 1, yPos)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos);
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos );
 
         if (isCollidingOnPos1){ //Hay colision en punto 1
 
@@ -466,7 +465,7 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
                 //Colision en eje Y
                 if (player.physics.vy > 0){
 
-                    player.yPos += overlapY;
+                    player.yPos -= overlapY;
 
                 } else {
 
@@ -480,7 +479,7 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
         //Vemos si hay colision en (xPos + xSize - 1, yPos + ySize - 1)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset + player.hitbox.ySize - 1;
-        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos);
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos );
 
         // console.log("Abajo derecha hacia la derecha: " +isCollidingOnPos2);
         if (isCollidingOnPos2) { // Hay colision en punto 2
@@ -488,14 +487,14 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
             // Se trata de una esquina. Puede haber overlap en X y en Y
 
             // Calculamos overLap en X y en Y con el player
-            overlapX = brickSize - Math.floor(xPos) % brickSize;
-            overlapY = Math.floor(yPos) % brickSize;
+            overlapX = Math.floor(xPos) % brickSize +1;
+            overlapY = Math.floor(yPos) % brickSize +1;
 
             if (overlapX <= overlapY) {
                 
                 // Colision en eje X
 
-                player.xPos += overlapX;
+                player.xPos -= overlapX;
                 player.physics.vx = 0;
             } else {
 
@@ -519,13 +518,13 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
         // Vemos si hay colisión en (xPos - 1, yPos)
         xPos = player.xPos + player.hitbox.xOffset + player.hitbox.xSize - 1;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos);
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos );
 
         if (isCollidingOnPos1){ //Hay colision en punto 1
 
             //Su trata de una esquina. Puede haber overLap en X y en Y
             //Calculamos overlap solo en Y
-            overlapY = brickSize - Math.floor(yPos) % brickSize;
+            overlapY = brickSize - Math.floor(yPos) % brickSize + 1;
 
             //Colision en eje Y
             player.yPos += overlapY;
@@ -543,7 +542,7 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
             //Se trata de una esquina. Puede haber overLap en X y en Y
 
             //Calculamos overlap solo en Y
-            overlapY = Math.floor(yPos) % brickSize;
+            overlapY = Math.floor(yPos) % brickSize + 1;
 
             //Colision en eje Y
             player.yPos -= overlapY;
@@ -563,8 +562,8 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
             // Se trata de una esquina. Puede haber overlap en X y en Y
 
             // Calculamos overLap en X y en Y con el player
-            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
-            overlapY = Math.floor(yPos) % brickSize;
+            overlapX = brickSize - Math.floor(xPos) % brickSize;
+            overlapY = Math.floor(yPos) % brickSize + 1;
 
             if (overlapX <= overlapY) {
                 
@@ -577,7 +576,7 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
                 // Colision en eje Y
                 if (player.physics.vy > 0) {
 
-                    player.yPos += overlapY;
+                    player.yPos -= overlapY;
 
                 } else {
                     player.yPos -= overlapY;
@@ -591,14 +590,14 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
         // Punto 4
         xPos = player.xPos + player.hitbox.xOffset;
         yPos = player.yPos + player.hitbox.yOffset;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos);
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos );
 
         if (isCollidingOnPos4){ //Hay colision en punto 4
 
             //Se trata de una esquina. Puede haber overLap en X y en Y
 
             //Calculamos overLap en X y en Y con el player
-            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapX = brickSize - Math.floor(xPos) % brickSize;
             overlapY = brickSize - Math.floor(yPos) % brickSize;
             
             if (overlapX <= overlapY){
@@ -612,7 +611,7 @@ function detectCollisionBetweenSpriteAndMap(sprite) {
                 //Colision en eje Y
                 if (player.physics.vy > 0){
 
-                    player.yPos -= overlapY;
+                    player.yPos += overlapY;
 
                 } else {
 
