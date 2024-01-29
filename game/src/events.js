@@ -1,4 +1,4 @@
-import {Key} from "./constants.js"
+import {Key,Sounds} from "./constants.js"
 import globals from "./globals.js"
 
 
@@ -58,5 +58,15 @@ export function keyupHandeler(event){
                         globals.action.esc = false;
                             
                             break;
+    }
+}
+
+export function updateMusic(){
+    const buffer = 0.28;
+    const music = globals.sounds[Sounds.GAME_MUSIC];
+    if(music.currentTime > music.duration - buffer )
+    {
+        music.currentTime = 0;
+        music.play();
     }
 }

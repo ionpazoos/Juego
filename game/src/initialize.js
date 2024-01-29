@@ -1,16 +1,17 @@
 import Frames from "./Frames.js";
 import ImageSet from "./ImageSet.js";
-import physics from "./Physics.js";
 import Sprite, { Ladron, Ladron_j } from "./Sprite.js";
-import { FPS, Game, SpriteID, State,particleID,particleState } from "./constants.js";
+import { FPS, Game, Sounds, SpriteID, State,particleID,particleState } from "./constants.js";
 import globals from "./globals.js";
 import { Level, level1,menu,highScore,controls} from "./levels.js";
 import Time from "./timer.js"
 import Physics from "./Physics.js";
-import { keyDownHandeler,keyupHandeler } from "./events.js";
+import { keyDownHandeler,keyupHandeler,updateMusic } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
-import ExplosionParticles from "./particle.js";
+import {ExplosionParticles,particles} from "./particle.js";
+
+
 
 //Funcion que inicializa los elementos HTML
 function initHTMLelements(){
@@ -47,6 +48,8 @@ function initVars(){
         moveDown:false
     }
 
+    globals.currentSound = Sounds.NO_SOUND;
+
 
     
 }
@@ -82,6 +85,13 @@ function loadAssets(){
     globals.tileSets.push(tileSet);
     globals.assetsToLoad.push(tileSet);
 
+    let gameMusic = document.querySelector('#gameMusic');
+    gameMusic.addEventListener("canplaytrhough",loadHandler,false);
+    gameMusic.addEventListener("timeupdate",updateMusic,false);
+    gameMusic.load();
+    globals.sounds.push(gameMusic);
+    globals.assetsToLoad.push(gameMusic);
+
    
 }
 
@@ -98,6 +108,11 @@ function loadHandler(){
 
             globals.tileSets[i].removeEventListener("load", loadHandler, false);
         }
+
+        for (let i = 0; i < globals.sounds.length; ++i){
+
+            globals.sounds[i].removeEventListener("canplaythrough", loadHandler, false);
+        }
         
 
         console.log("Assets finished loading");
@@ -105,6 +120,9 @@ function loadHandler(){
         //Start the game
         globals.gameState = Game.LOADING_MENU;
         console.log("modo cambiado");
+
+
+
     }
 }
 
@@ -323,11 +341,17 @@ function initExplosion(x,y){
     }
 }
 
+function initRain(x,y){
+    const particle = new particles(particleID.RAIN,particleState.ON , x, y, 5, 0.8, { velocity: { x: 0, y: 5 } });
+
+    globals.particles.push(particle);
+}
+
 
 
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion,initRain
 };
 

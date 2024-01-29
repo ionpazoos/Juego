@@ -1,7 +1,7 @@
-import { Colisions, Game, SpriteID, State, particleID, particleState } from "./constants.js";
+import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState,initRain} from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites,initExplosion, initSpritesNewGame } from "./initialize.js";
+import { initSprites,initExplosion, initSpritesNewGame,initRa } from "./initialize.js";
 
 
 
@@ -65,6 +65,7 @@ function playGame(){
     updateCamera();
     updatescore();
     updateparticles();
+    playSound();
     
 }
 
@@ -73,17 +74,17 @@ function newgame(){
     updateSprites();
     detectCollision();
     interactMenu();
+    createRandomRainParticle();
     
 }
 function playhistori(){
-   
-    
      interactstory();
 }
 function loadNewGame(){
     console.log("Ha entrado en loadNewGame");
     globals.level = globals.levels[1];
     initSpritesNewGame();
+    init
     
     globals.gameState = Game.NEWGAME;
 }
@@ -282,6 +283,9 @@ function updateParticle(particle){
         case particleID.EXPLOSION:
             updateExplosion(particle);
             break;
+        case particleID.RAIN:
+                updateRainParticle(particle);
+                break;
     }
 }
 
@@ -474,6 +478,9 @@ function interactMenu(){
             else if(globals.selectedOption === 3){
                 globals.gameState = Game.HIGHSCORE;
             }
+
+            globals.sounds[Sounds.GAME_MUSIC].play();
+            globals.sounds[Sounds.GAME_MUSIC].volume = 1;
         }
 
 
@@ -838,7 +845,27 @@ function restoreDefaultValues() {
 
     globals.level               = []
 }
+function playSound(){
+    if(globals.currentSound != Sounds.NO_SOUND)
+    {
+        globals.sounds[globals.currentSound].currentTime = 0;
+        globals.sounds[globals.currentSound].play();
 
+        globals.currentSound = Sounds.NO_SOUND;
+
+
+    }
+}
+
+function  updateRainParticle(particle){
+    particle.yPos += particle.physics.velocity.y;
+}
+
+function createRandomRainParticle() {
+    const xPos = Math.random() * globals.canvas.width; // Posición x aleatoria
+    const yPos = 0; // Siempre desde la parte superior del lienzo
+     initRain(xPos, yPos);
+}
 
 
     

@@ -54,6 +54,10 @@ export default {
 
     particles: [],
 
+    sounds: [],
+
+    currentSound: -1,
+
     score: 50,
     highScore: 100,
     menuOptions : ["New Game", "Controls", "History", "High Score"],

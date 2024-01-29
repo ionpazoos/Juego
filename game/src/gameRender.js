@@ -649,6 +649,10 @@ function renderParticle(particle){
         case particleID.EXPLOSION:
                 renderExplison(particle);
                break;
+
+        case particleID.RAIN:
+                renderRainParticle(particle);
+                break;
         default:
             break;
     }
@@ -674,6 +678,16 @@ function renderParticle(particle){
     }
 }
 
+function renderRainParticle(particle){
+    const ctx = globals.canvasContext;
+
+    ctx.beginPath();
+    ctx.arc(particle.xPos, particle.yPos, particle.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = 'blue'; // Color de las gotas de lluvia
+    ctx.fill();
+    ctx.closePath();
+}
+
 function calculateParabolicY(particle) {
     const initialY = globals.sprites[0].yPos - globals.camara.y + 45;
     const time = particle.fadecounter * globals.deltaTime;
@@ -690,7 +704,7 @@ function renderExplison(particle){
         globals.ctx.globalAlpha = particle.alpha;
         globals.ctx.beginPath();
         console.log(particle.yPos);
-        globals.ctx.arc(particle.xPos - globals.camara.x, particle.yPos - globals.camara.y, particle.radius, 0,2 * Math.PI);
+        globals.ctx.rect(particle.xPos - globals.camara.x, particle.yPos - globals.camara.y,2,2);
         globals.ctx.fill();
         globals.ctx.globalAlpha = 1.0;
     } else {

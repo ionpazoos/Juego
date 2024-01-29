@@ -93,7 +93,6 @@ export const Block = {
     TREE22:  61,
     TREE23:  35,
     TREE24:  36,
-
     BEEHOUSE:88,
     ROCK:151,
     ROCK2:152,
@@ -162,6 +161,7 @@ export const FPS = 30;
 export const particleID = {
     GRASS: 0,
     EXPLOSION: 1,
+    RAIN: 2,
 
 }
 export const particleState = {
@@ -169,4 +169,10 @@ export const particleState = {
     OFF:0,
     FADE: -1
 
+}
+
+export const Sounds = {
+    NO_SOUND: -1,     
+    GAME_MUSIC: 0, 
+    JUMP: 1     
 }
