@@ -14,6 +14,7 @@ export const Game = {
     GAMEOVER:   7,
     LOADING_MENU: 8,
     LOADING_PLAY: 9,
+    WIN:10,
 };
 
 //Identificador de tipo Sprite (ID)
@@ -67,6 +68,9 @@ export const Block = {
     GRASS3:26,
     GRASS4:28,
     GRASS5:30,
+    GRASS6:31,
+    GRASS7:107,
+    GRASS8:108,
   
     // WATER: 457,
     TREE:  161,
@@ -93,7 +97,13 @@ export const Block = {
     TREE22:  61,
     TREE23:  35,
     TREE24:  36,
+    TREE25:  286,
+    TREE26:  287,
+    TREE27:  288,
+    TREE28:  289,
     BEEHOUSE:88,
+
+
     ROCK:151,
     ROCK2:152,
     ROCK3:278,
@@ -104,6 +114,12 @@ export const Block = {
     ROCK9:205,
     ROCK10:278,
     ROCK11:178,
+    ROCK12:275,
+    ROCK13:276,
+    ROCK14:277,
+    ROCK15:279, 
+    ROCK16:278,
+
     WOOD_BRIDGE:230,
     WOOD_BRIDGE2:231,
     WOOD_BRIDGE3:232,
@@ -123,6 +139,12 @@ export const Block = {
     STONE3:410,
     STONE4:388,
     STONE5:387,
+
+    PLATAFORMA: 155,
+    PLATAFORMA1: 156,
+    PLATAFORMA2: 157,
+    PLATAFORMA3: 158,
+
 
     
 }

@@ -1,7 +1,7 @@
-import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState,initRain} from "./constants.js";
+import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites,initExplosion, initSpritesNewGame,initRa } from "./initialize.js";
+import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass } from "./initialize.js";
 
 
 
@@ -26,12 +26,7 @@ export default function update(){
                 break;
     
             case Game.LOADING_PLAY:
-                restoreDefaultValues();
-                console.log("Loading game...");
-                globals.level = globals.levels[0];
-                initSprites();
-                globals.gameState = Game.PLAYING
-                console.log("GAME LOADED");
+                loadPlaying();
                 break;
 
         case Game.NEWGAME:
@@ -66,6 +61,7 @@ function playGame(){
     updatescore();
     updateparticles();
     playSound();
+    dificulti();
     
 }
 
@@ -75,7 +71,16 @@ function newgame(){
     detectCollision();
     interactMenu();
     createRandomRainParticle();
+    updateparticles();
     
+}
+function loadPlaying(){
+    restoreDefaultValues();
+    console.log("Loading game...");
+    globals.level = globals.levels[4];
+    initSprites();
+    globals.gameState = Game.PLAYING
+    console.log("GAME LOADED");
 }
 function playhistori(){
      interactstory();
@@ -83,9 +88,7 @@ function playhistori(){
 function loadNewGame(){
     console.log("Ha entrado en loadNewGame");
     globals.level = globals.levels[1];
-    initSpritesNewGame();
-    init
-    
+    initSpritesNewGame();    
     globals.gameState = Game.NEWGAME;
 }
 
@@ -287,6 +290,10 @@ function updateParticle(particle){
                 updateRainParticle(particle);
                 break;
     }
+
+    
+       
+    
 }
 
 //Funcion que actualiza el personaje
@@ -304,6 +311,7 @@ function updateplayer(sprite){
             break;
         case State.RUNNING_LEFT:
                 sprite.physics.ax = -350;
+                initGrass((sprite.xPos - globals.camara.x + sprite.hitbox.xSize + sprite.hitbox2.xSize),sprite.yPos - globals.camara.y + sprite.hitbox.ySize + sprite.hitbox2.ySize,1);
                 break;
         default: sprite.physics.ax = 0;
  
@@ -332,7 +340,8 @@ function updateplayer(sprite){
             sprite.physics.isOnGround = false;
            sprite.physics.vy += sprite.physics.jumpforce;
             
-        
+           globals.sounds[Sounds.JUMP].play();
+           globals.sounds[Sounds.JUMP].volume = 1;
         }
 
         
@@ -370,7 +379,10 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
 
     updateAnimationFrame(sprite);
-    if(globals.gameState === Game.PLAYING){gameover();}
+
+    gameover();
+
+    console.log("x: " + sprite.xPos + "y:" + sprite.yPos);
     
     
 
@@ -806,6 +818,8 @@ function updateExplosion(particle){
             break;
 
         case particleState.OFF:
+            const indexSpriteRemove1 = globals.particles.indexOf(particle);
+            globals.particles.splice(indexSpriteRemove1, 1);
             break;
             default:
     }
@@ -814,7 +828,6 @@ function updateExplosion(particle){
    
     particle.physics.vx += particle.physics.ax * globals.deltaTime;
     particle.physics.vy += particle.physics.ay * globals.deltaTime;
-    console.log("update:"+ particle.physics.vx);
     const velModule = Math.sqrt(Math.pow(particle.physics.vx,2) + Math.pow(particle.physics.vy,2));
 
     if(velModule < 1 ){
@@ -831,8 +844,43 @@ function updateExplosion(particle){
 
 }
 
+function updategrassparticle(particle){
+    particle.fadeCounter += globals.deltaTime;
+
+    switch(particle.state){
+        case particleState.ON:
+            if(particle.fadeCounter > particle.timeToFade ){
+                particle.fadeCounter = 0;
+                particle.state = particleState.FADE;
+            } 
+            break;
+
+        case particleState.FADE:
+            particle.alpha -= 0.25;
+
+            if(particle.alpha <= 0){
+                particle.state = particleState.OFF;
+            }
+            break;
+
+        case particleState.OFF:
+            const indexSpriteRemove1 = globals.particles.indexOf(particle);
+            globals.particles.splice(indexSpriteRemove1, 1);
+            break;
+            default:
+    }
+    particle.physics.vx += particle.physics.ax * globals.deltaTime;
+    particle.physics.vy += particle.physics.ay * globals.deltaTime;
+
+    particle.xPos += (particle.physics.vx * globals.deltaTime);
+    particle.yPos += (particle.physics.vy * globals.deltaTime);
+
+
+
+}
+
 function restoreDefaultValues() {
-    globals.leveltime.value     = 360
+    globals.leveltime.value     = 130
     globals.leveltime.timeChangeCounter = 0
 
     globals.sprites             = []
@@ -858,13 +906,52 @@ function playSound(){
 }
 
 function  updateRainParticle(particle){
-    particle.yPos += particle.physics.velocity.y;
+
+    particle.fadeCounter += globals.deltaTime;
+
+    switch(particle.state){
+        case particleState.ON:
+            if(particle.fadeCounter > particle.timeToFade ){
+                particle.fadeCounter = 0;
+                particle.state = particleState.FADE;
+            } 
+            break;
+
+        case particleState.FADE:
+            particle.alpha -= 0.25;
+
+            if(particle.alpha <= 0){
+                particle.state = particleState.OFF;
+            }
+            break;
+
+        case particleState.OFF:
+            const indexSpriteRemove1 = globals.particles.indexOf(particle);
+            globals.particles.splice(indexSpriteRemove1, 1);
+            break;
+            default:
+    }
+    particle.physics.vy += particle.physics.ay * globals.deltaTime;
+
+
+    particle.yPos += (particle.physics.vy * globals.deltaTime);
 }
 
 function createRandomRainParticle() {
     const xPos = Math.random() * globals.canvas.width; // Posición x aleatoria
     const yPos = 0; // Siempre desde la parte superior del lienzo
-     initRain(xPos, yPos);
+      initRain(xPos, yPos);
+
+     
+}
+
+function dificulti(){
+    let lastTimeSpawn = 130;
+    console.log("time:" + globals.leveltime.value );
+    if((lastTimeSpawn - 10) === globals.leveltime.value){
+        initvillan(globals.sprites[0].xPos + 100,globals.sprites[0].xPos - 30);
+        lastTimeSpawn = globals.leveltime.value;
+    }
 }
 
 

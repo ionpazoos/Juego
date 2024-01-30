@@ -3,7 +3,7 @@ import ImageSet from "./ImageSet.js";
 import Sprite, { Ladron, Ladron_j } from "./Sprite.js";
 import { FPS, Game, Sounds, SpriteID, State,particleID,particleState } from "./constants.js";
 import globals from "./globals.js";
-import { Level, level1,menu,highScore,controls} from "./levels.js";
+import { Level, level1,menu,highScore,controls, level2} from "./levels.js";
 import Time from "./timer.js"
 import Physics from "./Physics.js";
 import { keyDownHandeler,keyupHandeler,updateMusic } from "./events.js";
@@ -39,7 +39,7 @@ function initVars(){
     globals.life = 300;
 
     //Inicializamos el estado del juego
-    globals.gameState = Game.LOADING_MENU
+    globals.gameState = Game.LOADING_MENU;
 
     globals.action = {
         moveLeft: false,
@@ -92,6 +92,13 @@ function loadAssets(){
     globals.sounds.push(gameMusic);
     globals.assetsToLoad.push(gameMusic);
 
+    let jumpSound = document.querySelector('#jumpSound');
+    jumpSound.addEventListener("canplaytrhough",loadHandler,false);
+    jumpSound.addEventListener("timeupdate",updateMusic,false);
+    jumpSound.load();
+    globals.sounds.push(jumpSound);
+    globals.assetsToLoad.push(jumpSound);
+
    
 }
 
@@ -130,9 +137,12 @@ function initSprites() {
     //funcion para iniciar sprites del playing
     initplayer();
     initskeleton(150);
+    initskeleton(2600);
     initbee();
     initcaballero();
     initsupersayan();
+    initvillan(800);
+    initvillan(2000);
     // initmoneda();
 }
 function initSpritesNewGame(){
@@ -302,6 +312,7 @@ function initLevel(){
     globals.levels[1] = new Level(menu, imageSet);
     globals.levels[2] = new Level(controls, imageSet);
     globals.levels[3] = new Level(highScore, imageSet);
+    globals.levels[4] = new Level(level2, imageSet);
 
 }
 
@@ -342,8 +353,34 @@ function initExplosion(x,y){
 }
 
 function initRain(x,y){
-    const particle = new particles(particleID.RAIN,particleState.ON , x, y, 5, 0.8, { velocity: { x: 0, y: 5 } });
+    const velocity = Math.random()*25 + 5;
+    const aceleration = 200;
+    const timeToFade = 1;
+    const physics = new Physics(velocity,aceleration);
+    const particle = new ExplosionParticles(particleID.RAIN,particleState.ON , x, y, 0.5, 1,physics,timeToFade);
 
+    
+    particle.physics.vy = particle.physics.vlimit;
+        
+   
+    particle.physics.ay = particle.physics.aLimit;
+    
+    globals.particles.push(particle);
+}
+
+function initGrass(x,y,direction){
+    const velocity = Math.random()*25 + 5;
+    const aceleration = 2;
+    const timeToFade = 1;
+    const physics = new Physics(velocity,aceleration);
+    const particle = new ExplosionParticles(particleID.GRASS,particleState.ON , x, y, 0.5, 1,physics,timeToFade);
+
+    
+    particle.physics.vy = direction * particle.physics.vlimit;
+        
+   console.log(globals.particles.length);
+    particle.physics.ay = direction * particle.physics.aLimit;
+    
     globals.particles.push(particle);
 }
 
@@ -352,6 +389,6 @@ function initRain(x,y){
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion,initRain
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass
 };
 

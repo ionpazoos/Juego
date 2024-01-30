@@ -34,6 +34,9 @@ export default function render(){
         case Game.GAMEOVER:
                 GAMEOVER();
                 break;
+        case Game.WIN:
+                winning();
+                break;
 
         default:
             console.error("Error: Game State invalid");
@@ -81,6 +84,7 @@ globals.ctx.drawImage(globals.tileSets[0], 10, globals.canvas.width +30, globals
 
     renderMenu();
     drawSprites();
+    renderParticles();
 
 }
 
@@ -163,9 +167,46 @@ function GAMEOVER(){
     globals.ctx.shadowOffsetY = 0;
     
     globals.ctx.fillText("Insert coin", globals.canvas.width / 2, globals.canvas.height / 2 + 20);
-    
-    
-    
+
+
+}
+
+function winning(){
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height); // Limpia todo el canvas
+globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+
+renderTitle();
+
+// Rellena el fondo negro
+globals.ctx.fillStyle = 'black';
+globals.ctx.fillRect(0, 0, globals.canvas.width, globals.canvas.height);
+
+// Estilo del texto "You Win!"
+globals.ctx.fillStyle = 'green'; // Cambié el color a verde
+globals.ctx.font = 'bold 24px monospace'; // Usé la fuente genérica "monospace"
+
+// Centrar el texto horizontalmente y verticalmente
+globals.ctx.textAlign = 'center';
+globals.ctx.textBaseline = 'middle';
+
+// Agregar efecto 3D con sombras cuadradas
+globals.ctx.shadowColor = 'green'; 
+globals.ctx.shadowBlur = 5; 
+globals.ctx.shadowOffsetX = 0; 
+globals.ctx.shadowOffsetY = 0; 
+
+// Dibujar el texto en el centro
+globals.ctx.fillText("You Win!", globals.canvas.width / 2, globals.canvas.height / 2 - 40);
+
+// Texto "Try again?"
+globals.ctx.fillStyle = 'white';
+globals.ctx.font = '16px monospace'; 
+
+// Restaurar el estilo de sombra
+globals.ctx.shadowColor = 'transparent';
+globals.ctx.shadowBlur = 0;
+globals.ctx.shadowOffsetX = 0;
+globals.ctx.shadowOffsetY = 0;
 
 
 }
@@ -641,17 +682,18 @@ function renderParticles(){
 }
 function renderParticle(particle){
     const type = particle.id;
-
+    
     switch(type){
-        // case particleID.GRASS:
-        //      renderGrassParticle(particle);
-            // break;
+        case particleID.GRASS:
+             renderGrassParticle(particle);
+            break;
         case particleID.EXPLOSION:
                 renderExplison(particle);
                break;
 
         case particleID.RAIN:
                 renderRainParticle(particle);
+                
                 break;
         default:
             break;
@@ -660,42 +702,29 @@ function renderParticle(particle){
 
  function renderGrassParticle(particle) {
     if (particle.state === particleState.ON) {
-        // Calcular posición con efecto parabólico
-        const initialY = calculateParabolicY(particle) +5;
 
-        particle.xPos = globals.sprites[0].xPos - globals.camara.x;
-        particle.yPos = initialY;
-
-        console.log("particle");
+        console.log(particle.xPos);
         globals.ctx.fillStyle = "Green";
-        globals.ctx.globalAlpha = particle.alpha;
         globals.ctx.beginPath();
-        globals.ctx.rect(particle.xPos, particle.yPos, 2, 2);
-        globals.ctx.closePath();
+        globals.ctx.rect(particle.xPos, particle.yPos, 10, 10);
         globals.ctx.fill();
+        globals.ctx.closePath();
     } else {
         console.log("particle off");
     }
 }
 
 function renderRainParticle(particle){
-    const ctx = globals.canvasContext;
 
-    ctx.beginPath();
-    ctx.arc(particle.xPos, particle.yPos, particle.radius, 0, 2 * Math.PI);
-    ctx.fillStyle = 'blue'; // Color de las gotas de lluvia
-    ctx.fill();
-    ctx.closePath();
+ 
+    globals.ctx.beginPath();
+    globals.ctx.rect(particle.xPos, particle.yPos, 0.8,1);
+    globals.ctx.fillStyle = 'blue'; // Color de las gotas de lluvia
+    globals.ctx.fill();
+    globals.ctx.closePath();
 }
 
-function calculateParabolicY(particle) {
-    const initialY = globals.sprites[0].yPos - globals.camara.y + 45;
-    const time = particle.fadecounter * globals.deltaTime;
-    const velocityY = -50; // Puedes ajustar la velocidad vertical según sea necesario
-    const accelerationY = 100; // Puedes ajustar la aceleración vertical según sea necesario
 
-    return initialY + velocityY * time + 0.5 * accelerationY * Math.pow(time, 2);
-}
 
 
 function renderExplison(particle){
