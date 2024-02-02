@@ -77,7 +77,7 @@ function newgame(){
 function loadPlaying(){
     restoreDefaultValues();
     console.log("Loading game...");
-    globals.level = globals.levels[4];
+    globals.level = globals.levels[0];
     initSprites();
     globals.gameState = Game.PLAYING
     console.log("GAME LOADED");
@@ -289,6 +289,9 @@ function updateParticle(particle){
         case particleID.RAIN:
                 updateRainParticle(particle);
                 break;
+        case particleID.GRASS:
+                updategrassparticle(particle);
+                break;
     }
 
     
@@ -307,11 +310,16 @@ function updateplayer(sprite){
 
     switch (sprite.state){
         case State.RUNNING_RIGHT:
-            sprite.physics.ax = 350;          
+            sprite.physics.ax = 350;
+            // if(sprite.isColisionBotton){
+                    initGrass((sprite.xPos - globals.camara.x ),sprite.yPos - globals.camara.y + sprite.hitbox.ySize  + sprite.hitbox2.ySize +20); 
+               // } 
             break;
         case State.RUNNING_LEFT:
                 sprite.physics.ax = -350;
-                initGrass((sprite.xPos - globals.camara.x + sprite.hitbox.xSize + sprite.hitbox2.xSize),sprite.yPos - globals.camara.y + sprite.hitbox.ySize + sprite.hitbox2.ySize,1);
+                // if(sprite.isColisionBotton){
+                    initGrass((sprite.xPos - globals.camara.x + sprite.hitbox.xSize + sprite.hitbox2.xSize),sprite.yPos - globals.camara.y + sprite.hitbox.ySize  + sprite.hitbox2.ySize +20);
+                //}
                 break;
         default: sprite.physics.ax = 0;
  
@@ -357,7 +365,7 @@ function updateplayer(sprite){
 
         
         // Detener completamente la velocidad si es muy pequeña
-        if (Math.abs(sprite.physics.vx) < 0.1) {
+        if (Math.abs(sprite.physics.vx) < 0.5) {
             sprite.physics.vx = 0;
         }
 
@@ -381,8 +389,6 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
     updateAnimationFrame(sprite);
 
     gameover();
-
-    console.log("x: " + sprite.xPos + "y:" + sprite.yPos);
     
     
 

@@ -368,20 +368,22 @@ function initRain(x,y){
     globals.particles.push(particle);
 }
 
-function initGrass(x,y,direction){
-    const velocity = Math.random()*25 + 5;
-    const aceleration = 2;
-    const timeToFade = 1;
+function initGrass(x,y){
+
+    const velocity =- Math.random()* 60 + 5;
+    const aceleration = 100;
+    const timeToFade = 0.6;
     const physics = new Physics(velocity,aceleration);
     const particle = new ExplosionParticles(particleID.GRASS,particleState.ON , x, y, 0.5, 1,physics,timeToFade);
 
     
-    particle.physics.vy = direction * particle.physics.vlimit;
+    particle.physics.vy = particle.physics.vlimit;
         
    console.log(globals.particles.length);
-    particle.physics.ay = direction * particle.physics.aLimit;
+    particle.physics.ay = particle.physics.aLimit;
     
     globals.particles.push(particle);
+
 }
 
 

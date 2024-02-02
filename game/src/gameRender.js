@@ -212,137 +212,208 @@ globals.ctx.shadowOffsetY = 0;
 }
 
 
+// function renderbook(selectedPaper) {
+//     // Dibujar el fondo del libro
+//     globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
+
+//     const separatedBySpaces = globals.story.split(' ');
+
+    
+// if(selectedPaper === 1 ){
+//     // Restablecer la transformación a la identidad al final para evitar problemas futuros
+// globals.ctx.setTransform(2.1, 0, 0, 2, -110, -70);
+
+
+// const maxWidth = 50;  // Ancho máximo por línea
+// let currentLine = '';
+// let texty = 50;
+
+// globals.ctx.font = '5px Arial';
+// globals.ctx.fillStyle = '#000';
+
+// for (let i = 0; i < 40; i++) {
+//     const word = separatedBySpaces[i];
+//     const wordWidth = globals.ctx.measureText(word).width;
+
+//     // Verificar si agregar la palabra excede la anchura máxima
+//     if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
+//         globals.ctx.fillText(currentLine, 130, texty);
+//         texty += 5;  // Ajusta según el espaciado entre líneas
+//         currentLine = word + ' ';
+//     } else {
+//         currentLine += word + ' ';
+//     }
+// }
+
+
+
+
+// }
+// else if(selectedPaper === 2 ){
+//     // Restablecer la transformación a la identidad al final para evitar problemas futuros
+// globals.ctx.setTransform(2.1, 0, 0, 2.1, -110, -170);
+
+// }
+// else if(selectedPaper === 3 ){
+//     // Restablecer la transformación a la identidad al final para evitar problemas futuros
+// globals.ctx.setTransform(2.8, 0, 0, 2.8, -550, -50);
+
+
+// const maxWidth = 40;  // Ancho máximo por línea
+// let currentLine = '';
+// let texty = 42;
+
+// globals.ctx.font = '5px Arial';
+// globals.ctx.fillStyle = '#000';
+
+// for (let i = 40; i < 50; i++) {
+//     const word = separatedBySpaces[i];
+//     const wordWidth = globals.ctx.measureText(word).width;
+
+//     // Verificar si agregar la palabra excede la anchura máxima
+//     if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
+//         globals.ctx.fillText(currentLine, 300, texty);
+//         texty += 5;  // Ajusta según el espaciado entre líneas
+//         currentLine = word + ' ';
+//     } else {
+//         currentLine += word + ' ';
+//     }
+// }
+
+
+// }
+
+// else if(selectedPaper === 4 ){
+//     // Restablecer la transformación a la identidad al final para evitar problemas futuros
+// globals.ctx.setTransform(2, 0, 0, 2, -450, -130);
+
+// const maxWidth = 40;  // Ancho máximo por línea
+// let currentLine = '';
+// let texty = 90;
+
+// globals.ctx.font = '5px Arial';
+// globals.ctx.fillStyle = '#000';
+
+// for (let i = 50; i < 75 ; i++) {
+//     const word = separatedBySpaces[i];
+//     const wordWidth = globals.ctx.measureText(word).width;
+
+//     // Verificar si agregar la palabra excede la anchura máxima
+//     if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
+//         globals.ctx.fillText(currentLine, 300, texty);
+//         texty += 5;  // Ajusta según el espaciado entre líneas
+//         currentLine = word + ' ';
+//     } else {
+//         currentLine += word + ' ';
+//     }
+// }
+// }
+// else if(selectedPaper === 5 ){
+//     // Restablecer la transformación a la identidad al final para evitar problemas futuros
+// globals.ctx.setTransform(2, 0, 0, 2, -550, -180);
+
+// const maxWidth = 80;  // Ancho máximo por línea
+// let currentLine = '';
+// let texty = 130;
+
+// globals.ctx.font = '6px Arial';
+// globals.ctx.fillStyle = '#000';
+
+// for (let i = 75; i < 87 ; i++) {
+//     const word = separatedBySpaces[i];
+//     const wordWidth = globals.ctx.measureText(word).width;
+
+//     // Verificar si agregar la palabra excede la anchura máxima
+//     if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
+//         globals.ctx.fillText(currentLine, 385, texty);
+//         texty += 5;  // Ajusta según el espaciado entre líneas
+//         currentLine = word + ' ';
+//     } else {
+//         currentLine += word + ' ';
+//     }
+// }
+// }
+
+
+// else{
+//     globals.ctx.setTransform(1, 0, 0, 1, 0, 0);
+// }
+    
+
+
+
+//     }
+
 function renderbook(selectedPaper) {
     // Dibujar el fondo del libro
     globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
 
     const separatedBySpaces = globals.story.split(' ');
 
+    let transformValues = [1, 0, 0, 1, 0, 0];
+    let maxWidth = 50;
+    let startingIndex = 0;
+    let totalWords;
+    let textx = 130;  // Ajusta según la posición inicial en x para cada papel
+    let texty = 50;
     
-if(selectedPaper === 1 ){
-    // Restablecer la transformación a la identidad al final para evitar problemas futuros
-globals.ctx.setTransform(2.1, 0, 0, 2, -110, -70);
-
-
-const maxWidth = 50;  // Ancho máximo por línea
-let currentLine = '';
-let texty = 50;
-
-globals.ctx.font = '5px Arial';
-globals.ctx.fillStyle = '#000';
-
-for (let i = 0; i < 40; i++) {
-    const word = separatedBySpaces[i];
-    const wordWidth = globals.ctx.measureText(word).width;
-
-    // Verificar si agregar la palabra excede la anchura máxima
-    if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
-        globals.ctx.fillText(currentLine, 130, texty);
-        texty += 5;  // Ajusta según el espaciado entre líneas
-        currentLine = word + ' ';
-    } else {
-        currentLine += word + ' ';
+    if (selectedPaper === 1) {
+        transformValues = [2.1, 0, 0, 2, -110, -70];
+        totalWords = 40;
+    } else if (selectedPaper === 2) {
+        transformValues = [2.1, 0, 0, 2.1, -110, -170];
+        totalWords = 40;
+    } else if (selectedPaper === 3) {
+        transformValues = [2.8, 0, 0, 2.8, -550, -50];
+        maxWidth = 40;
+        startingIndex = 40;
+        texty = 42;
+        totalWords = 50;
+    } else if (selectedPaper === 4) {
+        transformValues = [2, 0, 0, 2, -450, -130];
+        maxWidth = 40;
+        startingIndex = 50;
+        texty = 90;
+        totalWords = 75;
+    } else if (selectedPaper === 5) {
+        transformValues = [2, 0, 0, 2, -550, -180];
+        maxWidth = 80;
+        startingIndex = 75;
+        texty = 130;
+        totalWords = 87;
     }
-}
 
-
-
-
-}
-else if(selectedPaper === 2 ){
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
-globals.ctx.setTransform(2.1, 0, 0, 2.1, -110, -170);
+    globals.ctx.setTransform(...transformValues);
 
-}
-else if(selectedPaper === 3 ){
-    // Restablecer la transformación a la identidad al final para evitar problemas futuros
-globals.ctx.setTransform(2.8, 0, 0, 2.8, -550, -50);
+    globals.ctx.font = '5px Arial';
+    globals.ctx.fillStyle = '#000';
 
+    function drawText(index) {
+        const word = separatedBySpaces[index];
+        const wordWidth = globals.ctx.measureText(word).width;
 
-const maxWidth = 40;  // Ancho máximo por línea
-let currentLine = '';
-let texty = 42;
+        // Verificar si agregar la palabra excede la anchura máxima
+        if (globals.ctx.measureText(currentLine + word).width > maxWidth && index > startingIndex) {
+            globals.ctx.fillText(currentLine, textx, texty);
+            texty += 5;  // Ajusta según el espaciado entre líneas
+            currentLine = word + ' ';
+        } else {
+            currentLine += word + ' ';
+        }
 
-globals.ctx.font = '5px Arial';
-globals.ctx.fillStyle = '#000';
-
-for (let i = 40; i < 50; i++) {
-    const word = separatedBySpaces[i];
-    const wordWidth = globals.ctx.measureText(word).width;
-
-    // Verificar si agregar la palabra excede la anchura máxima
-    if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
-        globals.ctx.fillText(currentLine, 300, texty);
-        texty += 5;  // Ajusta según el espaciado entre líneas
-        currentLine = word + ' ';
-    } else {
-        currentLine += word + ' ';
+        if (index < totalWords - 1) {
+            setTimeout(() => {
+                drawText(index + 1);
+            }, 100); // Puedes ajustar el valor del retardo según tus preferencias
+        } else {
+            // Finalizar la animación o realizar cualquier otra acción al completar el dibujo del texto
+        }
     }
+
+    let currentLine = '';
+    drawText(startingIndex);
 }
-
-
-}
-
-else if(selectedPaper === 4 ){
-    // Restablecer la transformación a la identidad al final para evitar problemas futuros
-globals.ctx.setTransform(2, 0, 0, 2, -450, -130);
-
-const maxWidth = 40;  // Ancho máximo por línea
-let currentLine = '';
-let texty = 90;
-
-globals.ctx.font = '5px Arial';
-globals.ctx.fillStyle = '#000';
-
-for (let i = 50; i < 75 ; i++) {
-    const word = separatedBySpaces[i];
-    const wordWidth = globals.ctx.measureText(word).width;
-
-    // Verificar si agregar la palabra excede la anchura máxima
-    if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
-        globals.ctx.fillText(currentLine, 300, texty);
-        texty += 5;  // Ajusta según el espaciado entre líneas
-        currentLine = word + ' ';
-    } else {
-        currentLine += word + ' ';
-    }
-}
-}
-else if(selectedPaper === 5 ){
-    // Restablecer la transformación a la identidad al final para evitar problemas futuros
-globals.ctx.setTransform(2, 0, 0, 2, -550, -180);
-
-const maxWidth = 80;  // Ancho máximo por línea
-let currentLine = '';
-let texty = 130;
-
-globals.ctx.font = '6px Arial';
-globals.ctx.fillStyle = '#000';
-
-for (let i = 75; i < 87 ; i++) {
-    const word = separatedBySpaces[i];
-    const wordWidth = globals.ctx.measureText(word).width;
-
-    // Verificar si agregar la palabra excede la anchura máxima
-    if (globals.ctx.measureText(currentLine + word).width > maxWidth && i > 0) {
-        globals.ctx.fillText(currentLine, 385, texty);
-        texty += 5;  // Ajusta según el espaciado entre líneas
-        currentLine = word + ' ';
-    } else {
-        currentLine += word + ' ';
-    }
-}
-}
-
-
-else{
-    globals.ctx.setTransform(1, 0, 0, 1, 0, 0);
-}
-    
-
-
-
-    }
 
     
 
@@ -704,9 +775,9 @@ function renderParticle(particle){
     if (particle.state === particleState.ON) {
 
         console.log(particle.xPos);
-        globals.ctx.fillStyle = "Green";
+        globals.ctx.fillStyle = "lightGreen";
         globals.ctx.beginPath();
-        globals.ctx.rect(particle.xPos, particle.yPos, 10, 10);
+        globals.ctx.rect(particle.xPos , particle.yPos , 1, 1);
         globals.ctx.fill();
         globals.ctx.closePath();
     } else {
