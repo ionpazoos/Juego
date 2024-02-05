@@ -1,7 +1,7 @@
 import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass } from "./initialize.js";
+import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine } from "./initialize.js";
 
 
 
@@ -46,7 +46,9 @@ export default function update(){
         break;
 
         case Game.GAMEOVER:
-           mostrarFormulario();
+        //    mostrarFormulario();
+        createRandomShineParticle();
+        updateparticles();
         break;
     
 
@@ -81,7 +83,7 @@ function newgame(){
 function loadPlaying(){
     restoreDefaultValues();
     console.log("Loading game...");
-    globals.level = globals.levels[0];
+    globals.level = globals.levels[4];
     initSprites();
     globals.gameState = Game.PLAYING
     console.log("GAME LOADED");
@@ -298,6 +300,9 @@ function updateParticle(particle){
                 break;
         case particleID.GRASS:
                 updategrassparticle(particle);
+                break;
+        case particleID.SHINE:
+                updateShineParticle(particle);
                 break;
     }
 
@@ -893,7 +898,7 @@ function updategrassparticle(particle){
 }
 
 function restoreDefaultValues() {
-    globals.leveltime.value     = 130
+    globals.leveltime.value     = 260
     globals.leveltime.timeChangeCounter = 0
 
     globals.sprites             = []
@@ -949,11 +954,50 @@ function  updateRainParticle(particle){
 
     particle.yPos += (particle.physics.vy * globals.deltaTime);
 }
+function  updateShineParticle(particle){
+
+    particle.fadeCounter += globals.deltaTime;
+
+    switch(particle.state){
+        case particleState.ON:
+            if(particle.fadeCounter > particle.timeToFade ){
+                particle.fadeCounter = 0;
+                particle.state = particleState.FADE;
+            } 
+            break;
+
+        case particleState.FADE:
+            particle.alpha -= 0.25;
+
+            if(particle.alpha <= 0){
+                particle.state = particleState.OFF;
+            }
+            break;
+
+        case particleState.OFF:
+            const indexSpriteRemove1 = globals.particles.indexOf(particle);
+            globals.particles.splice(indexSpriteRemove1, 1);
+            break;
+            default:
+    }
+    particle.physics.vy += particle.physics.ay * globals.deltaTime;
+
+
+    particle.yPos += (particle.physics.vy * globals.deltaTime);
+}
 
 function createRandomRainParticle() {
     const xPos = Math.random() * globals.canvas.width; // Posición x aleatoria
     const yPos = 0; // Siempre desde la parte superior del lienzo
       initRain(xPos, yPos);
+
+     
+}
+
+function createRandomShineParticle() {
+    const xPos = (Math.random() * 100) + 200; // Posición x aleatoria
+    const yPos = 90; // Siempre desde la parte superior del lienzo
+      initShine(xPos, yPos);
 
      
 }

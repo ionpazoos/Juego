@@ -152,7 +152,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
             //Se trata de una esquina. Puede haber overLap en X y en Y
 
             //Calculamos overlap solo en Y
-            overlapY = Math.floor(yPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize;
 
             //Colision en eje Y
             player.yPos -= overlapY;
@@ -211,8 +211,8 @@ function detectCollisionBetweenPlayerAndObstacles(){
             // Se trata de una esquina. Puede haber overlap en X y en Y
 
             // Calculamos overLap en X y en Y con el player
-            overlapX = Math.floor(xPos) % brickSize +1;
-            overlapY = Math.floor(yPos) % brickSize +1;
+            overlapX = Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize ;
 
             if (overlapX <= overlapY) {
                 
@@ -266,7 +266,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
             //Se trata de una esquina. Puede haber overLap en X y en Y
 
             //Calculamos overlap solo en Y
-            overlapY = Math.floor(yPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize;
 
             //Colision en eje Y
             player.yPos -= overlapY;
@@ -286,8 +286,8 @@ function detectCollisionBetweenPlayerAndObstacles(){
             // Se trata de una esquina. Puede haber overlap en X y en Y
 
             // Calculamos overLap en X y en Y con el player
-            overlapX = brickSize - Math.floor(xPos) % brickSize;
-            overlapY = Math.floor(yPos) % brickSize + 1;
+            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize;
 
             if (overlapX <= overlapY) {
                 

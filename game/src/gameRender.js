@@ -125,7 +125,7 @@ function historia (){
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
     renderTitle();
    
-    renderbook(globals.selectedPaperIndex);
+    renderBook(globals.selectedPaperIndex);
  
 }
 
@@ -134,11 +134,11 @@ function GAMEOVER(){
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
 
     renderTitle();
-
+    
     // Rellena el fondo negro
     globals.ctx.fillStyle = 'black';
     globals.ctx.fillRect(0, 0, globals.canvas.width, globals.canvas.height);
-
+    renderParticles();
     // Estilo del texto "Game Over"
     globals.ctx.fillStyle = 'darkturquoise'; // Cambié el color a azul turquesa oscuro
     globals.ctx.font = 'bold 24px monospace'; // Usé la fuente genérica "monospace"
@@ -168,7 +168,7 @@ function GAMEOVER(){
     
     globals.ctx.fillText("Insert coin", globals.canvas.width / 2, globals.canvas.height / 2 + 20);
 
-
+    
 }
 
 function winning(){
@@ -343,7 +343,6 @@ globals.ctx.shadowOffsetY = 0;
 
 
 //     }
-
 function renderBook(selectedPaper) {
     // Dibujar el fondo del libro
     globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
@@ -367,18 +366,21 @@ function renderBook(selectedPaper) {
         transformValues = [2.8, 0, 0, 2.8, -550, -50];
         maxWidth = 40;
         startingIndex = 40;
+        textx = 300;  // Ajusta según la posición inicial en x para papel 3
         texty = 42;
         totalWords = 50;
     } else if (selectedPaper === 4) {
         transformValues = [2, 0, 0, 2, -450, -130];
         maxWidth = 40;
         startingIndex = 50;
+        textx = 300;  // Ajusta según la posición inicial en x para papel 4
         texty = 90;
         totalWords = 75;
     } else if (selectedPaper === 5) {
         transformValues = [2, 0, 0, 2, -550, -180];
         maxWidth = 80;
         startingIndex = 75;
+        textx = 385;  // Ajusta según la posición inicial en x para papel 5
         texty = 130;
         totalWords = 87;
     }
@@ -390,6 +392,7 @@ function renderBook(selectedPaper) {
     globals.ctx.fillStyle = '#000';
 
     function drawText(index) {
+        
         const word = separatedBySpaces[index];
         const wordWidth = globals.ctx.measureText(word).width;
 
@@ -403,9 +406,9 @@ function renderBook(selectedPaper) {
         }
 
         if (index < totalWords - 1) {
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 drawText(index + 1);
-            }, 100); // Puedes ajustar el valor del retardo según tus preferencias
+            });
         } else {
             // Finalizar la animación o realizar cualquier otra acción al completar el dibujo del texto
         }
@@ -414,6 +417,8 @@ function renderBook(selectedPaper) {
     let currentLine = '';
     drawText(startingIndex);
 }
+
+
     
 
 
@@ -765,6 +770,10 @@ function renderParticle(particle){
                 renderRainParticle(particle);
                 
                 break;
+         case particleID.SHINE:
+            rendershineParticle(particle)
+                
+                break;
         default:
             break;
     }
@@ -790,6 +799,16 @@ function renderRainParticle(particle){
     globals.ctx.beginPath();
     globals.ctx.rect(particle.xPos, particle.yPos, 0.8,1);
     globals.ctx.fillStyle = 'blue'; // Color de las gotas de lluvia
+    globals.ctx.fill();
+    globals.ctx.closePath();
+}
+
+function rendershineParticle(particle){
+
+ 
+    globals.ctx.beginPath();
+    globals.ctx.drawImage(globals.tileSets[0],0,2075,32,32,particle.xPos, particle.yPos, 10,10);
+   
     globals.ctx.fill();
     globals.ctx.closePath();
 }

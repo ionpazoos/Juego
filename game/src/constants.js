@@ -184,6 +184,7 @@ export const particleID = {
     GRASS: 0,
     EXPLOSION: 1,
     RAIN: 2,
+    SHINE: 3,
 
 }
 export const particleState = {

@@ -70,6 +70,7 @@ function initTimers(){
     globals.leveltime = new Time(360,0.5);
     globals.lifetime = new Time(15,1);
     globals.keytime = new Time(1,0.05);
+    globals.villantime = new Time(10,1);
     
 }
 
@@ -347,7 +348,7 @@ function initExplosion(x,y){
 
     
 
-        const timeToFade = timeToFadeMax * Math.random() + 1;
+        const timeToFade = timeToFadeMax;
         const particle = new ExplosionParticles(particleID.EXPLOSION,particleState.ON,xInit,yInit,radius,alpha,physics,timeToFade);
 
         const angle = Math.random() * Math.PI * 2;
@@ -355,11 +356,12 @@ function initExplosion(x,y){
         particle.physics.vy = particle.physics.vlimit * Math.sin(angle);
         
         particle.physics.ax = particle.physics.aLimit * Math.cos(angle);
-        particle.physics.ay = particle.physics.aLimit * Math.sin(angle);
+        particle.physics.ay = 100;
         
         globals.particles.push(particle);
     }
 }
+
 
 function initRain(x,y){
     const velocity = Math.random()*25 + 5;
@@ -367,6 +369,22 @@ function initRain(x,y){
     const timeToFade = 1;
     const physics = new Physics(velocity,aceleration);
     const particle = new ExplosionParticles(particleID.RAIN,particleState.ON , x, y, 0.5, 1,physics,timeToFade);
+
+    
+    particle.physics.vy = particle.physics.vlimit;
+        
+   
+    particle.physics.ay = particle.physics.aLimit;
+    
+    globals.particles.push(particle);
+}
+
+function initShine(x,y){
+    const velocity = Math.random()*25 + 5;
+    const aceleration = 200;
+    const timeToFade = 0.2;
+    const physics = new Physics(velocity,aceleration);
+    const particle = new ExplosionParticles(particleID.SHINE,particleState.ON , x, y, 0.5, 1,physics,timeToFade);
 
     
     particle.physics.vy = particle.physics.vlimit;
@@ -400,6 +418,6 @@ function initGrass(x,y){
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass
+    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass,initShine
 };
 
