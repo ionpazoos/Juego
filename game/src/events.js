@@ -70,3 +70,4 @@ export function updateMusic(){
         music.play();
     }
 }
+

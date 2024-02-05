@@ -1,0 +1,10 @@
+[04-Feb-2024 18:54:54 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' in /var/www/html/game/src/score.php:11
+Stack trace:
+#0 /var/www/html/game/src/score.php(11): mysqli->__construct()
+#1 {main}
+  thrown in /var/www/html/game/src/score.php on line 11
+[04-Feb-2024 18:59:48 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' in /var/www/html/game/src/score.php:13
+Stack trace:
+#0 /var/www/html/game/src/score.php(13): mysqli->__construct()
+#1 {main}
+  thrown in /var/www/html/game/src/score.php on line 13

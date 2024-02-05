@@ -10,6 +10,7 @@ import { keyDownHandeler,keyupHandeler,updateMusic } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
 import {ExplosionParticles,particles} from "./particle.js";
+import enviarPuntuacion from "./serverconnection.js";
 
 
 
@@ -56,6 +57,14 @@ function initVars(){
 function initEvents(){
     window.addEventListener("keydown",keyDownHandeler,false);
     window.addEventListener("keyup",keyupHandeler,false);
+
+        // // Agrega un EventListener al botón
+        // document.getElementById('enviarPuntuacionButton').addEventListener('click', function() {
+        //     console.log("click");
+        //     // Llamada a la función enviarPuntuacion
+        //     enviarPuntuacion();
+        // });
+    
 }
 function initTimers(){
     globals.leveltime = new Time(360,0.5);

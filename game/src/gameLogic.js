@@ -44,6 +44,10 @@ export default function update(){
         case Game.CONTROLS:
            
         break;
+
+        case Game.GAMEOVER:
+           mostrarFormulario();
+        break;
     
 
         default:
@@ -151,8 +155,11 @@ function gameover(){
     if(row >= 30){
 
         globals.gameState = Game.GAMEOVER;
-
+            
     }
+}
+function mostrarFormulario() {
+    document.getElementById('scoreFor').style.display = 'block';
 }
 function updatelifesprite(){
         let life = globals.life;

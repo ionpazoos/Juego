@@ -344,7 +344,7 @@ globals.ctx.shadowOffsetY = 0;
 
 //     }
 
-function renderbook(selectedPaper) {
+function renderBook(selectedPaper) {
     // Dibujar el fondo del libro
     globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
 
@@ -356,7 +356,7 @@ function renderbook(selectedPaper) {
     let totalWords;
     let textx = 130;  // Ajusta según la posición inicial en x para cada papel
     let texty = 50;
-    
+
     if (selectedPaper === 1) {
         transformValues = [2.1, 0, 0, 2, -110, -70];
         totalWords = 40;
@@ -414,7 +414,6 @@ function renderbook(selectedPaper) {
     let currentLine = '';
     drawText(startingIndex);
 }
-
     
 
 

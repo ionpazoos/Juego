@@ -70,6 +70,8 @@ export default {
 
     story: "In the City of Evil Tongues, X.G., born into a family of blind magicians, grapples with chaotic impulses. Sent to Master Silvano, a reflective-material goldsmith, he undergoes an Alchemical Trial in the Forest of Essences. Guided by Silvano, X.G faces magical challenges, mastering potion use and enhancing his skills with rare plants. Progressing, he learns precise potion dosing, emphasizing harmony and self-control. Conquering each trial, X.G and Silvano reach a luminous core, deepening his connection to alchemical magic. The first part of his journey concludes.",
 
+    name: {} ,
+
 
 
 
