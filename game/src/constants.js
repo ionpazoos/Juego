@@ -15,6 +15,7 @@ export const Game = {
     LOADING_MENU: 8,
     LOADING_PLAY: 9,
     WIN:10,
+    LOADING_HIGHSCORE:12,
 };
 
 //Identificador de tipo Sprite (ID)
@@ -185,6 +186,7 @@ export const particleID = {
     EXPLOSION: 1,
     RAIN: 2,
     SHINE: 3,
+    CONFETI:4,
 
 }
 export const particleState = {

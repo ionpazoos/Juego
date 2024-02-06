@@ -108,12 +108,15 @@ function highScore(){
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
     globals.ctx.drawImage(globals.tileSets[0], 10, globals.canvas.width +30, globals.canvas.height, 200, 0, 0, globals.canvas.width+20, globals.canvas.height);
-
+    moveCamera();
 
     renderTitle();
     renderMap();
-
+    renderParticles();
     renderscore();
+    restoreCamera();
+    
+    
 
 }
 
@@ -139,6 +142,7 @@ function GAMEOVER(){
     globals.ctx.fillStyle = 'black';
     globals.ctx.fillRect(0, 0, globals.canvas.width, globals.canvas.height);
     renderParticles();
+    
     // Estilo del texto "Game Over"
     globals.ctx.fillStyle = 'darkturquoise'; // Cambié el color a azul turquesa oscuro
     globals.ctx.font = 'bold 24px monospace'; // Usé la fuente genérica "monospace"
@@ -153,22 +157,25 @@ function GAMEOVER(){
     globals.ctx.shadowOffsetX = 0; // Desplazamiento X de la sombra (sin desplazamiento)
     globals.ctx.shadowOffsetY = 0; // Desplazamiento Y de la sombra (sin desplazamiento)
 
-    // Dibujar el texto en el centro
+    // Dibujar el texto "Game Over" en el centro
     globals.ctx.fillText("Game Over", globals.canvas.width / 2, globals.canvas.height / 2 - 40);
 
-    // Texto "Try again?"
+    // Establecer el estilo para el cuadro de entrada de nombre
     globals.ctx.fillStyle = 'white';
-    globals.ctx.font = '16px monospace'; // Usé la misma fuente genérica "monospace" para el texto "Try again?"
+    globals.ctx.font = '16px monospace'; // Usé la misma fuente genérica "monospace" para el texto
+
+    // Dibujar el recuadro para ingresar el nombre
+    globals.ctx.fillRect(globals.canvas.width / 2 - 40, globals.canvas.height / 2 +50, 80, 20);
 
     // Restaurar el estilo de sombra
     globals.ctx.shadowColor = 'transparent';
     globals.ctx.shadowBlur = 0;
     globals.ctx.shadowOffsetX = 0;
     globals.ctx.shadowOffsetY = 0;
-    
-    globals.ctx.fillText("Insert coin", globals.canvas.width / 2, globals.canvas.height / 2 + 20);
 
-    
+    // Texto "Insert coin"
+    globals.ctx.fillText("Press space for high score", globals.canvas.width / 2, globals.canvas.height / 2 + 5);
+    globals.ctx.fillText("Your Score: " + Math.floor(globals.score) , globals.canvas.width / 2, globals.canvas.height / 2 + 30);
 }
 
 function winning(){
@@ -343,7 +350,7 @@ globals.ctx.shadowOffsetY = 0;
 
 
 //     }
-function renderBook(selectedPaper) {
+function    renderBook(selectedPaper) {
     // Dibujar el fondo del libro
     globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
 
@@ -419,15 +426,6 @@ function renderBook(selectedPaper) {
 }
 
 
-    
-
-
-
-
-
-
-
-
 
 function renderMenu() {
    
@@ -465,19 +463,26 @@ function renderMenu() {
 }
 
 
-function renderscore(){
-    let score = 500;
-    let x = 150;
-    globals.ctx.font = '16px ';
-    for(var i = 0;i<5;i++){
-        globals.ctx.fillText((i+1)+". name:" + score, x , 100);
-        globals.ctx.drawImage(globals.tileSets[0], 30,0 , 32, 32, x, 110, 32, 32);
-        x += 80; 
-        score -=50;
-        
-    }
+function renderscore() {
 
+    let x = 50;
+
+    globals.ctx.font = '16px Arial'; // Establecer el tamaño y la fuente del texto
+    globals.ctx.fillStyle = 'black';
+    for (let i = 0; i < globals.Players.length; i++) {
+        let jugador = globals.Players[i];
+        
+
+        // Dibujar el texto del jugador
+        globals.ctx.fillText((i+1)+"."+ jugador.name +":"+ jugador.score, x , 100);
+
+        // Dibujar una imagen (en tu caso, un icono de jugador)
+        globals.ctx.drawImage(globals.tileSets[0], 30,0 , 32, 32, x, 110, 32, 32);
+
+        x += 100; // Incrementar la posición x para el próximo jugador
+    }
 }
+
 
 function renderMap() {
     const brickSize = globals.level.imageSet.gridSize;
@@ -517,15 +522,6 @@ function renderMap() {
 
     
 }
-
-
-
-
-
-    
-
-}
-
 function renderSprite(sprite)
 {
     
@@ -730,6 +726,7 @@ function rendercontrols(){
 }
 
 function moveCamera(){
+    
     const xTranslation = -globals.camara.x;
     const yTranslation = -globals.camara.y+20;
 
@@ -744,6 +741,7 @@ function moveCamera(){
     // Dibuja la imagen de fondo ajustada a la posición de la cámara
     globals.ctx.drawImage(globals.tileSets[0], 0, globals.canvas.width +20, globals.canvas.height, 200, backgroundX, backgroundY, globals.canvas.width+20, globals.canvas.height);
 }
+
 
 function restoreCamera(){
     globals.ctx.setTransform(1,0,0,1,0,0);
@@ -774,6 +772,9 @@ function renderParticle(particle){
             rendershineParticle(particle)
                 
                 break;
+        case particleID.CONFETI:
+                renderconfetiParticle(particle)
+                        break;
         default:
             break;
     }
@@ -800,6 +801,13 @@ function renderRainParticle(particle){
     globals.ctx.rect(particle.xPos, particle.yPos, 0.8,1);
     globals.ctx.fillStyle = 'blue'; // Color de las gotas de lluvia
     globals.ctx.fill();
+    globals.ctx.closePath();
+}
+function renderconfetiParticle(particle){
+
+ 
+    globals.ctx.beginPath();
+    globals.ctx.drawImage(globals.tileSets[0],64,2100,32,32,particle.xPos, particle.yPos, 10,10);
     globals.ctx.closePath();
 }
 
@@ -829,3 +837,7 @@ function renderExplison(particle){
         console.log("particle off");
     }
 }
+
+}
+
+

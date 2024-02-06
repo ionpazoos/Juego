@@ -10,7 +10,7 @@ import { keyDownHandeler,keyupHandeler,updateMusic } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
 import {ExplosionParticles,particles} from "./particle.js";
-import enviarPuntuacion from "./serverconnection.js";
+import Jugador from "./highscore.js";
 
 
 
@@ -330,9 +330,6 @@ function initCamera(){
     globals.camara = new Camera(0,0);
 }
 
-function initparticles(){
-    // initExplosion();
-}
 function initExplosion(x,y){
     const numparticles = 300;
     const xInit = x;
@@ -378,11 +375,25 @@ function initRain(x,y){
     
     globals.particles.push(particle);
 }
+function initconfeti(x,y){
+    const velocity = Math.random()*25 + 5;
+    const aceleration = 200;
+    const timeToFade = 10;
+    const physics = new Physics(velocity,aceleration);
+    const particle = new ExplosionParticles(particleID.CONFETI,particleState.ON , x, y, 0.5, 1,physics,timeToFade);
 
+    
+    particle.physics.vy = particle.physics.vlimit;
+        
+   
+    particle.physics.ay = particle.physics.aLimit;
+    
+    globals.particles.push(particle);
+}
 function initShine(x,y){
     const velocity = Math.random()*25 + 5;
     const aceleration = 200;
-    const timeToFade = 0.2;
+    const timeToFade = 5;
     const physics = new Physics(velocity,aceleration);
     const particle = new ExplosionParticles(particleID.SHINE,particleState.ON , x, y, 0.5, 1,physics,timeToFade);
 
@@ -390,7 +401,7 @@ function initShine(x,y){
     particle.physics.vy = particle.physics.vlimit;
         
    
-    particle.physics.ay = particle.physics.aLimit;
+    particle.physics.ay = -particle.physics.aLimit;
     
     globals.particles.push(particle);
 }
@@ -413,11 +424,24 @@ function initGrass(x,y){
 
 }
 
+function initplayers(){
+    const nombres = ["Juan", "María", "Pedro", "Ana", "Luis", "Sofía", "Diego", "Laura", "Carlos", "Lucía"];
+    
+    
+
+    for (let i = 1; i <= 10; i++) {
+        let nombreAleatorio = nombres[Math.floor(Math.random() * nombres.length)];
+        let puntuacionAleatoria = Math.floor(Math.random() * 1001);
+        let jugador = new Jugador(i, nombreAleatorio, puntuacionAleatoria);
+        globals.Players.push(jugador);
+    }
+}
+
 
 
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initparticles,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass,initShine
+    initVars, loadAssets, initTimers, initEvents,initCamera,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass,initShine,initplayers,initconfeti
 };
 

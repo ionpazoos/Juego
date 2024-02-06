@@ -1,7 +1,8 @@
 import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine } from "./initialize.js";
+import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initplayers, initconfeti } from "./initialize.js";
+
 
 
 
@@ -19,15 +20,23 @@ export default function update(){
             playGame();
            
             break;
-            case Game.LOADING_MENU:
+        case Game.LOADING_MENU:
                 globals.sprites = [];
                 loadNewGame();
                 console.log("Loading Menu assets");
                 break;
     
-            case Game.LOADING_PLAY:
+        case Game.LOADING_PLAY:
                 loadPlaying();
                 break;
+        case Game.LOADING_HIGHSCORE:
+                    initplayers();
+                                globals.sprites = [];
+            globals.currentlevel = 3;
+            globals.level = globals.levels[globals.currentlevel];
+            globals.gameState = Game.HIGHSCORE;
+                    
+                break; 
 
         case Game.NEWGAME:
                 newgame();
@@ -38,7 +47,10 @@ export default function update(){
              
               break;
         case Game.HIGHSCORE:
-               
+            moveCameraRight();
+            interacthigscores();
+            createRandomconfetiParticle();
+            updateparticles();
                
                  break; 
         case Game.CONTROLS:
@@ -49,6 +61,7 @@ export default function update(){
         //    mostrarFormulario();
         createRandomShineParticle();
         updateparticles();
+        interactgameover()
         break;
     
 
@@ -93,7 +106,8 @@ function playhistori(){
 }
 function loadNewGame(){
     console.log("Ha entrado en loadNewGame");
-    globals.level = globals.levels[1];
+    globals.currentlevel = 1;
+    globals.level = globals.levels[globals.currentlevel];
     initSpritesNewGame();    
     globals.gameState = Game.NEWGAME;
 }
@@ -304,6 +318,11 @@ function updateParticle(particle){
         case particleID.SHINE:
                 updateShineParticle(particle);
                 break;
+         case particleID.CONFETI:
+                updateConfetiParticle(particle);
+                    break;
+    
+                
     }
 
     
@@ -506,7 +525,7 @@ function interactMenu(){
                 globals.gameState = Game.HISTORIA;
             }
             else if(globals.selectedOption === 3){
-                globals.gameState = Game.HIGHSCORE;
+                globals.gameState = Game.LOADING_HIGHSCORE;
             }
 
             globals.sounds[Sounds.GAME_MUSIC].play();
@@ -553,6 +572,42 @@ function interactstory(){
             globals.gameState = Game.NEWGAME;
         }
         
+        
+    
+    globals.keytime.value = 1;
+
+
+}
+function interactgameover(){
+    updatekeyTime();
+    console.log(globals.keytime.value);
+    
+
+
+        if( globals.action.esc){
+            globals.gameState = Game.LOADING_MENU;
+        }
+        
+        else if(globals.action.space){
+
+        globals.gameState = Game.LOADING_HIGHSCORE;
+        }
+        
+    
+    globals.keytime.value = 1;
+
+
+}
+function interacthigscores(){
+    updatekeyTime();
+    
+    
+
+
+        if( globals.action.esc){
+            globals.gameState = Game.LOADING_MENU;
+        }
+    
         
     
     globals.keytime.value = 1;
@@ -740,11 +795,6 @@ function updateMoneda(sprite){
     
     }
     
-  
-    
-    
-    
-
 
 function updateAnimationFrame(sprite){
     sprite.frames.frameChangeCounter++;
@@ -806,13 +856,41 @@ function updateCamera() {
 
 
 }
+function moveCameraRight(timestamp) {
+    
+    
+    // Actualiza el tiempo del último fotograma
+    globals.lastFrameTime = timestamp;
 
+    const brickSize = globals.level.imageSet.gridSize;
+    const nivelAncho = 70 * brickSize; // Ancho del nivel
+    
+    globals.camara.y = 20; // Ajustar la posición vertical de la cámara
 
+    // Establecer límites para la posición de la cámara
+    const minX = 0;  // Límite mínimo en el eje X
+    const maxX = nivelAncho - globals.canvas.width;  // Límite máximo en el eje X
 
+    // Calcular la posición final deseada de la cámara
+    const desiredX = globals.camara.x + 1; // Mover la cámara 1 unidad a la derecha (ajustar la velocidad aquí)
 
+    // Definir la velocidad de desplazamiento de la cámara (muy lenta)
+    const cameraSpeed = 1; // Puedes ajustar esta velocidad según tus necesidades
 
+    // Calcular el nuevo valor de la posición de la cámara
+    globals.camara.x += cameraSpeed;
 
+    // Ajustar la posición de la cámara dentro de los límites
+    globals.camara.x = Math.max(minX, Math.min(maxX, globals.camara.x));
 
+    // Verificar si se alcanzó la posición final deseada
+    if (globals.camara.x >= desiredX) {
+        // Detener el movimiento de la cámara
+        return;
+    }
+
+    // Solicitar el siguiente fotograma de animación
+    requestAnimationFrame(moveCameraRight);
 }
 
 function updateExplosion(particle){
@@ -898,7 +976,7 @@ function updategrassparticle(particle){
 }
 
 function restoreDefaultValues() {
-    globals.leveltime.value     = 260
+    globals.leveltime.value     = 140
     globals.leveltime.timeChangeCounter = 0
 
     globals.sprites             = []
@@ -924,6 +1002,37 @@ function playSound(){
 }
 
 function  updateRainParticle(particle){
+
+    particle.fadeCounter += globals.deltaTime;
+
+    switch(particle.state){
+        case particleState.ON:
+            if(particle.fadeCounter > particle.timeToFade ){
+                particle.fadeCounter = 0;
+                particle.state = particleState.FADE;
+            } 
+            break;
+
+        case particleState.FADE:
+            particle.alpha -= 0.25;
+
+            if(particle.alpha <= 0){
+                particle.state = particleState.OFF;
+            }
+            break;
+
+        case particleState.OFF:
+            const indexSpriteRemove1 = globals.particles.indexOf(particle);
+            globals.particles.splice(indexSpriteRemove1, 1);
+            break;
+            default:
+    }
+    particle.physics.vy += particle.physics.ay * globals.deltaTime;
+
+
+    particle.yPos += (particle.physics.vy * globals.deltaTime);
+}
+function  updateConfetiParticle(particle){
 
     particle.fadeCounter += globals.deltaTime;
 
@@ -995,9 +1104,15 @@ function createRandomRainParticle() {
 }
 
 function createRandomShineParticle() {
-    const xPos = (Math.random() * 100) + 200; // Posición x aleatoria
-    const yPos = 90; // Siempre desde la parte superior del lienzo
+    const xPos = (Math.random() * globals.canvas.width); // Posición x aleatoria
+    const yPos = globals.canvas.height; // Siempre desde la parte superior del lienzo
       initShine(xPos, yPos);
+}
+
+function createRandomconfetiParticle() {
+    const xPos = (Math.random() * 1100 ); // Posición x aleatoria
+    const yPos = 20; // Siempre desde la parte superior del lienzo
+      initconfeti(xPos, yPos);
 
      
 }
@@ -1010,6 +1125,9 @@ function dificulti(){
         lastTimeSpawn = globals.leveltime.value;
     }
 }
+}
+
+
 
 
     
