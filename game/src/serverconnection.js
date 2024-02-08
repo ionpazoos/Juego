@@ -3,23 +3,46 @@ import globals from "./globals.js";
 export default function enviarPuntuacion() {
     console.log("enviando...");
     var playerName = document.getElementById('playerName').value;
+    
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "./src/score.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                // Manejar la respuesta del servidor (puedes mostrar un mensaje al usuario, redirigir, etc.)
-                console.log(xhr.responseText);
-            } else {
-                // Manejar errores del servidor
-                console.error('Error en la solicitud al servidor:', xhr.status, xhr.statusText);
-            }
-        }
+    var data = {
+        player_name: playerName,
+        score: globals.score
     };
-
-    var data = 'player_name=' + encodeURIComponent(playerName) + '&score=' + encodeURIComponent(globals.score);
-    xhr.send(data);
+    console.log(JSON.stringify(data));
+    fetch('./src/score.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+       
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud al servidor:', response.status, response.statusText);
+        }
+        return response.text();
+    })
+    .then(responseText => {
+        console.log(responseText);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
+
+export async function obtenerMejoresPuntuaciones() {
+    try {
+        const response = await fetch('./src/getHighScores.php');
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud al servidor: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        return []; // Devolvemos un array vacío en caso de error
+    }
+}
+

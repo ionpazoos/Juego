@@ -2,7 +2,7 @@ import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} fr
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
 import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initplayers, initconfeti } from "./initialize.js";
-
+import {obtenerMejoresPuntuaciones} from "./serverconnection.js"
 
 
 
@@ -30,8 +30,9 @@ export default function update(){
                 loadPlaying();
                 break;
         case Game.LOADING_HIGHSCORE:
+           globals.Players = obtenerMejoresPuntuaciones();
                     initplayers();
-                                globals.sprites = [];
+              globals.sprites = [];
             globals.currentlevel = 3;
             globals.level = globals.levels[globals.currentlevel];
             globals.gameState = Game.HIGHSCORE;
@@ -69,8 +70,10 @@ export default function update(){
             console.error("Error: Game State invalid");
     }
 
+
 function playGame(){
     // ... A completar
+   
     updateSprites();
     updateLevelTime();
     updatelifeTime();
@@ -96,7 +99,8 @@ function newgame(){
 function loadPlaying(){
     restoreDefaultValues();
     console.log("Loading game...");
-    globals.level = globals.levels[4];
+    globals.currentlevel = 0;
+     globals.level = globals.levels[globals.currentlevel];
     initSprites();
     globals.gameState = Game.PLAYING
     console.log("GAME LOADED");

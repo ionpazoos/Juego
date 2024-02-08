@@ -1,82 +1,104 @@
 <?php
+// Permitir acceso desde cualquier origen
+header("Access-Control-Allow-Origin: *");
+// Permitir los métodos GET, POST, PUT, DELETE y OPTIONS
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+// Permitir ciertos encabezados
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
 // Habilitar el registro de errores en un archivo
 ini_set('log_errors', 1);
 ini_set('error_log', 'phperrors.log');
 
-// Establecer la conexión a la base de datos (reemplaza con tus propios detalles de conexión)
-$servername = "127.0.0.1";
-$username = "game";
-$password = "123456";
-$dbname = "GameScores";
-$port = "3306";
-$conn = new mysqli($servername, $username, $password, $dbname, $port);
+// Leer el cuerpo de la solicitud como JSON
+$json = file_get_contents('php://input');
 
-// Verificar la conexión
-if ($conn->connect_error) {
-    // Registrar el error y terminar la ejecución del script
-    error_log("Conexión fallida: " . $conn->connect_error);
-    die("Conexión fallida. Consulta los registros de errores para más detalles.");
-}
-
-// Obtener datos del formulario o de la solicitud
-$playerName = isset($_POST['player_name']) ? $_POST['player_name'] : null;
-$score = isset($_POST['score']) ? $_POST['score'] : null;
+// Decodificar el JSON a un arreglo asociativo
+$data = json_decode($json, true);
 
 // Verificar si los datos están presentes
+$playerName = isset($data['player_name']) ? $data['player_name'] : null;
+$score = isset($data['score']) ? $data['score'] : null;
+
+// Verificar si los datos se recibieron correctamente
 if ($playerName === null || $score === null) {
     // Registrar el error y terminar la ejecución del script
-    error_log("Datos no recibidos correctamente.");
-    die("Datos no recibidos correctamente.");
+    error_log("Datos no recibidos correctamente. Player: $playerName");
+    die("Datos no recibidos correctamente. Player: $playerName");
 }
 
-// Comprobar si el jugador ya existe
-$sql = "SELECT player_id FROM Players WHERE player_name = '$playerName'";
-$result = $conn->query($sql);
+// Establecer los detalles de la conexión a la base de datos (reemplaza con tus propios detalles de conexión)
+$servername = "ep-twilight-bar-a2o4mmy3.eu-central-1.aws.neon.tech";
+$username = "jon.pazos"; // Cambiado de 'jon.pazos' a 'username'
+$password = "FUX89CDqowsA";
+$dbname = "HighScores";
+$port = "5432";
 
-if ($result === false) {
-    // Si hay un error en la consulta, registrar el error y terminar la ejecución del script
-    $error_message = "Error en la consulta: " . $conn->error;
-    error_log($error_message);
-    die($error_message);
+// Establecer la conexión a la base de datos utilizando pg_connect
+$conn = pg_connect("host=$servername port=$port dbname=$dbname user=$username password=$password");
+
+// Verificar la conexión
+if (!$conn) {
+    // Si la conexión falla, mostrar un mensaje de error y terminar el script
+    error_log("Error en la conexión: " . pg_last_error($conn));
+    die("Error en la conexión. Consulta los registros de errores para más detalles.");
 }
 
-if ($result->num_rows > 0) {
-    // El jugador ya existe, actualizamos su puntaje
-    $row = $result->fetch_assoc();
-    $playerId = $row['player_id'];
+try {
+    echo "Conexión establecida correctamente";
 
-    $sql = "INSERT INTO Scores (player_id, score) VALUES ($playerId, $score)";
-    if ($conn->query($sql) === TRUE) {
-        echo "Puntaje insertado correctamente.";
-    } else {
-        // Registrar el error si hay un problema al insertar el puntaje
-        $error_message = "Error al insertar el puntaje: " . $conn->error;
+    // Comprobar si el jugador ya existe
+    $sql = "SELECT playerid FROM Players WHERE name = '$playerName'";
+    $result = pg_query($conn, $sql);
+
+    if ($result === false) {
+        // Si hay un error en la consulta, registrar el error y terminar la ejecución del script
+        $error_message = "Error en la consulta: " . pg_last_error($conn);
         error_log($error_message);
-        echo $error_message;
+        die($error_message);
     }
-} else {
-    // El jugador no existe, lo creamos y luego insertamos el puntaje
-    $sql = "INSERT INTO Players (player_name) VALUES ('$playerName')";
-    if ($conn->query($sql) === TRUE) {
-        $playerId = $conn->insert_id;
 
-        $sql = "INSERT INTO Scores (player_id, score) VALUES ($playerId, $score)";
-        if ($conn->query($sql) === TRUE) {
-            echo "Nuevo jugador y puntaje insertados correctamente.";
+    if (pg_num_rows($result) > 0) {
+        // El jugador ya existe, actualizamos su puntaje
+        $row = pg_fetch_assoc($result);
+        $playerId = $row['playerid'];
+
+        $sql = "INSERT INTO Scores (playerid, score) VALUES ($playerId, $score)";
+        $result = pg_query($conn, $sql);
+        if ($result) {
+            echo "Puntaje insertado correctamente.";
         } else {
             // Registrar el error si hay un problema al insertar el puntaje
-            $error_message = "Error al insertar el puntaje: " . $conn->error;
+            $error_message = "Error al insertar el puntaje: " . pg_last_error($conn);
             error_log($error_message);
             echo $error_message;
         }
     } else {
-        // Registrar el error si hay un problema al insertar el nuevo jugador
-        $error_message = "Error al insertar el nuevo jugador: " . $conn->error;
-        error_log($error_message);
-        echo $error_message;
-    }
-}
+        // El jugador no existe, lo creamos y luego insertamos el puntaje
+        $sql = "INSERT INTO Players(name) VALUES ('$playerName')";
+        $result = pg_query($conn, $sql);
+        if ($result) {
+            $playerId = pg_last_oid($result);
 
-// Cerrar la conexión
-$conn->close();
+            $sql = "INSERT INTO Scores(playerid, score) VALUES ($playerId, $score)";
+            $result = pg_query($conn, $sql);
+            if ($result) {
+                echo "Nuevo jugador y puntaje insertados correctamente.";
+            } else {
+                // Registrar el error si hay un problema al insertar el puntaje
+                $error_message = "Error al insertar el puntaje: " . pg_last_error($conn);
+                error_log($error_message);
+                echo $error_message;
+            }
+        } else {
+            // Registrar el error si hay un problema al insertar el nuevo jugador
+            $error_message = "Error al insertar el nuevo jugador: " . pg_last_error($conn);
+            error_log($error_message);
+            echo $error_message;
+        }
+    }
+} finally {
+    // Cerrar la conexión   
+    pg_close($conn);
+}
 ?>

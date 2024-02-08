@@ -11,6 +11,8 @@ import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
 import {ExplosionParticles,particles} from "./particle.js";
 import Jugador from "./highscore.js";
+import enviarPuntuacion from "./serverconnection.js";
+
 
 
 
@@ -58,12 +60,12 @@ function initEvents(){
     window.addEventListener("keydown",keyDownHandeler,false);
     window.addEventListener("keyup",keyupHandeler,false);
 
-        // // Agrega un EventListener al botón
-        // document.getElementById('enviarPuntuacionButton').addEventListener('click', function() {
-        //     console.log("click");
-        //     // Llamada a la función enviarPuntuacion
-        //     enviarPuntuacion();
-        // });
+        // Agrega un EventListener al botón
+        document.getElementById('enviarPuntuacionButton').addEventListener('click', function() {
+            console.log("click");
+            // Llamada a la función enviarPuntuacion
+            enviarPuntuacion();
+        });
     
 }
 function initTimers(){

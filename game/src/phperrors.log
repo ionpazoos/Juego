@@ -1,10 +1,128 @@
-[04-Feb-2024 18:54:54 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' in /var/www/html/game/src/score.php:11
-Stack trace:
-#0 /var/www/html/game/src/score.php(11): mysqli->__construct()
-#1 {main}
-  thrown in /var/www/html/game/src/score.php on line 11
-[04-Feb-2024 18:59:48 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' in /var/www/html/game/src/score.php:13
-Stack trace:
-#0 /var/www/html/game/src/score.php(13): mysqli->__construct()
-#1 {main}
-  thrown in /var/www/html/game/src/score.php on line 13
+[07-Feb-2024 20:27:37 Europe/Berlin] Datos no recibidos correctamente.
+[07-Feb-2024 20:39:34 Europe/Berlin] Datos no recibidos correctamente.
+[07-Feb-2024 20:39:35 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:11:00 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:14:23 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:19:11 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:21:19 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:21:33 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:22:28 Europe/Berlin] 
+[08-Feb-2024 08:22:28 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:22:44 Europe/Berlin] 
+[08-Feb-2024 08:22:44 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:23:36 Europe/Berlin] 
+[08-Feb-2024 08:23:36 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:24:38 Europe/Berlin] 
+[08-Feb-2024 08:24:38 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:25:48 Europe/Berlin] 
+[08-Feb-2024 08:25:48 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:32:44 Europe/Berlin] 
+[08-Feb-2024 08:32:44 Europe/Berlin] Datos no recibidos correctamente.
+[08-Feb-2024 08:33:11 Europe/Berlin] 
+[08-Feb-2024 08:33:11 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 08:44:40 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 09:15:42 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 09:17:28 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 09:17:44 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 09:26:27 Europe/Berlin] PHP Warning:  Undefined array key "player_name" in /home/ion/Documentos/juego/game/src/score.php on line 34
+[08-Feb-2024 09:26:27 Europe/Berlin] PHP Warning:  Undefined array key "score" in /home/ion/Documentos/juego/game/src/score.php on line 35
+[08-Feb-2024 09:26:27 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 10:29:29 Europe/Berlin] PHP Warning:  Undefined array key "player_name" in /home/ion/Documentos/juego/game/src/score.php on line 34
+[08-Feb-2024 10:29:29 Europe/Berlin] PHP Warning:  Undefined array key "score" in /home/ion/Documentos/juego/game/src/score.php on line 35
+[08-Feb-2024 10:29:29 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 10:34:44 Europe/Berlin] PHP Warning:  Undefined array key "player_name" in /home/ion/Documentos/juego/game/src/score.php on line 34
+[08-Feb-2024 10:34:44 Europe/Berlin] PHP Warning:  Undefined array key "score" in /home/ion/Documentos/juego/game/src/score.php on line 35
+[08-Feb-2024 10:34:44 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 10:35:45 Europe/Berlin] PHP Warning:  Undefined array key "player_name" in /home/ion/Documentos/juego/game/src/score.php on line 35
+[08-Feb-2024 10:35:45 Europe/Berlin] PHP Warning:  Undefined array key "score" in /home/ion/Documentos/juego/game/src/score.php on line 36
+[08-Feb-2024 10:35:45 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 10:35:45 Europe/Berlin] PHP Warning:  Undefined array key "player_name" in /home/ion/Documentos/juego/game/src/score.php on line 35
+[08-Feb-2024 10:35:45 Europe/Berlin] PHP Warning:  Undefined array key "score" in /home/ion/Documentos/juego/game/src/score.php on line 36
+[08-Feb-2024 10:35:45 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 10:36:04 Europe/Berlin] PHP Warning:  Undefined array key "player_name" in /home/ion/Documentos/juego/game/src/score.php on line 35
+[08-Feb-2024 10:36:04 Europe/Berlin] PHP Warning:  Undefined array key "score" in /home/ion/Documentos/juego/game/src/score.php on line 36
+[08-Feb-2024 10:36:04 Europe/Berlin] Datos no recibidos correctamente.player:
+[08-Feb-2024 10:39:09 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  column &quot;player_id&quot; does not exist
+LINE 1: SELECT player_id FROM Players WHERE player_name = 'ion'
+               ^
+HINT:  Perhaps you meant to reference the column &quot;players.playerid&quot;. in /home/ion/Documentos/juego/game/src/score.php on line 52
+[08-Feb-2024 10:39:09 Europe/Berlin] Error en la consulta: ERROR:  column "player_id" does not exist
+LINE 1: SELECT player_id FROM Players WHERE player_name = 'ion'
+               ^
+HINT:  Perhaps you meant to reference the column "players.playerid".
+[08-Feb-2024 10:39:26 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  column &quot;player_name&quot; does not exist
+LINE 1: SELECT playerid FROM Players WHERE player_name = 'ion'
+                                           ^ in /home/ion/Documentos/juego/game/src/score.php on line 52
+[08-Feb-2024 10:39:26 Europe/Berlin] Error en la consulta: ERROR:  column "player_name" does not exist
+LINE 1: SELECT playerid FROM Players WHERE player_name = 'ion'
+                                           ^
+[08-Feb-2024 10:39:39 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  column &quot;player_name&quot; of relation &quot;players&quot; does not exist
+LINE 1: INSERT INTO Players (player_name) VALUES ('ion')
+                             ^ in /home/ion/Documentos/juego/game/src/score.php on line 79
+[08-Feb-2024 10:39:39 Europe/Berlin] Error al insertar el nuevo jugador: ERROR:  column "player_name" of relation "players" does not exist
+LINE 1: INSERT INTO Players (player_name) VALUES ('ion')
+                             ^
+[08-Feb-2024 10:39:49 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  column &quot;player_name&quot; of relation &quot;players&quot; does not exist
+LINE 1: INSERT INTO Players (player_name) VALUES ('ion')
+                             ^ in /home/ion/Documentos/juego/game/src/score.php on line 79
+[08-Feb-2024 10:39:49 Europe/Berlin] Error al insertar el nuevo jugador: ERROR:  column "player_name" of relation "players" does not exist
+LINE 1: INSERT INTO Players (player_name) VALUES ('ion')
+                             ^
+[08-Feb-2024 10:40:24 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (, 50)
+                                                     ^ in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 10:40:24 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (, 50)
+                                                     ^
+[08-Feb-2024 10:41:09 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  column &quot;score&quot; of relation &quot;scores&quot; does not exist
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (6, 50)
+                                      ^ in /home/ion/Documentos/juego/game/src/score.php on line 67
+[08-Feb-2024 10:41:09 Europe/Berlin] Error al insertar el puntaje: ERROR:  column "score" of relation "scores" does not exist
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (6, 50)
+                                      ^
+[08-Feb-2024 10:47:33 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (, 61.695)
+                                                     ^ in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 10:47:33 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (, 61.695)
+                                                     ^
+[08-Feb-2024 10:54:11 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (, 27.658)
+                                                     ^ in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 10:54:11 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (, 27.658)
+                                                     ^
+[08-Feb-2024 10:57:52 Europe/Berlin] PHP Warning:  pg_query_params(): Query failed: ERROR:  invalid input syntax for type integer: &quot;&quot;
+CONTEXT:  unnamed portal parameter $1 = '' in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 10:57:52 Europe/Berlin] Error al insertar el puntaje: ERROR:  invalid input syntax for type integer: ""
+CONTEXT:  unnamed portal parameter $1 = ''
+[08-Feb-2024 10:58:24 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (, 50)
+                                                     ^ in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 10:58:24 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (, 50)
+                                                     ^
+[08-Feb-2024 10:58:50 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 50)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 10:58:50 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 50)
+                                                    ^
+[08-Feb-2024 10:59:22 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  invalid input syntax for type integer: &quot;&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES ('', '50')
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 10:59:22 Europe/Berlin] Error al insertar el puntaje: ERROR:  invalid input syntax for type integer: ""
+LINE 1: INSERT INTO Scores(playerid, score) VALUES ('', '50')
+                                                    ^
+[08-Feb-2024 10:59:54 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  invalid input syntax for type integer: &quot;&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES ('', 50)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 10:59:54 Europe/Berlin] Error al insertar el puntaje: ERROR:  invalid input syntax for type integer: ""
+LINE 1: INSERT INTO Scores(playerid, score) VALUES ('', 50)
+                                                    ^
+[08-Feb-2024 11:00:09 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 50)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 84
+[08-Feb-2024 11:00:09 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 50)
+                                                    ^

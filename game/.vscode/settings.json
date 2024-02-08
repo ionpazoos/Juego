@@ -1,3 +1,5 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "phpserver.phpPath": "/usr/bin/php",
+    "phpserver.phpConfigPath": "/etc/php/8.1/cli/php.ini"
 }

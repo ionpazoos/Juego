@@ -226,6 +226,7 @@ function detectCollisionBetweenPlayerAndObstacles(){
                 if (player.physics.vy > 0) {
 
                     player.yPos -= overlapY;
+                    player.physics.vy = 0;
 
                 } else {
                     player.yPos -= overlapY;
