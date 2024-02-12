@@ -132,17 +132,17 @@ function historia (){
  
 }
 
-function GAMEOVER(){
+function GAMEOVER() {
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height); // Limpia todo el canvas
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
 
     renderTitle();
-    
+
     // Rellena el fondo negro
     globals.ctx.fillStyle = 'black';
     globals.ctx.fillRect(0, 0, globals.canvas.width, globals.canvas.height);
     renderParticles();
-    
+
     // Estilo del texto "Game Over"
     globals.ctx.fillStyle = 'darkturquoise'; // Cambié el color a azul turquesa oscuro
     globals.ctx.font = 'bold 24px monospace'; // Usé la fuente genérica "monospace"
@@ -165,7 +165,11 @@ function GAMEOVER(){
     globals.ctx.font = '16px monospace'; // Usé la misma fuente genérica "monospace" para el texto
 
     // Dibujar el recuadro para ingresar el nombre
-    globals.ctx.fillRect(globals.canvas.width / 2 - 40, globals.canvas.height / 2 +50, 80, 20);
+    globals.ctx.fillRect(globals.canvas.width / 2 - 40, globals.canvas.height / 2 + 50, 80, 20);
+
+    // Mostrar las tres letras del nombre del jugador si están disponibles
+    globals.ctx.fillStyle = 'black'; // Color del texto negro
+    globals.ctx.fillText(globals.playerName ? globals.playerName : '___', globals.canvas.width / 2, globals.canvas.height / 2 + 60); // Mostrar el nombre o tres guiones bajos si aún no se ha ingresado
 
     // Restaurar el estilo de sombra
     globals.ctx.shadowColor = 'transparent';
@@ -173,10 +177,11 @@ function GAMEOVER(){
     globals.ctx.shadowOffsetX = 0;
     globals.ctx.shadowOffsetY = 0;
 
-    // Texto "Insert coin"
+    // Texto "Press space for high score"
     globals.ctx.fillText("Press space for high score", globals.canvas.width / 2, globals.canvas.height / 2 + 5);
-    globals.ctx.fillText("Your Score: " + Math.floor(globals.score) , globals.canvas.width / 2, globals.canvas.height / 2 + 30);
+    globals.ctx.fillText("Your Score: " + Math.floor(globals.score), globals.canvas.width / 2, globals.canvas.height / 2 + 30);
 }
+
 
 function winning(){
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height); // Limpia todo el canvas

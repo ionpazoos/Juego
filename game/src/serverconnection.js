@@ -1,6 +1,6 @@
 import globals from "./globals.js";
 
-export default function enviarPuntuacion() {
+export  function enviarPuntuacion() {
     console.log("enviando...");
     var playerName = document.getElementById('playerName').value;
     
@@ -10,7 +10,7 @@ export default function enviarPuntuacion() {
         score: globals.score
     };
     console.log(JSON.stringify(data));
-    fetch('./src/score.php', {
+    fetch('http://localhost:3000/game/src/score.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -30,11 +30,12 @@ export default function enviarPuntuacion() {
     .catch(error => {
         console.error('Error:', error);
     });
+    
 }
 
 export async function obtenerMejoresPuntuaciones() {
     try {
-        const response = await fetch('./src/getHighScores.php');
+        const response = await fetch('http://localhost:3000/game/src/getHighScores.php');
         if (!response.ok) {
             throw new Error(`Error en la solicitud al servidor: ${response.status} ${response.statusText}`);
         }
@@ -46,3 +47,12 @@ export async function obtenerMejoresPuntuaciones() {
     }
 }
 
+export async function cargarMejoresPuntuaciones() {    
+    try {
+        const jugadores = await obtenerMejoresPuntuaciones();
+       return jugadores;
+        
+    } catch (error) {
+        console.error('Error al cargar los mejores puntajes:', error);
+    }
+}

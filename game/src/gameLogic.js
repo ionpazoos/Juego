@@ -1,8 +1,8 @@
 import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initplayers, initconfeti } from "./initialize.js";
-import {obtenerMejoresPuntuaciones} from "./serverconnection.js"
+import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initplayers, initconfeti,initKeyEventsGameOver } from "./initialize.js";
+
 
 
 
@@ -30,7 +30,6 @@ export default function update(){
                 loadPlaying();
                 break;
         case Game.LOADING_HIGHSCORE:
-           globals.Players = obtenerMejoresPuntuaciones();
                     initplayers();
               globals.sprites = [];
             globals.currentlevel = 3;
@@ -63,6 +62,7 @@ export default function update(){
         createRandomShineParticle();
         updateparticles();
         interactgameover()
+
         break;
     
 
@@ -582,26 +582,29 @@ function interactstory(){
 
 
 }
-function interactgameover(){
-    updatekeyTime();
-    console.log(globals.keytime.value);
-    
+function interactgameover() {
+   
 
 
-        if( globals.action.esc){
-            globals.gameState = Game.LOADING_MENU;
+    if (globals.action.esc) {
+        globals.gameState = Game.LOADING_MENU;
+    } else if (globals.action.space) {
+        // Verificar si se han ingresado tres letras
+        if (globals.playerName.length === 3) {
+            // Guardar el nombre del jugador y pasar al estado de carga de los puntajes altos
+            globals.gameState = Game.LOADING_HIGHSCORE;
+        } else {
+            console.log('Por favor, ingresa tres letras para tu nombre.');
         }
-        
-        else if(globals.action.space){
-
-        globals.gameState = Game.LOADING_HIGHSCORE;
-        }
-        
+    }
     
-    globals.keytime.value = 1;
+    initKeyEventsGameOver();
 
-
+   
 }
+
+
+
 function interacthigscores(){
     updatekeyTime();
     

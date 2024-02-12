@@ -74,8 +74,9 @@ export default {
     name: {} ,
 
     player:[],
-
     Players:[],
+    playerName:"",
+
     lastFrameTime:0,
 
 

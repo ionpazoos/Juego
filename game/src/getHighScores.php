@@ -1,4 +1,9 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+
+ini_set('log_errors', 1);
+ini_set('error_log', 'phperrorsget.log');
+
 // Establecer los detalles de la conexión a la base de datos (reemplaza con tus propios detalles de conexión)
 $servername = "ep-twilight-bar-a2o4mmy3.eu-central-1.aws.neon.tech";
 $username = "jon.pazos";
@@ -19,9 +24,10 @@ if (!$conn) {
 try {
     // Consulta SQL para obtener el nombre de usuario y su mejor puntuación
     $sql = "SELECT name AS player_name, MAX(score) AS best_score 
-            FROM Players
-            JOIN Scores ON Players.PlayerID = Scores.PlayerID 
-            GROUP BY name";
+    FROM Players
+    JOIN Scores ON Players.PlayerID = Scores.PlayerID 
+    GROUP BY name
+    ORDER BY MAX(score) DESC;";
 
     // Ejecutar la consulta
     $result = pg_query($conn, $sql);

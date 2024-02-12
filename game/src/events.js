@@ -1,5 +1,6 @@
 import {Key,Sounds} from "./constants.js"
 import globals from "./globals.js"
+import updatekeytime from "./gameLogic.js"
 
 
 export function keyDownHandeler(event){
@@ -68,6 +69,20 @@ export function updateMusic(){
     {
         music.currentTime = 0;
         music.play();
+    }
+}
+// Función para manejar la entrada de teclado
+export function handleKeyPressAZ(key) {
+    updatekeytime();
+    console.log(globals.keytime);
+    // Verificar si el jugador ha presionado una tecla alfabética
+    console.log(globals.playerName.length);
+    if (key.match(/[a-zA-Z]/) && globals.playerName.length < 3 && globals.keytime === 0) {
+      
+        globals.playerName += key.toUpperCase(); // Agregar la letra al nombre del jugador
+        console.log('Nombre actual:', globals.playerName);
+
+        globals.keytime = 1;
     }
 }
 

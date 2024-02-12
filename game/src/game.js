@@ -5,7 +5,7 @@ import { initHTMLelements, initLevel, initSprites, initVars, loadAssets,initTime
 
 import update from "./gameLogic.js";
 import render from "./gameRender.js";
-import enviarPuntuacion from "./serverconnection.js";
+
 
 
 ///////////////////////////////////////////////////////////////

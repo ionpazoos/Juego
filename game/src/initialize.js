@@ -6,12 +6,12 @@ import globals from "./globals.js";
 import { Level, level1,menu,highScore,controls, level2} from "./levels.js";
 import Time from "./timer.js"
 import Physics from "./Physics.js";
-import { keyDownHandeler,keyupHandeler,updateMusic } from "./events.js";
+import { keyDownHandeler,keyupHandeler,updateMusic,handleKeyPressAZ } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
 import {ExplosionParticles,particles} from "./particle.js";
 import Jugador from "./highscore.js";
-import enviarPuntuacion from "./serverconnection.js";
+import {cargarMejoresPuntuaciones,enviarPuntuacion} from "./serverconnection.js";
 
 
 
@@ -26,6 +26,7 @@ function initHTMLelements(){
     //Canvas, context HUD
     globals.canvasHUD = document.getElementById('gameHUD');
     globals.ctxHUD = globals.canvasHUD.getContext('2d');
+    
 
     //Eliminacion del Anti-Aliasing
     globals.ctx.imageSmoothingEnabled = false;
@@ -66,12 +67,20 @@ function initEvents(){
             // Llamada a la función enviarPuntuacion
             enviarPuntuacion();
         });
+
     
+}
+
+function initKeyEventsGameOver(){
+    document.addEventListener('keydown', function(event) {
+        handleKeyPressAZ(event.key);
+        console.log(event.key);
+    });
 }
 function initTimers(){
     globals.leveltime = new Time(360,0.5);
     globals.lifetime = new Time(15,1);
-    globals.keytime = new Time(1,0.05);
+    globals.keytime = new Time(1,0.08);
     globals.villantime = new Time(10,1);
     
 }
@@ -426,16 +435,25 @@ function initGrass(x,y){
 
 }
 
-function initplayers(){
-    const nombres = ["Juan", "María", "Pedro", "Ana", "Luis", "Sofía", "Diego", "Laura", "Carlos", "Lucía"];
-    
-    
+async function initplayers() {
+    try {
+        // Espera a que se resuelva la promesa devuelta por cargarMejoresPuntuaciones()
+        const playersinfo = await cargarMejoresPuntuaciones();
+        
+        console.log(playersinfo);
 
-    for (let i = 1; i <= 10; i++) {
-        let nombreAleatorio = nombres[Math.floor(Math.random() * nombres.length)];
-        let puntuacionAleatoria = Math.floor(Math.random() * 1001);
-        let jugador = new Jugador(i, nombreAleatorio, puntuacionAleatoria);
-        globals.Players.push(jugador);
+        // Itera sobre los datos de los puntajes recibidos y crea objetos Jugador
+        for (let i = 0; i < playersinfo.length; i++) {
+            const jugadorData = playersinfo[i];
+            console.log(playersinfo[i]);
+            const jugador = new Jugador(0, jugadorData.player_name, jugadorData.best_score);
+            // Agrega el jugador creado al arreglo de jugadores
+            globals.Players.push(jugador);
+        }
+        
+        console.log(globals.Players); // Asegúrate de que los jugadores se hayan agregado correctamente
+    } catch (error) {
+        console.error('Error al inicializar los jugadores:', error);
     }
 }
 
@@ -444,6 +462,7 @@ function initplayers(){
 //Exportamos las funciones
 export {
     initHTMLelements, initLevel, initSprites,
-    initVars, loadAssets, initTimers, initEvents,initCamera,initSpritesNewGame,initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass,initShine,initplayers,initconfeti
+    initVars, loadAssets, initTimers, initEvents,initCamera,initSpritesNewGame,
+    initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass,initShine,initplayers,initconfeti,initKeyEventsGameOver
 };
 

@@ -75,10 +75,11 @@ try {
         }
     } else {
         // El jugador no existe, lo creamos y luego insertamos el puntaje
-        $sql = "INSERT INTO Players(name) VALUES ('$playerName')";
+        $sql = "INSERT INTO players(name) VALUES ('$playerName')";
         $result = pg_query($conn, $sql);
         if ($result) {
-            $playerId = pg_last_oid($result);
+            $row = pg_fetch_assoc($result);
+            $playerId = $row['PlayerID'];
 
             $sql = "INSERT INTO Scores(playerid, score) VALUES ($playerId, $score)";
             $result = pg_query($conn, $sql);
