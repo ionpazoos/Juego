@@ -388,7 +388,7 @@ function initRain(x,y){
 }
 function initconfeti(x,y){
     const velocity = Math.random()*25 + 5;
-    const aceleration = 200;
+    const aceleration = 100;
     const timeToFade = 10;
     const physics = new Physics(velocity,aceleration);
     const particle = new ExplosionParticles(particleID.CONFETI,particleState.ON , x, y, 0.5, 1,physics,timeToFade);

@@ -16,6 +16,7 @@ export const Game = {
     LOADING_PLAY: 9,
     WIN:10,
     LOADING_HIGHSCORE:12,
+    LOADING_GAMEOVER:13,
 };
 
 //Identificador de tipo Sprite (ID)

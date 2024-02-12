@@ -78,7 +78,7 @@ export default {
     playerName:"",
 
     lastFrameTime:0,
-
+    lastTimeSpawn: 130,
 
 
 

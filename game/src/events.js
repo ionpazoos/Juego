@@ -73,16 +73,15 @@ export function updateMusic(){
 }
 // Función para manejar la entrada de teclado
 export function handleKeyPressAZ(key) {
-    updatekeytime();
-    console.log(globals.keytime);
+    
     // Verificar si el jugador ha presionado una tecla alfabética
-    console.log(globals.playerName.length);
-    if (key.match(/[a-zA-Z]/) && globals.playerName.length < 3 && globals.keytime === 0) {
+    console.log(globals.keytime.value);
+    if (key.match(/[a-zA-Z]/) && globals.playerName.length < 3 && globals.keytime.value === 0) {
       
-        globals.playerName += key.toUpperCase(); // Agregar la letra al nombre del jugador
+        globals.playerName += key; // Agregar la letra al nombre del jugador
         console.log('Nombre actual:', globals.playerName);
 
-        globals.keytime = 1;
+        globals.keytime.value = 1;
     }
 }
 

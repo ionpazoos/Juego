@@ -56,12 +56,17 @@ export default function update(){
         case Game.CONTROLS:
            
         break;
-
+        case Game.LOADING_GAMEOVER:
+           globals.particles = [];
+           globals.sprites = [];
+           globals.gameState = Game.GAMEOVER;
+        break;
         case Game.GAMEOVER:
         //    mostrarFormulario();
         createRandomShineParticle();
         updateparticles();
-        interactgameover()
+        interactgameover();
+        updatekeyTime();
 
         break;
     
@@ -72,7 +77,6 @@ export default function update(){
 
 
 function playGame(){
-    // ... A completar
    
     updateSprites();
     updateLevelTime();
@@ -170,11 +174,11 @@ function gameover(){
     const row = Math.floor(globals.sprites[0].yPos / brickSize);
 
     if(globals.life <=0){
-        globals.gameState = Game.GAMEOVER;
+        globals.gameState = Game.LOADING_GAMEOVER;
     }
     if(row >= 30){
 
-        globals.gameState = Game.GAMEOVER;
+        globals.gameState = Game.LOADING_GAMEOVER;
             
     }
 }
@@ -1065,10 +1069,14 @@ function  updateConfetiParticle(particle){
             break;
             default:
     }
+
     particle.physics.vy += particle.physics.ay * globals.deltaTime;
-
-
     particle.yPos += (particle.physics.vy * globals.deltaTime);
+
+       // Mover la partícula de lado a lado con una oscilación más lenta en el eje X
+       const swayAmount = 10; // Ajusta este valor según lo deseado para el balanceo
+       const swaySpeed = 0.2; // Ajusta este valor para controlar la velocidad de la oscilación en X, cuanto menor, más lento
+       particle.xPos += Math.sin(particle.yPos * 0.1) * swayAmount * swaySpeed;
 }
 function  updateShineParticle(particle){
 
@@ -1125,11 +1133,18 @@ function createRandomconfetiParticle() {
 }
 
 function dificulti(){
-    let lastTimeSpawn = 130;
-    console.log("time:" + globals.leveltime.value );
-    if((lastTimeSpawn - 10) === globals.leveltime.value){
+     
+    
+    if((globals.lastTimeSpawn - 10) === globals.leveltime.value){
+        
         initvillan(globals.sprites[0].xPos + 100,globals.sprites[0].xPos - 30);
-        lastTimeSpawn = globals.leveltime.value;
+        globals.lastTimeSpawn = globals.leveltime.value;
+        console.log("spawn")
+    }
+
+    if(globals.sprites[0].xPos > 200){
+        
+        //por completar
     }
 }
 }
