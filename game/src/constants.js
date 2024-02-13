@@ -202,4 +202,5 @@ export const Sounds = {
     GAME_MUSIC: 0, 
     JUMP: 1,
     HIGHSCORE:2,
+    MENU:3,
 }

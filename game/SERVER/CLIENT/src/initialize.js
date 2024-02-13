@@ -45,7 +45,7 @@ function createCards(data)
     globals.cards = [];
     for (let i = 0; i < data.length; ++i)
     {
-        card= new Card(
+        card = new Card(
         0,
         0,
         data[i].id,

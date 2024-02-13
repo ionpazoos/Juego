@@ -38,9 +38,11 @@
             $host = $cfg['servidor'];
             $user = $cfg['usuario'];
             $pass = $cfg['password'];
-
-            $conn_string = "host=$host dbname=$db user=$user password=$pass";
+            $port = $cfg['puerto']; 
+            
+            $conn_string = "host=$host port=$port dbname=$db user=$user password=$pass"; // Agregamos el puerto a la cadena de conexión
             $this->dbh = pg_connect($conn_string);
+            
 
             if(!$this->dbh)
             {

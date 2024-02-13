@@ -1,5 +1,13 @@
 <?php
 
+// Permitir solicitudes desde cualquier origen
+header("Access-Control-Allow-Origin: *");
+// Permitir solicitudes con el método POST
+header("Access-Control-Allow-Methods: POST");
+// Permitir que el contenido sea leído por JavaScript
+header("Access-Control-Allow-Headers: Content-Type");
+
+
 // Habilitar el registro de errores en un archivo
 ini_set('log_errors', 1);
 ini_set('error_log', 'phperrors.log');
@@ -10,8 +18,14 @@ $json = file_get_contents('php://input');
 // Decodificar el JSON a un arreglo asociativo
 $data = json_decode($json, true);
 
+if ($data === null) {
+    // Si hay un error en la decodificación, registrar el error y terminar la ejecución del script
+    error_log("Error al decodificar los datos JSON: " . json_last_error_msg());
+    die("Error al decodificar los datos JSON.");
+}
+
 // Verificar si los datos están presentes
-$playerName = isset($data['player_name']) ? $data['player_name'] : null;
+$playerName = isset($data['name']) ? $data['name'] : null;
 $score = isset($data['score']) ? $data['score'] : null;
 
 // Verificar si los datos se recibieron correctamente
@@ -19,6 +33,11 @@ if ($playerName === null || $score === null) {
     // Registrar el error y terminar la ejecución del script
     error_log("Datos no recibidos correctamente. Player: $playerName");
     
+}
+if ($score === null || $score === '') {
+    // Registrar el error y terminar la ejecución del script
+    error_log("El puntaje recibido es inválido.");
+    die("El puntaje recibido es inválido.");
 }
 
 // Establecer los detalles de la conexión a la base de datos (reemplaza con tus propios detalles de conexión)

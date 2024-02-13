@@ -121,6 +121,13 @@ function loadAssets(){
     globals.sounds.push(highScore);
     globals.assetsToLoad.push(highScore);
 
+    let menu = document.querySelector('#menu');
+    menu.addEventListener("canplaytrhough",loadHandler,false);
+    menu.addEventListener("timeupdate",updateMusic,false);
+    menu.load();
+    globals.sounds.push(menu);
+    globals.assetsToLoad.push(menu);
+
    
 }
 
@@ -161,7 +168,7 @@ function initSprites() {
     initskeleton(150);
     initskeleton(2600);
     initbee();
-    initcaballero();
+    // initcaballero();
     initsupersayan();
     initvillan(800);
     initvillan(2000);

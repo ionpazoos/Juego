@@ -61,7 +61,7 @@ export default {
 
     score: 50,
     highScore: 100,
-    menuOptions : ["New Game", "Controls", "History", "High Score"],
+    menuOptions : ["New Game", "Controls", "Story", "High Score"],
     selectedOption:0,
 
     //papers

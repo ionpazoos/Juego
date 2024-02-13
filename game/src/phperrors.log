@@ -279,3 +279,117 @@ LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
 [13-Feb-2024 08:43:11 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
 LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
                                                          ^
+[13-Feb-2024 10:32:59 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 10:33:00 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 61
+[13-Feb-2024 10:33:00 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 10:33:37 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 10:33:37 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 61
+[13-Feb-2024 10:33:37 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 10:37:07 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 10:37:07 Europe/Berlin] El puntaje recibido es inválido.
+[13-Feb-2024 10:39:36 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:42:49 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:43:24 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:44:08 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:44:19 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:50:45 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:50:46 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in /home/ion/Documentos/juego/game/src/score.php on line 95
+[13-Feb-2024 10:50:46 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 28.005)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 98
+[13-Feb-2024 10:50:46 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 28.005)
+                                                    ^
+[13-Feb-2024 10:52:58 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:52:58 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in /home/ion/Documentos/juego/game/src/score.php on line 95
+[13-Feb-2024 10:52:58 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 28.348)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 98
+[13-Feb-2024 10:52:58 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 28.348)
+                                                    ^
+[13-Feb-2024 10:54:33 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:54:33 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 64
+[13-Feb-2024 10:54:33 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 91
+[13-Feb-2024 10:54:33 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  value too long for type character varying(3) in /home/ion/Documentos/juego/game/src/score.php on line 92
+[13-Feb-2024 10:54:33 Europe/Berlin] Error al insertar el nuevo jugador: ERROR:  value too long for type character varying(3)
+[13-Feb-2024 10:55:40 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:55:41 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 64
+[13-Feb-2024 10:55:41 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 91
+[13-Feb-2024 10:55:41 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  value too long for type character varying(3) in /home/ion/Documentos/juego/game/src/score.php on line 92
+[13-Feb-2024 10:55:41 Europe/Berlin] Error al insertar el nuevo jugador: ERROR:  value too long for type character varying(3)
+[13-Feb-2024 10:57:01 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 10:57:05 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 64
+[13-Feb-2024 10:57:05 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 91
+[13-Feb-2024 10:57:06 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  value too long for type character varying(3) in /home/ion/Documentos/juego/game/src/score.php on line 92
+[13-Feb-2024 10:57:06 Europe/Berlin] Error al insertar el nuevo jugador: ERROR:  value too long for type character varying(3)
+[13-Feb-2024 11:49:17 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 11:49:18 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 64
+[13-Feb-2024 11:49:18 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 91
+[13-Feb-2024 11:49:18 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  value too long for type character varying(3) in /home/ion/Documentos/juego/game/src/score.php on line 92
+[13-Feb-2024 11:49:18 Europe/Berlin] Error al insertar el nuevo jugador: ERROR:  value too long for type character varying(3)
+[13-Feb-2024 11:58:48 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 11:58:48 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 12:09:21 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 12:09:21 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 12:10:03 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:10:04 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in /home/ion/Documentos/juego/game/src/score.php on line 95
+[13-Feb-2024 12:10:04 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 4.35165)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 98
+[13-Feb-2024 12:10:04 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 4.35165)
+                                                    ^
+[13-Feb-2024 12:12:17 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:12:17 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 64
+[13-Feb-2024 12:12:17 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 91
+[13-Feb-2024 12:12:18 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  value too long for type character varying(3) in /home/ion/Documentos/juego/game/src/score.php on line 92
+[13-Feb-2024 12:12:18 Europe/Berlin] Error al insertar el nuevo jugador: ERROR:  value too long for type character varying(3)
+[13-Feb-2024 12:13:59 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:13:59 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 64
+[13-Feb-2024 12:13:59 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 91
+[13-Feb-2024 12:13:59 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in /home/ion/Documentos/juego/game/src/score.php on line 95
+[13-Feb-2024 12:13:59 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 4.1976)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 98
+[13-Feb-2024 12:13:59 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 4.1976)
+                                                    ^
+[13-Feb-2024 12:14:23 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:14:23 Europe/Berlin] PHP Warning:  Array to string conversion in /home/ion/Documentos/juego/game/src/score.php on line 64
+[13-Feb-2024 12:24:18 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:24:19 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in /home/ion/Documentos/juego/game/src/score.php on line 95
+[13-Feb-2024 12:24:20 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 4.82325)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 98
+[13-Feb-2024 12:24:20 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 4.82325)
+                                                    ^
+[13-Feb-2024 12:25:00 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:25:16 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:25:25 Europe/Berlin]    
+[13-Feb-2024 12:30:40 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:30:44 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type bool in /home/ion/Documentos/juego/game/src/score.php on line 95
+[13-Feb-2024 12:30:44 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;,&quot;
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 4.60965)
+                                                    ^ in /home/ion/Documentos/juego/game/src/score.php on line 98
+[13-Feb-2024 12:30:44 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ","
+LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 4.60965)
+                                                    ^
+[13-Feb-2024 12:35:55 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:35:56 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  column &quot;ion&quot; does not exist
+LINE 1: SELECT playerid FROM Players WHERE name = ion
+                                                  ^ in /home/ion/Documentos/juego/game/src/score.php on line 65
+[13-Feb-2024 12:35:56 Europe/Berlin] Error en la consulta: ERROR:  column "ion" does not exist
+LINE 1: SELECT playerid FROM Players WHERE name = ion
+                                                  ^
+[13-Feb-2024 12:37:49 Europe/Berlin] Error al decodificar los datos JSON: Syntax error
+[13-Feb-2024 12:51:42 Europe/Berlin] Error al decodificar los datos JSON: Syntax error

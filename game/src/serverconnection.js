@@ -1,14 +1,15 @@
 import globals from "./globals.js";
 
-export  function enviarPuntuacion() {
+export  function enviarPuntuacion(name) {
     console.log("enviando...");
     
     
     var data = {
-        player_name: "globals.playerName",
-        score: 200
+        name: name,
+        score: globals.score,
     };
-    console.log(JSON.stringify(data));
+    console.log(`{"name": "${name}", "score": ${globals.score}}`);
+
     fetch('http://localhost:3000/game/src/score.php', {
         method: 'POST',
         headers: {

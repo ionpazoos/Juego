@@ -32,17 +32,13 @@ export default function update(){
                 loadPlaying();
                 break;
         case Game.LOADING_HIGHSCORE:
-                    initplayers();
-              globals.sprites = [];
-            globals.currentlevel = 3;
-            globals.level = globals.levels[globals.currentlevel];
-            globals.sounds[Sounds.GAME_MUSIC].volume = 0;
-            globals.sounds[Sounds.HIGHSCORE].play();
-            globals.sounds[Sounds.HIGHSCORE].volume = 1;
-            globals.gameState = Game.HIGHSCORE;      
+            loadhighscore();
+                       
                 break; 
 
         case Game.NEWGAME:
+            globals.sounds[Sounds.MENU].play();
+            globals.sounds[Sounds.MENU].volume = 1;
                 newgame();
           
                 break;
@@ -66,7 +62,6 @@ export default function update(){
            globals.gameState = Game.GAMEOVER;
         break;
         case Game.GAMEOVER:
-        //    mostrarFormulario();
         createRandomShineParticle();
         updateparticles();
         interactgameover();
@@ -103,7 +98,21 @@ function newgame(){
     interactMenu();
     createRandomRainParticle();
     updateparticles();
+    playSound();
+    globals.sounds[Sounds.MENU].play();
+    globals.sounds[Sounds.MENU].volume = 1;
     
+}
+function loadhighscore(){
+    initplayers();
+              globals.sprites = [];
+            globals.currentlevel = 3;
+            globals.level = globals.levels[globals.currentlevel];
+            globals.sounds[Sounds.GAME_MUSIC].volume = 0;
+            globals.sounds[Sounds.HIGHSCORE].play();
+            globals.sounds[Sounds.HIGHSCORE].volume = 1;
+            globals.sounds[Sounds.MENU].volume = 0;
+            globals.gameState = Game.HIGHSCORE;   
 }
 function loadPlaying(){
     restoreDefaultValues();
@@ -113,6 +122,7 @@ function loadPlaying(){
     initSprites();
     globals.gameState = Game.PLAYING
     console.log("GAME LOADED");
+    globals.sounds[Sounds.MENU].volume = 0;
 }
 function drawRotatingBallSpinner() {
     // Borramos la pantalla entera
@@ -163,6 +173,8 @@ function loadNewGame(){
     globals.level = globals.levels[globals.currentlevel];
     initSpritesNewGame();    
     globals.gameState = Game.NEWGAME;
+    globals.currentSound = Sounds.MENU;
+    
 }
 
 function updateSprites(){
@@ -481,7 +493,7 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
 function updatescore(){
     
-    globals.score += globals.deltaTime * 10  ;
+    globals.score += globals.deltaTime * 1.5  ;
 
     if(globals.score > globals.highScore){
         globals.highScore =  globals.score;
@@ -641,7 +653,8 @@ function interactgameover() {
         // Verificar si se han ingresado tres letras
         if (globals.playerName.length === 3) {
             // Guardar el nombre del jugador y pasar al estado de carga de los puntajes altos
-            enviarPuntuacion();
+            console.log(globals.playerName);
+            enviarPuntuacion(globals.playerName);
             globals.gameState = Game.LOADING_HIGHSCORE;
         } else {
             console.log('Por favor, ingresa tres letras para tu nombre.');
@@ -669,6 +682,7 @@ function interactloading(){
     updatekeyTime(); 
 
         if( globals.action.space){
+            playSound();
             globals.gameState = Game.LOADING_MENU;
         }
 
