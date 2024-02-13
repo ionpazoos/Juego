@@ -10,7 +10,7 @@ export default function render(){
     switch(globals.gameState){
 
         case Game.LOADING:
-            //Draw loading spinner
+            drawSpinnerAndMessage()
             break;
 
         case Game.PLAYING:
@@ -66,6 +66,46 @@ function drawGame(){
 
 }
 
+function drawSpinnerAndMessage() {
+    // Borramos la pantalla entera
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+
+    // Definir propiedades del spinner
+    const centerX = globals.canvas.width / 2;
+    const centerY = globals.canvas.height / 2;
+    const radius = 10;
+    const ballRadius = 5;
+    const spinnerColor = '#000000'; // Color negro para la bola y el texto
+
+    // Calcular la posición de la bola en función del tiempo
+    const angle = Date.now() / 1000; // Velocidad de rotación
+
+    // Calcular la posición de la bola
+    const ballX = centerX + Math.cos(angle) * radius;
+    const ballY = centerY + Math.sin(angle) * radius;
+
+    // Dibujar el círculo del spinner
+    globals.ctx.beginPath();
+    globals.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    globals.ctx.lineWidth = 1;
+    globals.ctx.strokeStyle = spinnerColor;
+    globals.ctx.stroke();
+
+    // Dibujar la bola
+    globals.ctx.beginPath();
+    globals.ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+    globals.ctx.fillStyle = spinnerColor;
+    globals.ctx.fill();
+
+    // Dibujar texto "Presiona espacio para continuar"
+    const message = "Presiona espacio para continuar";
+    globals.ctx.font = "20px Arial";
+    globals.ctx.fillStyle = spinnerColor; // Color negro
+    globals.ctx.textAlign = "center";
+    globals.ctx.fillText(message, 250, 150);
+}
+
+
 function drawNewGame(){
     
     // Borramos la pantalla entera
@@ -75,7 +115,7 @@ function drawNewGame(){
     renderTitle();
 
 
-globals.ctx.drawImage(globals.tileSets[0], 10, globals.canvas.width +30, globals.canvas.height, 200, 0, 0, globals.canvas.width+20, globals.canvas.height);
+    globals.ctx.drawImage(globals.tileSets[0], 10, globals.canvas.width +30, globals.canvas.height, 200, 0, 0, globals.canvas.width+20, globals.canvas.height);
 
 
   
@@ -677,28 +717,28 @@ function renderHUD(){
     //Draw score
     globals.ctxHUD.font = '17px upheavtt';
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("SCORE", 8, 16);
+    globals.ctxHUD.fillText("SCORE", 32, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
-    globals.ctxHUD.fillText(" " + score, 3, 32);
+    globals.ctxHUD.fillText(" " + score, 32, 32);
 
     //Draw High Score
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("Health", 72, 16);
-    globals.ctxHUD.fillText("High Score", 125, 16);
+    globals.ctxHUD.fillText("Health", 100, 16);
+    globals.ctxHUD.fillText("High Score", 165, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
-    globals.ctxHUD.fillText(" " + highScore, 120, 32);
+    globals.ctxHUD.fillText(" " + highScore, 165, 32);
 
-    globals.ctxHUD.fillText(" " + globals.life, 77, 32);
+    globals.ctxHUD.fillText(" " + globals.life, 100, 32);
 
     
     //Draw time
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("TIME", 221, 16);
-    globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 200, 14, time/3, 32);
+    globals.ctxHUD.fillText("TIME", 240, 16);
+    globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 220, 14, time/3, 32);
 
      // rage
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("RAGE", 305, 25);
+    globals.ctxHUD.fillText("RAGE", 315, 25);
 
     
     drawSpriteshud();
@@ -710,7 +750,7 @@ function renderHUD(){
 function renderTitle(){
     globals.ctxHUD.font = '30px upheavtt';
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("Haserrearen esnatzea", 80, 26);
+    globals.ctxHUD.fillText("Haserrearen esnatzea", 200, 26);
 }
 
 function rendercontrols(){

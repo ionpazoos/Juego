@@ -1,10 +1,4 @@
 <?php
-// Permitir acceso desde cualquier origen
-header("Access-Control-Allow-Origin: *");
-// Permitir los métodos GET, POST, PUT, DELETE y OPTIONS
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-// Permitir ciertos encabezados
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Habilitar el registro de errores en un archivo
 ini_set('log_errors', 1);
@@ -24,7 +18,7 @@ $score = isset($data['score']) ? $data['score'] : null;
 if ($playerName === null || $score === null) {
     // Registrar el error y terminar la ejecución del script
     error_log("Datos no recibidos correctamente. Player: $playerName");
-    die("Datos no recibidos correctamente. Player: $playerName");
+    
 }
 
 // Establecer los detalles de la conexión a la base de datos (reemplaza con tus propios detalles de conexión)

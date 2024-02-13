@@ -9,9 +9,9 @@ import Physics from "./Physics.js";
 import { keyDownHandeler,keyupHandeler,updateMusic,handleKeyPressAZ } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
-import {ExplosionParticles,particles} from "./particle.js";
+import {ExplosionParticles} from "./particle.js";
 import Jugador from "./highscore.js";
-import {cargarMejoresPuntuaciones,enviarPuntuacion} from "./serverconnection.js";
+import {cargarMejoresPuntuaciones} from "./serverconnection.js";
 
 
 
@@ -43,7 +43,7 @@ function initVars(){
     globals.life = 300;
 
     //Inicializamos el estado del juego
-    globals.gameState = Game.LOADING_MENU;
+    globals.gameState = Game.LOADING;
 
     globals.action = {
         moveLeft: false,
@@ -61,13 +61,7 @@ function initEvents(){
     window.addEventListener("keydown",keyDownHandeler,false);
     window.addEventListener("keyup",keyupHandeler,false);
 
-        // Agrega un EventListener al botón
-        document.getElementById('enviarPuntuacionButton').addEventListener('click', function() {
-            console.log("click");
-            // Llamada a la función enviarPuntuacion
-            enviarPuntuacion();
-        });
-
+            
     
 }
 
@@ -119,6 +113,13 @@ function loadAssets(){
     jumpSound.load();
     globals.sounds.push(jumpSound);
     globals.assetsToLoad.push(jumpSound);
+
+    let highScore = document.querySelector('#HighScore');
+    highScore.addEventListener("canplaytrhough",loadHandler,false);
+    highScore.addEventListener("timeupdate",updateMusic,false);
+    highScore.load();
+    globals.sounds.push(highScore);
+    globals.assetsToLoad.push(highScore);
 
    
 }

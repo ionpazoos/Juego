@@ -2,12 +2,11 @@ import globals from "./globals.js";
 
 export  function enviarPuntuacion() {
     console.log("enviando...");
-    var playerName = document.getElementById('playerName').value;
     
-
+    
     var data = {
-        player_name: playerName,
-        score: globals.score
+        player_name: "globals.playerName",
+        score: 200
     };
     console.log(JSON.stringify(data));
     fetch('http://localhost:3000/game/src/score.php', {

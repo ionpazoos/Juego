@@ -2,7 +2,7 @@ import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} fr
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
 import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initplayers, initconfeti,initKeyEventsGameOver } from "./initialize.js";
-
+import { enviarPuntuacion } from "./serverconnection.js";
 
 
 
@@ -13,6 +13,8 @@ export default function update(){
 
         case Game.LOADING:
             console.log("Loading assets...");
+            drawRotatingBallSpinner();
+            interactloading();
             break;
 
         case Game.PLAYING:
@@ -34,8 +36,10 @@ export default function update(){
               globals.sprites = [];
             globals.currentlevel = 3;
             globals.level = globals.levels[globals.currentlevel];
-            globals.gameState = Game.HIGHSCORE;
-                    
+            globals.sounds[Sounds.GAME_MUSIC].volume = 0;
+            globals.sounds[Sounds.HIGHSCORE].play();
+            globals.sounds[Sounds.HIGHSCORE].volume = 1;
+            globals.gameState = Game.HIGHSCORE;      
                 break; 
 
         case Game.NEWGAME:
@@ -79,6 +83,7 @@ export default function update(){
 function playGame(){
    
     updateSprites();
+    updateSprite(globals.sprites_hud[0]);
     updateLevelTime();
     updatelifeTime();
     detectCollision();
@@ -109,6 +114,46 @@ function loadPlaying(){
     globals.gameState = Game.PLAYING
     console.log("GAME LOADED");
 }
+function drawRotatingBallSpinner() {
+    // Borramos la pantalla entera
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+
+    // Definir propiedades del spinner
+    const centerX = globals.canvas.width / 2;
+    const centerY = globals.canvas.height / 2;
+    const radius = 30;
+    const ballRadius = 10;
+    const spinnerColor = '#000000'; // Color negro para la bola y el texto
+
+    // Calcular la posición de la bola en función del tiempo
+    const angle = Date.now() / 1000; // Velocidad de rotación
+
+    // Calcular la posición de la bola
+    const ballX = centerX + Math.cos(angle) * radius;
+    const ballY = centerY + Math.sin(angle) * radius;
+
+    // Dibujar el círculo del spinner
+    globals.ctx.beginPath();
+    globals.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    globals.ctx.lineWidth = 8;
+    globals.ctx.strokeStyle = spinnerColor;
+    globals.ctx.stroke();
+
+    // Dibujar la bola
+    globals.ctx.beginPath();
+    globals.ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+    globals.ctx.fillStyle = spinnerColor;
+    globals.ctx.fill();
+
+    // Dibujar texto "Presiona espacio para continuar"
+    const message = "Presiona espacio para continuar";
+    globals.ctxHUD.font = "20px Arial";
+    globals.ctxHUD.fillStyle = spinnerColor; // Color negro
+    globals.ctxHUD.textAlign = "center";
+    globals.ctxHUD.fillText(message, centerX, centerY + radius + 30);
+}
+
 function playhistori(){
      interactstory();
 }
@@ -136,7 +181,7 @@ function updateSprites(){
         
     }
 
-    // updateSprite(globals.sprites_hud[0]);
+
 }
 
 function updatelife() {
@@ -596,6 +641,7 @@ function interactgameover() {
         // Verificar si se han ingresado tres letras
         if (globals.playerName.length === 3) {
             // Guardar el nombre del jugador y pasar al estado de carga de los puntajes altos
+            enviarPuntuacion();
             globals.gameState = Game.LOADING_HIGHSCORE;
         } else {
             console.log('Por favor, ingresa tres letras para tu nombre.');
@@ -610,20 +656,23 @@ function interactgameover() {
 
 
 function interacthigscores(){
-    updatekeyTime();
-    
-    
-
+    updatekeyTime(); 
 
         if( globals.action.esc){
             globals.gameState = Game.LOADING_MENU;
         }
-    
-        
-    
+
     globals.keytime.value = 1;
+}
 
+function interactloading(){
+    updatekeyTime(); 
 
+        if( globals.action.space){
+            globals.gameState = Game.LOADING_MENU;
+        }
+
+    globals.keytime.value = 1;
 }
 
 
@@ -1144,7 +1193,7 @@ function dificulti(){
 
     if(globals.sprites[0].xPos > 200){
         
-        //por completar
+        
     }
 }
 }

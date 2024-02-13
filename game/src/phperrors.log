@@ -220,3 +220,62 @@ LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 50)
 LINE 1: INSERT INTO Scores(playerid, score) VALUES (, 50)
                                                     ^
 [12-Feb-2024 12:20:12 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:18:13 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:24:09 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:24:17 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:30:11 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:30:13 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 67
+[13-Feb-2024 08:30:13 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 08:35:31 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:35:31 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 67
+[13-Feb-2024 08:35:31 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 08:35:31 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:35:32 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 67
+[13-Feb-2024 08:35:32 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 08:38:03 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:38:07 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 67
+[13-Feb-2024 08:38:07 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 08:39:06 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:39:06 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 67
+[13-Feb-2024 08:39:06 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 08:41:44 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:41:44 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 61
+[13-Feb-2024 08:41:44 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 08:41:55 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:41:55 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 61
+[13-Feb-2024 08:41:55 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
+[13-Feb-2024 08:43:10 Europe/Berlin] Datos no recibidos correctamente. Player: 
+[13-Feb-2024 08:43:11 Europe/Berlin] PHP Warning:  pg_query(): Query failed: ERROR:  syntax error at or near &quot;)&quot;
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^ in /home/ion/Documentos/juego/game/src/score.php on line 61
+[13-Feb-2024 08:43:11 Europe/Berlin] Error al insertar el puntaje: ERROR:  syntax error at or near ")"
+LINE 1: INSERT INTO Scores (playerid, score) VALUES (17, )
+                                                         ^
