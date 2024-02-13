@@ -2,7 +2,7 @@ import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} fr
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
 import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initplayers, initconfeti,initKeyEventsGameOver } from "./initialize.js";
-import { enviarPuntuacion } from "./serverconnection.js";
+import { SendData, getData } from "./events.js";
 
 
 
@@ -104,7 +104,7 @@ function newgame(){
     
 }
 function loadhighscore(){
-    initplayers();
+                getData();
               globals.sprites = [];
             globals.currentlevel = 3;
             globals.level = globals.levels[globals.currentlevel];
@@ -654,7 +654,7 @@ function interactgameover() {
         if (globals.playerName.length === 3) {
             // Guardar el nombre del jugador y pasar al estado de carga de los puntajes altos
             console.log(globals.playerName);
-            enviarPuntuacion(globals.playerName);
+            SendData();
             globals.gameState = Game.LOADING_HIGHSCORE;
         } else {
             console.log('Por favor, ingresa tres letras para tu nombre.');

@@ -1,5 +1,15 @@
 <?php
+    // Permitir el acceso desde cualquier origen
+    header("Access-Control-Allow-Origin: *");
 
+    // Permitir los métodos de solicitud GET, POST, PUT y OPTIONS
+    header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS");
+    
+    // Permitir los encabezados de solicitud Content-Type y Authorization
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
+    
+    // Permitir que las cookies se incluyan en las solicitudes
+    header("Access-Control-Allow-Credentials: true");
     //EL resto de lcases heredan esta clase realiza la conexion con mysqli y singleton
 
     require_once "login_data.php";
@@ -32,15 +42,23 @@
 
         private function __construct()
         {
-            global $cfg;
+            // global $cfg;
 
-            $db = $cfg['nombre_bd'];
-            $host = $cfg['servidor'];
-            $user = $cfg['usuario'];
-            $pass = $cfg['password'];
-            $port = $cfg['puerto']; 
+            // $db = $cfg['db'];
+            // $host = $cfg['host'];
+            // $user = $cfg['user'];
+            // $pass = $cfg['pass'];
+            // $port = $cfg['port']; 
+
+            $host = "ep-twilight-bar-a2o4mmy3.eu-central-1.aws.neon.tech";
+            $user = "jon.pazos";
+            $pass = "FUX89CDqowsA";
+            $db = "HighScores";
+            $port = "5432";
             
-            $conn_string = "host=$host port=$port dbname=$db user=$user password=$pass"; // Agregamos el puerto a la cadena de conexión
+            $conn_string = "host=$host port=$port dbname=$db user=$user password=$pass";
+ 
+
             $this->dbh = pg_connect($conn_string);
             
 

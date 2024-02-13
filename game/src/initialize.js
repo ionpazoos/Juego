@@ -6,12 +6,12 @@ import globals from "./globals.js";
 import { Level, level1,menu,highScore,controls, level2} from "./levels.js";
 import Time from "./timer.js"
 import Physics from "./Physics.js";
-import { keyDownHandeler,keyupHandeler,updateMusic,handleKeyPressAZ } from "./events.js";
+import { keyDownHandeler,keyupHandeler,updateMusic,handleKeyPressAZ, getData } from "./events.js";
 import HitBox from "./Hitbox.js";
 import Camera from "./camara.js";
 import {ExplosionParticles} from "./particle.js";
 import Jugador from "./highscore.js";
-import {cargarMejoresPuntuaciones} from "./serverconnection.js";
+
 
 
 
@@ -443,10 +443,10 @@ function initGrass(x,y){
 
 }
 
-async function initplayers() {
+async function initplayers(data) {
     try {
         // Espera a que se resuelva la promesa devuelta por cargarMejoresPuntuaciones()
-        const playersinfo = await cargarMejoresPuntuaciones();
+        const playersinfo = data;
         
         console.log(playersinfo);
 
@@ -454,7 +454,7 @@ async function initplayers() {
         for (let i = 0; i < playersinfo.length; i++) {
             const jugadorData = playersinfo[i];
             console.log(playersinfo[i]);
-            const jugador = new Jugador(0, jugadorData.player_name, jugadorData.best_score);
+            const jugador = new Jugador(jugadorData.id, jugadorData.nombre, jugadorData.score);
             // Agrega el jugador creado al arreglo de jugadores
             globals.Players.push(jugador);
         }
