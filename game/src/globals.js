@@ -76,7 +76,7 @@ export default {
     player:{},
     Players:[],
     playerName:"",
-    playerId:0,
+    playerId: 0,
 
     lastFrameTime:0,
     lastTimeSpawn: 130,

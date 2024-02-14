@@ -509,32 +509,82 @@ function renderMenu() {
 
 
 function renderscore() {
-
     let x = 50;
     let count = 0;
 
-    globals.ctx.font = '16px Arial'; // Establecer el tamaño y la fuente del texto
+    globals.ctx.font = '16px Arial'; // Establecer el tamaño y la fuente del texto predeterminado
     globals.ctx.fillStyle = 'black';
-   
-    
-    // console.log(globals.player.id);
-    for (let i = globals.player.id ; i < globals.Players.length; i++) {
+
+    let startIndex = globals.playerId + 4;
+    let endIndex = globals.playerId - 5;
+
+    // Ajustar el índice de inicio y fin si están fuera de los límites del array
+    if (startIndex >= globals.Players.length) {
+        endIndex -= startIndex - (globals.Players.length - 1);
+        startIndex = globals.Players.length - 1;
+    }
+    if (endIndex < 0) {
+        startIndex -= endIndex;
+        endIndex = 0;
+    }
+
+    for (let i = startIndex; i >= endIndex; i--) {
         let jugador = globals.Players[i];
         
-
         // Dibujar el texto del jugador
-        globals.ctx.fillText((i+1)+"."+ jugador.name +": "+ jugador.score, x , 100);
+        if (i === globals.playerId) {
+            
+            // Si es el jugador actual, aumentar el tamaño del texto y hacerlo más grande
+            globals.ctx.font = 'bold 20px Arial';
+            globals.ctx.fillText((i + 1) + "." + jugador.name + ": " + jugador.score, x, 70);
+            globals.ctx.drawImage(globals.tileSets[0], 30, 0, 32, 30, x-2, 80, 64, 64);
+        } else {
+            // Si no es el jugador actual, usar el tamaño de fuente predeterminado
+            globals.ctx.font = '16px Arial';
+            globals.ctx.fillText((i + 1) + "." + jugador.name + ": " + jugador.score, x, 100);
+            globals.ctx.drawImage(globals.tileSets[0], 30, 0, 32, 30, x, 110, 32, 32);
+        }
 
-        // Dibujar una imagen (en tu caso, un icono de jugador)
-        globals.ctx.drawImage(globals.tileSets[0], 30,0 , 32, 32, x, 110, 32, 32);
 
         x += 100; // Incrementar la posición x para el próximo jugador
         count++;
-        if(count === 10){
+        if (count === 10) {
             break;
         }
     }
+
+    // Restaurar el tamaño de fuente predeterminado al finalizar el bucle
+    globals.ctx.font = '16px Arial';
+
+    // Si el bucle no ha alcanzado 10 jugadores, dibujar los jugadores restantes desde el principio del array
+    if (count < 10) {
+        for (let i = startIndex - 1; i >= 0; i--) {
+            let jugador = globals.Players[i];
+            
+            // Dibujar el texto del jugador
+            if (i === globals.playerId) {
+                globals.ctx.font = 'bold 20px Arial';
+                
+                globals.ctx.drawImage(globals.tileSets[0], 30, 0, 32, 30, x-2, 80, 64, 64);
+                // Dibujar una imagen (en tu caso, un icono de jugador)
+            } else {
+                globals.ctx.font = '16px Arial';
+                globals.ctx.fillText((i + 1) + "." + jugador.name + ": " + jugador.score, x, 100);
+                // Dibujar una imagen (en tu caso, un icono de jugador)
+            globals.ctx.drawImage(globals.tileSets[0], 30, 0, 32, 30, x, 110, 32, 32);
+            }
+
+            
+
+            x += 100; // Incrementar la posición x para el próximo jugador
+            count++;
+            if (count === 10) {
+                break;
+            }
+        }
+    }
 }
+
 
 
 function renderMap() {
@@ -858,7 +908,7 @@ function renderconfetiParticle(particle){
 
  
     globals.ctx.beginPath();
-    globals.ctx.drawImage(globals.tileSets[0],64,2100,32,32,particle.xPos, particle.yPos, 10,10);
+    globals.ctx.drawImage(globals.tileSets[0],0,2100,32,32,particle.xPos, particle.yPos, 10,10);
     globals.ctx.closePath();
 }
 

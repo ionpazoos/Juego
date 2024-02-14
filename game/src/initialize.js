@@ -74,7 +74,7 @@ function initKeyEventsGameOver(){
 function initTimers(){
     globals.leveltime = new Time(360,0.5);
     globals.lifetime = new Time(15,1);
-    globals.keytime = new Time(1,0.08);
+    globals.keytime = new Time(0.2,0,2);
     globals.villantime = new Time(10,1);
     
 }

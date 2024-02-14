@@ -108,10 +108,13 @@ export function getData()
                 if(this.responseText != null)
                 {
                     const resultJSON = JSON.parse(this.responseText);
-                    console.log (resultJSON);
-                    if(globals.playerName === ""){globals.playerId = 0;
+                    
+                    if(globals.playerName === ""){
+                        globals.playerId = 0;
+                        console.log (globals.playerId);
                     }
-                    else{globals.playerId = resultJSON.length;
+                    else{
+                        globals.playerId = resultJSON.length - 1;
                         console.log("0");}
                     
                     //INiciamos los datos del juego
@@ -200,23 +203,26 @@ function ordenarPorScore() {
             }
         }
     }
-    console.log(globals.Players);
+    
 }
-function findactualplayer(){
-    for(let i = 0;i < globals.Players.length;i++){
-        if(globals.playerId === globals.Players[i].id){
-            console.log("asignado");
-            globals.player = globals.Players[i];
-            
-            break;
-
-        }
-        else{
-            globals.player = globals.Players[0];
-            console.log("player"+globals.player);
-        }
-        
+function findactualplayer() {
+    if (globals.playerName === "") {
+        // Si no hay un nombre de jugador ingresado, establece el playerId como el del primer jugador en el array
+        globals.playerId = 0;
+    } else {
+        // Si hay un nombre de jugador ingresado, establece el playerId como el último jugador en el array
+        globals.playerId = globals.Players.length;
     }
     
+    // Buscar el jugador en el array cuyo ID coincida con globals.playerId
+    for (let i = 0; i < globals.Players.length ; i++) {
+        if (globals.Players[i].id === globals.playerId) {
+            // Establecer el jugador actual como aquel cuyo ID coincide con globals.playerId
+            globals.player = globals.Players[i];
+            console.log("jugador encontrado");
+            break; // Salir del bucle una vez que se encuentre el jugador
+            
+        }
+    }
 }
 
