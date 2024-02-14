@@ -454,7 +454,7 @@ async function initplayers(data) {
         for (let i = 0; i < playersinfo.length; i++) {
             const jugadorData = playersinfo[i];
             console.log(playersinfo[i]);
-            const jugador = new Jugador(jugadorData.id, jugadorData.nombre, jugadorData.score);
+            const jugador = new Jugador(jugadorData.id, jugadorData.nombre, parseInt(jugadorData.score));
             // Agrega el jugador creado al arreglo de jugadores
             globals.Players.push(jugador);
 

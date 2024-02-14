@@ -4,6 +4,7 @@ import { initplayers } from "./initialize.js";
 
 
 
+
 export function keyDownHandeler(event){
 
     switch(event.keyCode){
@@ -111,6 +112,7 @@ export function getData()
 
                     //INiciamos los datos del juego
                     initplayers(resultJSON);
+                    ordenarPorScore();
                 }
                 else
                     alert("Communication error: no data received");
@@ -176,6 +178,24 @@ export function SendData(event) {
 
     request.responseType = "text";
     request.send(dataToSend);
+}
+
+function ordenarPorScore() {
+    let n = globals.Players.length;
+    
+    for (let i = 0; i < n - 1; i++) {
+       
+        for (let j = 0; j < n - i - 1; j++) {
+            if (globals.Players[j].score < globals.Players[j + 1].score) {
+                // Intercambiar elementos si el puntaje del Highscore en j es menor que el puntaje del Highscore en j + 1
+                let temp = globals.Players[j];
+                globals.Players[j] = globals.Players[j + 1];
+                globals.Players[j + 1] = temp;
+                
+            }
+        }
+    }
+    console.log(globals.Players);
 }
 
 
