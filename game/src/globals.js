@@ -73,9 +73,10 @@ export default {
 
     name: {} ,
 
-    player:[],
+    player:{},
     Players:[],
     playerName:"",
+    playerId:0,
 
     lastFrameTime:0,
     lastTimeSpawn: 130,

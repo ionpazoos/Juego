@@ -109,10 +109,15 @@ export function getData()
                 {
                     const resultJSON = JSON.parse(this.responseText);
                     console.log (resultJSON);
-
+                    if(globals.playerName === ""){globals.playerId = 0;
+                    }
+                    else{globals.playerId = resultJSON.length;
+                        console.log("0");}
+                    
                     //INiciamos los datos del juego
                     initplayers(resultJSON);
                     ordenarPorScore();
+                    findactualplayer();
                 }
                 else
                     alert("Communication error: no data received");
@@ -162,10 +167,10 @@ export function SendData(event) {
                     
                         const resultJSON = JSON.parse(this.responseText);
                         console.log("resultJSON: "+resultJSON);
-
+                        
                         // Inicializar los datos
                         initplayers(resultJSON);
-        
+                        
                     }
                  else {
                     alert("Communication error: No data received");
@@ -197,5 +202,21 @@ function ordenarPorScore() {
     }
     console.log(globals.Players);
 }
+function findactualplayer(){
+    for(let i = 0;i < globals.Players.length;i++){
+        if(globals.playerId === globals.Players[i].id){
+            console.log("asignado");
+            globals.player = globals.Players[i];
+            
+            break;
 
+        }
+        else{
+            globals.player = globals.Players[0];
+            console.log("player"+globals.player);
+        }
+        
+    }
+    
+}
 

@@ -113,7 +113,7 @@ function loadhighscore(){
             globals.sounds[Sounds.HIGHSCORE].volume = 1;
             globals.sounds[Sounds.MENU].volume = 0;
            
-             console.log(globals.Players);
+    
             globals.gameState = Game.HIGHSCORE;  
 
 }

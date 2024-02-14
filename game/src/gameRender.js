@@ -515,7 +515,10 @@ function renderscore() {
 
     globals.ctx.font = '16px Arial'; // Establecer el tamaño y la fuente del texto
     globals.ctx.fillStyle = 'black';
-    for (let i = 0; i < globals.Players.length; i++) {
+   
+    
+    // console.log(globals.player.id);
+    for (let i = globals.player.id ; i < globals.Players.length; i++) {
         let jugador = globals.Players[i];
         
 
