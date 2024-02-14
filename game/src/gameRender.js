@@ -511,6 +511,7 @@ function renderMenu() {
 function renderscore() {
 
     let x = 50;
+    let count = 0;
 
     globals.ctx.font = '16px Arial'; // Establecer el tamaño y la fuente del texto
     globals.ctx.fillStyle = 'black';
@@ -519,12 +520,16 @@ function renderscore() {
         
 
         // Dibujar el texto del jugador
-        globals.ctx.fillText((i+1)+"."+ jugador.name +":"+ jugador.score, x , 100);
+        globals.ctx.fillText((i+1)+"."+ jugador.name +": "+ jugador.score, x , 100);
 
         // Dibujar una imagen (en tu caso, un icono de jugador)
         globals.ctx.drawImage(globals.tileSets[0], 30,0 , 32, 32, x, 110, 32, 32);
 
         x += 100; // Incrementar la posición x para el próximo jugador
+        count++;
+        if(count === 10){
+            break;
+        }
     }
 }
 
@@ -707,7 +712,7 @@ function drawSpriteRectangle_hud(sprite){
 
 function renderHUD(){
 
-    //TEST: Datos metidos en bruto
+    
     const score = Math.floor(globals.score);
     const highScore = Math.floor(globals.highScore);
     const time = globals.leveltime.value;
@@ -723,14 +728,12 @@ function renderHUD(){
 
     //Draw High Score
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("Health", 100, 16);
+    
     globals.ctxHUD.fillText("High Score", 165, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
     globals.ctxHUD.fillText(" " + highScore, 165, 32);
 
-    globals.ctxHUD.fillText(" " + globals.life, 100, 32);
 
-    
     //Draw time
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("TIME", 240, 16);

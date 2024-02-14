@@ -1,7 +1,7 @@
 import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initplayers, initconfeti,initKeyEventsGameOver } from "./initialize.js";
+import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initconfeti,initKeyEventsGameOver } from "./initialize.js";
 import { SendData, getData } from "./events.js";
 
 
@@ -112,7 +112,10 @@ function loadhighscore(){
             globals.sounds[Sounds.HIGHSCORE].play();
             globals.sounds[Sounds.HIGHSCORE].volume = 1;
             globals.sounds[Sounds.MENU].volume = 0;
-            globals.gameState = Game.HIGHSCORE;   
+
+             console.log(globals.Players);
+            globals.gameState = Game.HIGHSCORE;  
+
 }
 function loadPlaying(){
     restoreDefaultValues();
@@ -936,8 +939,10 @@ function moveCameraRight(timestamp) {
     // Actualiza el tiempo del último fotograma
     globals.lastFrameTime = timestamp;
 
+    const playerlenth = 100;
+
     const brickSize = globals.level.imageSet.gridSize;
-    const nivelAncho = 70 * brickSize; // Ancho del nivel
+    const nivelAncho = 10 * playerlenth ; // Ancho del nivel
     
     globals.camara.y = 20; // Ajustar la posición vertical de la cámara
 
@@ -1209,6 +1214,19 @@ function dificulti(){
         
         
     }
+}
+
+function arrayorder(){
+    let unorderedarray = globals.Players.slice(); // Copia del array original para no modificarlo directamente
+
+    // Ordenar el array por puntajes de mayor a menor
+    unorderedarray.sort(function(a, b) {
+        return b.score - a.score;
+        
+    });
+    console.log(unorderedarray);
+    return unorderedarray;
+
 }
 }
 

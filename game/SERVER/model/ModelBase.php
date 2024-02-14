@@ -58,6 +58,7 @@ class ModelBase extends Conexion
         $query = "SELECT $columns FROM $table";
         if($name != "" && $value != "")
             $query .= " WHERE $name = '$value'";
+            $query .= "";
 
         return $query;
     }

@@ -42,19 +42,19 @@
 
         private function __construct()
         {
-            // global $cfg;
+            global $cfg;
 
-            // $db = $cfg['db'];
-            // $host = $cfg['host'];
-            // $user = $cfg['user'];
-            // $pass = $cfg['pass'];
-            // $port = $cfg['port']; 
+            $db = $cfg['db'];
+            $host = $cfg['host'];
+            $user = $cfg['user'];
+            $pass = $cfg['pass'];
+            $port = $cfg['port']; 
 
-            $host = "ep-twilight-bar-a2o4mmy3.eu-central-1.aws.neon.tech";
-            $user = "jon.pazos";
-            $pass = "FUX89CDqowsA";
-            $db = "HighScores";
-            $port = "5432";
+            // $host = "ep-twilight-bar-a2o4mmy3.eu-central-1.aws.neon.tech";
+            // $user = "jon.pazos";
+            // $pass = "FUX89CDqowsA";
+            // $db = "HighScores";
+            // $port = "5432";
             
             $conn_string = "host=$host port=$port dbname=$db user=$user password=$pass";
  

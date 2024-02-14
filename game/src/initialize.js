@@ -457,6 +457,7 @@ async function initplayers(data) {
             const jugador = new Jugador(jugadorData.id, jugadorData.nombre, jugadorData.score);
             // Agrega el jugador creado al arreglo de jugadores
             globals.Players.push(jugador);
+
         }
         
         console.log(globals.Players); // Asegúrate de que los jugadores se hayan agregado correctamente

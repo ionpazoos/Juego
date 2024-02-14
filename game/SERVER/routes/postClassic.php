@@ -14,6 +14,10 @@
 
     require_once (__DIR__."/../controller/Controller.php");
 
+    // $_POST['nombre']        = 'lan';
+    // $_POST['score']        = '50';
+
+
 
 
     if(isset($_POST['nombre']) && isset($_POST['score']))

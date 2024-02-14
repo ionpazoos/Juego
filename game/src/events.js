@@ -88,7 +88,7 @@ export function handleKeyPressAZ(key) {
 
 
 
-export function getData(event)
+export function getData()
 {
     console.log("OK");
 
@@ -128,7 +128,7 @@ export function getData(event)
 export function SendData(event) {
     console.log("Data send to the BD");
 
-    // Generamos score aleatorio
+    
     let score = Math.round(globals.score);
 
     // Objeto para enviar como JSON
@@ -137,15 +137,14 @@ export function SendData(event) {
         score: score,
     };
 
-    // Convertir el objeto a una cadena JSON
-        //String data to send
+ 
         const dataToSend = 'nombre=' + encodeURIComponent(objectToSend.nombre) + '&score=' + encodeURIComponent(objectToSend.score);
 
 
     console.log(dataToSend);
 
     // Ruta relativa al archivo que maneja la petición
-    const url = "http://localhost:3000/game/SERVER/db/Conexion.php";
+    const url = "http://localhost:3000/game/SERVER/routes/postClassic.php";
     const request = new XMLHttpRequest();
     request.open('POST', url, true);
     
@@ -154,19 +153,19 @@ export function SendData(event) {
 
     request.onreadystatechange = function() {
         if (this.readyState == 4) {
+            
             if (this.status == 200) {
+                
                 if (this.responseText != null) {
-                    try {
+                    
                         const resultJSON = JSON.parse(this.responseText);
-                        console.log(resultJSON);
+                        console.log("resultJSON: "+resultJSON);
 
                         // Inicializar los datos
-                        initplayers([resultJSON]);
-                    } catch (error) {
-                        console.error('Error al analizar la respuesta JSON:', error);
-                        alert("Error al analizar la respuesta del servidor");
+                        initplayers(resultJSON);
+        
                     }
-                } else {
+                 else {
                     alert("Communication error: No data received");
                 }
             } else {
