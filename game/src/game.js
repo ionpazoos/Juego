@@ -1,7 +1,7 @@
 import globals from "./globals.js";
 
 // Importamos loadAssets
-import { initHTMLelements, initLevel, initSprites, initVars, loadAssets,initTimers ,initEvents,initCamera, initSpritesNewGame,initExplosion} from "./initialize.js";
+import { initHTMLelements, initLevel, initVars, loadAssets,initTimers ,initEvents,initCamera} from "./initialize.js";
 
 import update from "./gameLogic.js";
 import render from "./gameRender.js";

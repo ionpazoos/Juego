@@ -129,6 +129,13 @@ function loadAssets(){
     globals.sounds.push(menu);
     globals.assetsToLoad.push(menu);
 
+    let gameover = document.querySelector('#gameover');
+    gameover.addEventListener("canplaytrhough",loadHandler,false);
+    gameover.addEventListener("timeupdate",updateMusic,false);
+    gameover.load();
+    globals.sounds.push(gameover);
+    globals.assetsToLoad.push(gameover);
+
    
 }
 
@@ -165,7 +172,7 @@ function loadHandler(){
 
 function initSprites() {
     //funcion para iniciar sprites del playing
-    initplayer(3200,100);
+    initplayer(30,100);
     initskeleton(150);
     initskeleton(2600);
     initbee(460,80);
@@ -206,23 +213,23 @@ function initplayer(x,y){
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
 }
-function initmoneda(){
+// function initmoneda(){
 
-    //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
-    const imageSet = new ImageSet(0, 0,  15, 15, 15, 0, 0);
+//     //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
+//     const imageSet = new ImageSet(0, 0,  15, 15, 15, 0, 0);
 
-    //Creamos los datos de la animacion. 8 frames / state
-    const frames = new Frames(4, 4);
+//     //Creamos los datos de la animacion. 8 frames / state
+//     const frames = new Frames(4, 4);
     
-    const hitbox =  new HitBox(15,15,0,0);
-    const deadtime = new Time(3,1);
+//     const hitbox =  new HitBox(15,15,0,0);
+//     const deadtime = new Time(3,1);
 
-    //Creamos nuestro sprite
-    const Moneda = new Ladron_j(SpriteID.MONEDA, State.MONEDA, 1590, 100, imageSet, frames,0,0,-50,hitbox,deadtime);
+//     //Creamos nuestro sprite
+//     const Moneda = new Ladron_j(SpriteID.MONEDA, State.MONEDA, 1590, 100, imageSet, frames,0,0,-50,hitbox,deadtime);
 
-    //Añadimos el pirata al array de sprites
-    globals.sprites.push(Moneda);
-}
+//     //Añadimos el pirata al array de sprites
+//     globals.sprites.push(Moneda);
+// }
 function initvillan(x){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset

@@ -1,7 +1,6 @@
-import { Game, Tile,particleState,particleID, SpriteID } from "./constants.js";
+import { Game,particleState,particleID } from "./constants.js";
 import globals from "./globals.js";
-import { initLevel } from "./initialize.js";
-import { Level } from "./levels.js";
+
 
 //Funcion que renderiza los grarficos
 export default function render(){
@@ -166,9 +165,11 @@ function highScore(){
 function historia (){
     globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+    globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
     renderTitle();
    
     renderBook(globals.selectedPaperIndex);
+    
  
 }
 
@@ -223,45 +224,69 @@ function GAMEOVER() {
 }
 
 
-function winning(){
-    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height); // Limpia todo el canvas
-globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
+function winning() {
+    // Limpia todo el canvas
+    globals.ctx.clearRect(0, 0, globals.canvas.width, globals.canvas.height);
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height);
 
-renderTitle();
+    // Rellena el fondo negro
+    globals.ctx.fillStyle = 'black';
+    globals.ctx.fillRect(0, 0, globals.canvas.width, globals.canvas.height);
 
-// Rellena el fondo negro
-globals.ctx.fillStyle = 'black';
-globals.ctx.fillRect(0, 0, globals.canvas.width, globals.canvas.height);
+    // Estilo del texto "You Win!"
+    globals.ctx.fillStyle = 'green'; // Cambié el color a verde
+    globals.ctx.font = 'bold 16px Emulogic'; // Usé la fuente genérica "monospace"
 
-// Estilo del texto "You Win!"
-globals.ctx.fillStyle = 'green'; // Cambié el color a verde
-globals.ctx.font = 'bold 16px Emulogic'; // Usé la fuente genérica "monospace"
+    // Centrar el texto horizontalmente y verticalmente
+    globals.ctx.textAlign = 'center';
+    globals.ctx.textBaseline = 'middle';
 
-// Centrar el texto horizontalmente y verticalmente
-globals.ctx.textAlign = 'center';
-globals.ctx.textBaseline = 'middle';
+    // Agregar efecto 3D con sombras cuadradas
+    globals.ctx.shadowColor = 'green'; 
+    globals.ctx.shadowBlur = 5; 
+    globals.ctx.shadowOffsetX = 0; 
+    globals.ctx.shadowOffsetY = 0; 
 
-// Agregar efecto 3D con sombras cuadradas
-globals.ctx.shadowColor = 'green'; 
-globals.ctx.shadowBlur = 5; 
-globals.ctx.shadowOffsetX = 0; 
-globals.ctx.shadowOffsetY = 0; 
+    // Dibujar el texto "You Win!" en el centro
+    globals.ctx.fillText("You Win!", globals.canvas.width / 2, globals.canvas.height / 2 - 40);
 
-// Dibujar el texto en el centro
-globals.ctx.fillText("You Win!", globals.canvas.width / 2, globals.canvas.height / 2 - 40);
+    // Restaurar el estilo de sombra
+    globals.ctx.shadowColor = 'transparent';
+    globals.ctx.shadowBlur = 0;
+    globals.ctx.shadowOffsetX = 0;
+    globals.ctx.shadowOffsetY = 0;
 
-// Texto "Try again?"
-globals.ctx.fillStyle = 'white';
-globals.ctx.font = '8px Emulogic'; 
+    // Pintar la siguiente historia debajo del mensaje de victoria
+    const story = "X.G, The Erudite, managed to escape from the foes. Suddenly a path of light opened before her eyes. It was a small cottage in the middle of the forest. Its name was 'Wound's Valley Inn'. He decided to enter.";
 
-// Restaurar el estilo de sombra
-globals.ctx.shadowColor = 'transparent';
-globals.ctx.shadowBlur = 0;
-globals.ctx.shadowOffsetX = 0;
-globals.ctx.shadowOffsetY = 0;
+    // Estilo del texto de la historia
+    globals.ctx.fillStyle = 'white';
+    globals.ctx.font = '8px Emulogic'; // Tamaño de fuente 8
 
+    // Centrar el texto horizontalmente y dividirlo en líneas
+    const maxWidth = 500; // Ancho máximo del texto
+    const words = story.split(' ');
+    let line = '';
+    let y = globals.canvas.height / 2 + 40; // Posición vertical inicial
 
+    for (let word of words) {
+        let testLine = line + word + ' ';
+        let metrics = globals.ctx.measureText(testLine);
+        let testWidth = metrics.width;
+
+        if (testWidth > maxWidth && line !== '') {
+            globals.ctx.fillText(line, globals.canvas.width / 2, y);
+            line = word + ' ';
+            y += 10; // Espaciado entre líneas
+        } else {
+            line = testLine;
+        }
+    }
+    // Dibujar la última línea
+    globals.ctx.fillText(line, globals.canvas.width / 2, y);
 }
+
+
 
 
 // function renderbook(selectedPaper) {
@@ -395,11 +420,13 @@ globals.ctx.shadowOffsetY = 0;
 
 
 //     }
-function    renderBook(selectedPaper) {
+function renderBook(selectedPaper) {
     // Dibujar el fondo del libro
-    globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
+    // (Asumiendo que esta parte queda fuera de la función)
+    // globals.ctx.drawImage(globals.tileSets[0], 0, 769, 1920, 1080, 0, 0, 1000, 360);
+     let story = "In the City of Evil Tongues, X.G., born into a family of blind magicians, grapples with chaotic impulses. Sent to Master Silvano, a reflective-material goldsmith, he undergoes an Alchemical Trial in the Forest of Essences. Guided by Silvano, X.G faces magical challenges, mastering potion use and enhancing his skills with rare plants. Progressing, he learns precise potion dosing, emphasizing harmony and self-control. Conquering each trial, X.G and Silvano reach a luminous core, deepening his connection to alchemical magic. The first part of his journey concludes.";
 
-    const separatedBySpaces = globals.story.split(' ');
+    const separatedBySpaces = story.split(' ');
 
     let transformValues = [1, 0, 0, 1, 0, 0];
     let maxWidth = 50;
@@ -410,64 +437,105 @@ function    renderBook(selectedPaper) {
 
     if (selectedPaper === 1) {
         transformValues = [2.1, 0, 0, 2, -110, -70];
-        totalWords = 40;
+        totalWords = 28;
     } else if (selectedPaper === 2) {
         transformValues = [2.1, 0, 0, 2.1, -110, -170];
-        totalWords = 40;
+        
     } else if (selectedPaper === 3) {
         transformValues = [2.8, 0, 0, 2.8, -550, -50];
         maxWidth = 40;
         startingIndex = 40;
         textx = 300;  // Ajusta según la posición inicial en x para papel 3
         texty = 42;
-        totalWords = 50;
+        totalWords = 48;
     } else if (selectedPaper === 4) {
         transformValues = [2, 0, 0, 2, -450, -130];
         maxWidth = 40;
         startingIndex = 50;
         textx = 300;  // Ajusta según la posición inicial en x para papel 4
         texty = 90;
-        totalWords = 75;
+        totalWords = 65;
     } else if (selectedPaper === 5) {
         transformValues = [2, 0, 0, 2, -550, -180];
         maxWidth = 80;
         startingIndex = 75;
         textx = 385;  // Ajusta según la posición inicial en x para papel 5
         texty = 130;
-        totalWords = 87;
+        totalWords = 84;
     }
 
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
     globals.ctx.setTransform(...transformValues);
 
-    globals.ctx.font = '4px Emulogic';
+    globals.ctx.font = '3px Emulogic';
     globals.ctx.fillStyle = '#000';
 
-    function drawText(index) {
-        
-        const word = separatedBySpaces[index];
-        const wordWidth = globals.ctx.measureText(word).width;
+    // Función para dibujar el texto en las posiciones indicadas
+    function drawText() {
+        let line = '';
+        let currentTextY = texty;
 
-        // Verificar si agregar la palabra excede la anchura máxima
-        if (globals.ctx.measureText(currentLine + word).width > maxWidth && index > startingIndex) {
-            globals.ctx.fillText(currentLine, textx, texty);
-            texty += 5;  // Ajusta según el espaciado entre líneas
-            currentLine = word + ' ';
-        } else {
-            currentLine += word + ' ';
+        // Recorre cada palabra del texto
+        for (let i = startingIndex; i < totalWords; i++) {
+            const word = separatedBySpaces[i];
+            const wordWidth = globals.ctx.measureText(word).width;
+
+            // Verifica si agregar la palabra excede la anchura máxima
+            if (globals.ctx.measureText(line + word).width > maxWidth && i > startingIndex) {
+                // Dibuja la línea actual en las coordenadas indicadas
+                globals.ctx.fillText(line, textx, currentTextY);
+                line = word + ' '; // Inicia una nueva línea con la palabra actual
+                currentTextY += 5; // Ajusta según el espaciado entre líneas
+            } else {
+                line += word + ' '; // Agrega la palabra a la línea actual
+            }
         }
 
-        if (index < totalWords - 1) {
-            requestAnimationFrame(() => {
-                drawText(index + 1);
-            });
-        } else {
-            // Finalizar la animación o realizar cualquier otra acción al completar el dibujo del texto
+        // Dibuja la última línea o en caso de ser un texto muy corto la única línea que haya
+        globals.ctx.fillText(line, textx, currentTextY);
+    }
+
+    // Dibuja el texto en las posiciones indicadas
+    drawText();
+}
+
+
+
+
+function getTextWidth(text, context)
+{  
+    let medidaTexto = context.measureText(text);
+    return medidaTexto.width;
+}
+
+//Funcion para escribir un texto con un ancho designado en pantalla
+function wrapText(context, text, x, y, maxWidth, lineHeight) 
+{
+    //Separaremos todo el texto en base a sus espacios y lo meteremos en un array que contendra cada palabra que se escribirá
+    const textToType = text.split(' ');
+    let line = '';
+    
+    //Recorre cada palabra del textoz
+    for (let i = 0; i < textToType.length; i++) 
+    {
+        let testLine = line + textToType[i] + ' ';      //Escribimos una linea de prueba que contiene la palabra actual
+        let metrics = context.measureText(testLine);    //Obtenemos los datos de la linea
+        let testWidth = metrics.width;                  //Obtenemos el width de dicha linea
+
+        //Si el width de la linea es mayor que el que hemos escogido nosotros y no estamos en la primera palabra, haremos el salto de linea
+        if (testWidth > maxWidth && i > 0) 
+        {
+            context.fillText(line, x, y);               //Dibuja la linea en las coordenadas que hemos indicado
+            line = textToType[i] + ' ';                 //Reinicia la linea con la palabra actual y ajusta las coordenadas para la proxima linea
+            y += lineHeight;                            //Incrementamos la coordenada Y (para que se escriba mas abajo que la linea actual)
+        } 
+        else //Sino seguiremos construyendo la linea actual
+        {
+            line = testLine;                            
         }
     }
 
-    let currentLine = '';
-    drawText(startingIndex);
+    context.fillText(line, x, y); //Dibuja la ultima linea o en caso de ser un texto muy corto la unica linea que haya
 }
 
 
@@ -782,15 +850,15 @@ function renderHUD(){
     //Draw High Score
     globals.ctxHUD.fillStyle = 'pink';
     
-    globals.ctxHUD.fillText("High Score", 165, 16);
+    globals.ctxHUD.fillText("High Score", 135, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
-    globals.ctxHUD.fillText(" " + highScore, 165, 32);
+    globals.ctxHUD.fillText(" " + highScore, 135, 32);
 
 
     //Draw time
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("TIME", 240, 16);
-    globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 220, 14, time/3, 32);
+    globals.ctxHUD.fillText("TIME", 220, 16);
+    globals.ctxHUD.drawImage(globals.tileSets[1], 160,160 , 96, 32, 190, 14, time/3, 32);
 
      // rage
     globals.ctxHUD.fillStyle = 'pink';

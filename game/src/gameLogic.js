@@ -6,40 +6,30 @@ import { SendData, getData } from "./events.js";
 
 
 
+
 export default function update(){
 
     //Change what the game is doing based on the game state
     switch(globals.gameState){
 
         case Game.LOADING:
-            console.log("Loading assets...");
-            drawRotatingBallSpinner();
-            interactloading();
-            // getData();
+             loading();
             break;
 
         case Game.PLAYING:
-            
             playGame();
-           
             break;
         case Game.LOADING_MENU:
-                globals.sprites = [];
-                loadNewGame();
-                console.log("Loading Menu assets");
+            loadingmenu();
                 break;
-    
         case Game.LOADING_PLAY:
                 loadPlaying();
                 break;
         case Game.LOADING_HIGHSCORE:
-            loadhighscore();
-                       
+            loadhighscore();     
                 break; 
 
         case Game.NEWGAME:
-            globals.sounds[Sounds.MENU].play();
-            globals.sounds[Sounds.MENU].volume = 1;
                 newgame();
           
                 break;
@@ -48,26 +38,17 @@ export default function update(){
              
               break;
         case Game.HIGHSCORE:
-            moveCameraRight();
-            interacthigscores();
-            createRandomconfetiParticle();
-            updateparticles();
+                 highScore();
                
                  break; 
         case Game.CONTROLS:
-           
+           controls();
         break;
         case Game.LOADING_GAMEOVER:
-           globals.particles = [];
-           globals.sprites = [];
-           globals.gameState = Game.GAMEOVER;
+               loadinggameover();
         break;
         case Game.GAMEOVER:
-        createRandomShineParticle();
-        updateparticles();
-        interactgameover();
-        updatekeyTime();
-
+        gameoverlogic();
         break;
     
 
@@ -92,7 +73,6 @@ function playGame(){
     win();
     
 }
-
 function newgame(){
     
     updateSprites();
@@ -104,6 +84,7 @@ function newgame(){
     globals.sounds[Sounds.MENU].play();
     globals.sounds[Sounds.MENU].volume = 1;
     
+    
 }
 function loadhighscore(){
                 getData();
@@ -114,14 +95,12 @@ function loadhighscore(){
             globals.sounds[Sounds.HIGHSCORE].play();
             globals.sounds[Sounds.HIGHSCORE].volume = 1;
             globals.sounds[Sounds.MENU].volume = 0;
+            globals.sounds[Sounds.GAMEOVER].volume = 0;
            
     
             globals.gameState = Game.HIGHSCORE;  
 
 }
-
-
-
 function loadPlaying(){
     restoreDefaultValues();
     console.log("Loading game...");
@@ -178,7 +157,6 @@ function drawRotatingBallSpinner() {
     globals.ctxHUD.textAlign = "center";
     globals.ctxHUD.fillText(message, centerX, centerY + radius + 30);
 }
-
 function playhistori(){
      interactstory();
 }
@@ -192,7 +170,6 @@ function loadNewGame(){
     globals.currentSound = Sounds.MENU;
     
 }
-
 function updateSprites(){
     for (let i = 0; i < globals.sprites.length; ++i){
 
@@ -216,7 +193,6 @@ function updateSprites(){
     console.log("score:" + globals.score);
 
 }
-
 function updatelife() {
   
         for (let i = 1; i < globals.sprites.length; i++) {
@@ -245,7 +221,6 @@ function updatelife() {
 
     
 }
- 
 function gameover(){
 
     const brickSize = globals.level.imageSet.gridSize;
@@ -260,7 +235,6 @@ function gameover(){
             
     }
 }
-
 function updatelifesprite(){
         let life = globals.life;
 
@@ -296,7 +270,6 @@ sprite.frames.speed = 4;
 
 
 }
-
 function updateLevelTime(){
     globals.leveltime.timeChangeCounter += globals.deltaTime;
     if(globals.leveltime.timeChangeCounter > globals.leveltime.timeChangeValue){
@@ -389,7 +362,6 @@ function updateSprite(sprite){
             break;
     }
 }
-
 function updateparticles(){
     for (let i = 0; i < globals.particles.length; ++i){
 
@@ -423,8 +395,6 @@ function updateParticle(particle){
        
     
 }
-
-//Funcion que actualiza el personaje
 function updateplayer(sprite){
 
 
@@ -513,7 +483,6 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
     gameover();
 console.log(sprite.xPos);
 }
-
 function updatescore(){
     globals.highScore = globals.Players[0].score;
     if(globals.score > globals.highScore){
@@ -620,6 +589,7 @@ function interactMenu(){
                 globals.gameState = Game.CONTROLS;
             }
             else if(globals.selectedOption === 2){
+               
                 globals.gameState = Game.HISTORIA;
             }
             else if(globals.selectedOption === 3){
@@ -644,8 +614,8 @@ function interactstory(){
     updatekeyTime();
     console.log(globals.keytime.value);
     
-        
-        if(globals.action.moveRight){
+        if(globals.keytime.value <=0){
+        if(globals.action.moveRight ){
 
             globals.selectedPaperIndex++;
             
@@ -669,7 +639,7 @@ function interactstory(){
             globals.gameState = Game.NEWGAME;
         }
         
-        
+    }
     
     globals.keytime.value = 1;
 
@@ -697,9 +667,6 @@ function interactgameover() {
 
    
 }
-
-
-
 function interacthigscores(){
     updatekeyTime(); 
 
@@ -710,7 +677,6 @@ function interacthigscores(){
 
     globals.keytime.value = 1;
 }
-
 function interactloading(){
     updatekeyTime(); 
 
@@ -721,8 +687,6 @@ function interactloading(){
 
     globals.keytime.value = 1;
 }
-
-
 function updatevillan(sprite){
 
     //Aqui actualizariamos el estado de las variables del player
@@ -782,7 +746,6 @@ function updatevillan(sprite){
 
 
 }
-
 function calculateColision(sprite){
     if(sprite.xPos + sprite.imageSet.xSize > globals.canvas.width-10){
         sprite.collisionBorder = Colisions.BORDER_RIGHT;
@@ -797,7 +760,6 @@ function calculateColision(sprite){
         sprite.collisionBorder = Colisions.NO_COLISIONS;
     }
 }
-
 function updatebee(sprite){
 
 
@@ -838,8 +800,6 @@ function updatebee(sprite){
   
 
 }
-
-
 function updateCaballero(sprite){
 
 const amplitud = 20;
@@ -877,12 +837,10 @@ if(sprite.isColidingHead){
 
 
 }
-
 function updatesupersayan(sprite){
 
 updateAnimationFrame(sprite);
 }
-
  function setPositionBee(sprite){
     const radius = 25;
 
@@ -894,15 +852,6 @@ updateAnimationFrame(sprite);
 
 
 }
-function updateMoneda(sprite){
-    
-    verifyIfSpriteIsDead(sprite);
-    updateAnimationFrame(sprite);
-
-    
-    }
-    
-
 function updateAnimationFrame(sprite){
     sprite.frames.frameChangeCounter++;
 
@@ -915,8 +864,6 @@ function updateAnimationFrame(sprite){
         sprite.frames.frameCounter = 0;
     }
 }
-
-
 function readKeyboardAndAssignState(sprite)
 {
    
@@ -928,7 +875,6 @@ sprite.state =  globals.action.moveLeft         ? State.RUNNING_LEFT :
                 sprite.state === State.RUNNING_RIGHT    ? State.STILL_RIGHT:
                 sprite.state;
 }
-
 function swapDirectio(sprite){
     sprite.state = sprite.state === State.RUNNING_RIGHT_ESKELETON ? State.RUNNING_LEFT_ESKELETON : State.RUNNING_RIGHT_ESKELETON
 }
@@ -943,7 +889,6 @@ function updateDirectionRandom(sprite){
         swapDirectio(sprite);
     }
 }
-
 function updateCamera() {
     const player = globals.sprites[0];
     const brickSize = globals.level.imageSet.gridSize;
@@ -1001,7 +946,6 @@ function moveCameraRight(timestamp) {
     // Solicitar el siguiente fotograma de animación
     requestAnimationFrame(moveCameraRight);
 }
-
 function updateExplosion(particle){
 
     particle.fadeCounter += globals.deltaTime;
@@ -1048,7 +992,6 @@ function updateExplosion(particle){
 
 
 }
-
 function updategrassparticle(particle){
     particle.fadeCounter += globals.deltaTime;
 
@@ -1083,9 +1026,8 @@ function updategrassparticle(particle){
 
 
 }
-
 function restoreDefaultValues() {
-    globals.leveltime.value     = 160
+    globals.leveltime.value     = 300
     globals.leveltime.timeChangeCounter = 0
 
     globals.sprites             = []
@@ -1107,7 +1049,6 @@ function playSound(){
 
     }
 }
-
 function  updateRainParticle(particle){
 
     particle.fadeCounter += globals.deltaTime;
@@ -1205,7 +1146,6 @@ function  updateShineParticle(particle){
 
     particle.yPos += (particle.physics.vy * globals.deltaTime);
 }
-
 function createRandomRainParticle() {
     const xPos = Math.random() * globals.canvas.width; // Posición x aleatoria
     const yPos = 0; // Siempre desde la parte superior del lienzo
@@ -1213,13 +1153,11 @@ function createRandomRainParticle() {
 
      
 }
-
 function createRandomShineParticle() {
     const xPos = (Math.random() * globals.canvas.width); // Posición x aleatoria
     const yPos = globals.canvas.height; // Siempre desde la parte superior del lienzo
       initShine(xPos, yPos);
 }
-
 function createRandomconfetiParticle() {
     const xPos = (Math.random() * 1100 ); // Posición x aleatoria
     const yPos = 20; // Siempre desde la parte superior del lienzo
@@ -1227,7 +1165,6 @@ function createRandomconfetiParticle() {
 
      
 }
-
 function dificulti(){
      
     updateSpawnTimer();
@@ -1279,14 +1216,57 @@ function loopEvent(){
     }
 
 }
-
 function win(){
     if(globals.currentlevel === 4 && globals.sprites[0].xPos > 1200){
         globals.gameState = Game.WIN;
     }
 }
+function gameoverlogic(){
+    globals.sounds[Sounds.GAME_MUSIC].volume = 0;
+    globals.sounds[Sounds.GAMEOVER].play();
+    globals.sounds[Sounds.GAMEOVER].volume = 1;
+    playSound();
 
+createRandomShineParticle();
+updateparticles();
+interactgameover();
+updatekeyTime();
+}
+function loading(){
+    console.log("Loading assets...");
+    drawRotatingBallSpinner();
+    interactloading();
+    // getData();
+}
+function loadingmenu(){
+    globals.sprites = [];
+    loadNewGame();
+    console.log("Loading Menu assets");
+}
+function highScore(){
+    moveCameraRight();
+    interacthigscores();
+    createRandomconfetiParticle();
+    updateparticles();
+}
+function loadinggameover(){
+    globals.particles = [];
+    globals.sprites = [];
+    globals.gameState = Game.GAMEOVER;
+}
+function controls(){
+    interactcontrols();
+}
+function interactcontrols(){
+    updatekeyTime(); 
 
+    if( globals.action.esc){
+        globals.gameState = Game.LOADING_MENU;
+        globals.sounds[Sounds.HIGHSCORE].volume = 0;
+    }
+
+globals.keytime.value = 1;
+}
 }
 
 

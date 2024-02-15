@@ -209,4 +209,5 @@ export const Sounds = {
     JUMP: 1,
     HIGHSCORE:2,
     MENU:3,
+    GAMEOVER:4,
 }

@@ -1,5 +1,5 @@
 import globals from "./globals.js";
-import {Block,Game, SpriteID} from "./constants.js"
+import {Block} from "./constants.js"
 
 function rectIntersect(x1,y1,w1,h1,x2,y2,w2,h2){
     let isOverlap;
