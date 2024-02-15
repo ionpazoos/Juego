@@ -46,6 +46,7 @@ export default {
     leveltime: {},
     lifetime: {},
     keytime:{},
+    spawntime:{},
 
     action: {},
 
@@ -80,6 +81,9 @@ export default {
 
     lastFrameTime:0,
     lastTimeSpawn: 130,
+
+    eventpass: false,
+    enemikilled:0,
 
 
 

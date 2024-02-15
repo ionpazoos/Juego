@@ -76,6 +76,7 @@ function initTimers(){
     globals.lifetime = new Time(15,1);
     globals.keytime = new Time(1,0.1);
     globals.villantime = new Time(10,1);
+    globals.spawntime = new Time(5,5);
     
 }
 
@@ -164,7 +165,7 @@ function loadHandler(){
 
 function initSprites() {
     //funcion para iniciar sprites del playing
-    initplayer(35,100);
+    initplayer(3200,100);
     initskeleton(150);
     initskeleton(2600);
     initbee(460,80);
@@ -310,7 +311,7 @@ function initcaballero(){
     const physics = new Physics(30,0,omega,initangle,0,0,yRef);
     const hitbox =  new HitBox(20,25,0,7);
     const hitbox2 =  new HitBox(13,7,5,0);
-    const deadtime = new Time(3,1);
+    const deadtime = new Time(2.5,1);
 
     //Creamos nuestro sprite
     const caballero = new Ladron_j(SpriteID.CABALLERO, State.IDLE_CABALLERO, 1250, 105, imageSet, frames,physics,hitbox,100,hitbox2,deadtime,200);

@@ -120,7 +120,7 @@ export function getData()
                     else{
                         globals.playerId = resultJSON.length - 1;
                         console.log("0");}
-                    
+                    globals.Players = [];
                     //INiciamos los datos del juego
                     initplayers(resultJSON);
                     ordenarPorScore();
@@ -219,7 +219,8 @@ function findactualplayer() {
     }
     
     // Buscar el jugador en el array cuyo ID coincida con globals.playerId
-    for (let i = 0; i < globals.Players.length ; i++) {
+    for (let i = 0; i <= globals.Players.length ; i++) {
+        console.log("playerid" + globals.playerId);
         if (globals.Players[i].id === globals.playerId) {
             // Establecer el jugador actual como aquel cuyo ID coincide con globals.playerId
             globals.player = globals.Players[i];
@@ -228,6 +229,7 @@ function findactualplayer() {
             break; // Salir del bucle una vez que se encuentre el jugador
             
         }
+
     }
 }
 

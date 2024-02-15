@@ -103,6 +103,8 @@ export const Block = {
     TREE26:  287,
     TREE27:  288,
     TREE28:  289,
+    TREE29:  137,
+    TREE30:  138,
     BEEHOUSE:88,
 
 
@@ -121,6 +123,9 @@ export const Block = {
     ROCK14:277,
     ROCK15:279, 
     ROCK16:278,
+    ROCK17:203,
+    ROCK18:204,
+    ROCK19:205,
 
     WOOD_BRIDGE:230,
     WOOD_BRIDGE2:231,
@@ -133,8 +138,9 @@ export const Block = {
     MUD4:176,
     MUD5:177,
     MUD6:178,
-    MUD6:51,
-    MUD6:79,
+    MUD7:51,
+    MUD8:79,
+    MUD9:179,
 
     STONE:360,
     STONE2:385,

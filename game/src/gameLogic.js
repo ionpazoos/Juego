@@ -1,7 +1,7 @@
 import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initconfeti,initKeyEventsGameOver,initSpritesLv2 } from "./initialize.js";
+import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initconfeti,initKeyEventsGameOver,initSpritesLv2, initskeleton } from "./initialize.js";
 import { SendData, getData } from "./events.js";
 
 
@@ -89,6 +89,7 @@ function playGame(){
     updateparticles();
     playSound();
     dificulti();
+    win();
     
 }
 
@@ -200,6 +201,9 @@ function updateSprites(){
         if(sprite.state === State.DEAD){
             const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
             globals.score += sprite.score;
+            sprite.physics.vx = 0;
+            globals.sprites[0].ay = 0;
+            globals.enemikilled++;
             
             globals.sprites.splice(indexSpriteRemove1, 1);  
         }
@@ -336,6 +340,16 @@ function updatedeadtimer(sprite){
         sprite.deadTimer.value--;
         sprite.deadTimer.timeChangeCounter = 0;
 
+    }
+
+    
+}
+function updateSpawnTimer(){
+    
+    globals.spawntime.timeChangeCounter += globals.deltaTime;
+    if(globals.spawntime.timeChangeCounter > globals.spawntime.timeChangeValue){
+        globals.spawntime.value--;
+        globals.spawntime.timeChangeCounter = 0;
     }
 
     
@@ -508,6 +522,7 @@ function updatescore(){
 }
 function changelevel(sprite){
     if(sprite.xPos > 3700){
+        globals.score += 500;
         globals.currentlevel = 4;
         sprite.xPos = 30;
         sprite.yPos = 100;
@@ -1070,7 +1085,7 @@ function updategrassparticle(particle){
 }
 
 function restoreDefaultValues() {
-    globals.leveltime.value     = 300
+    globals.leveltime.value     = 160
     globals.leveltime.timeChangeCounter = 0
 
     globals.sprites             = []
@@ -1215,7 +1230,9 @@ function createRandomconfetiParticle() {
 
 function dificulti(){
      
+    updateSpawnTimer();
     
+    console.log(globals.spawntime.value);
     if((globals.lastTimeSpawn - 10) === globals.leveltime.value){
         
         initvillan(globals.sprites[0].xPos + 100,globals.sprites[0].xPos - 30);
@@ -1223,9 +1240,49 @@ function dificulti(){
         console.log("spawn")
     }
 
-    if(globals.sprites[0].xPos > 200){
+    if((globals.sprites[0].xPos > 1200 && globals.sprites[0].xPos < 1205) && globals.spawntime.value <= 0){
         
+        initskeleton(1500);
+        globals.spawntime.value = 1;
+    }
+
+    loopEvent();
+}
+function loopEvent(){
+    
+    if(globals.leveltime.value === 149){
+        globals.enemikilled = 0;
+    }
+    if(globals.enemikilled > 10){ globals.eventpass = true}
+
+    if(globals.leveltime.value <= 150 && globals.leveltime.value >= 120){
+
+        if(globals.spawntime.value <= 0){
+            initvillan(globals.sprites[0].xPos + 50);
+            globals.spawntime.value = 1;
+        }
         
+    }
+
+    if(globals.leveltime.value <= 60 && globals.leveltime.value >= 10){
+
+        if(globals.spawntime.value <= 0){
+            initskeleton(globals.sprites[0].xPos - 50);
+            initvillan(globals.sprites[0].xPos + 50);
+            if(globals.eventpass === false){
+                initvillan(globals.sprites[0].xPos + 100);
+                initskeleton(globals.sprites[0].xPos - 100);
+            }
+            globals.spawntime.value = 1;
+        }
+        
+    }
+
+}
+
+function win(){
+    if(globals.currentlevel === 4 && globals.sprites[0].xPos > 1200){
+        globals.gameState = Game.WIN;
     }
 }
 
