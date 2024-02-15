@@ -884,12 +884,13 @@ function rendercontrols(){
     globals.ctx.drawImage(globals.tileSets[0], 24, 1315, 16, 16, 155, 32, 32, 32);
     globals.ctx.drawImage(globals.tileSets[0], 56, 1315, 16, 16, 185, 32, 32, 32);
     globals.ctx.drawImage(globals.tileSets[0], 40, 1315, 16, 16, 128, 32, 32, 32);
-    globals.ctx.font = '15px Emulogic';
-    globals.ctx.fillText("Move", 145, 76);
+    globals.ctx.font = '16px Emulogic';
+    globals.ctx.fillStyle = 'black';
+    globals.ctx.fillText("Move", 160, 86);
 
     globals.ctx.drawImage(globals.tileSets[0], 68, 1569, 32, 16, 250, 32, 64, 32);
-    globals.ctx.font = '15px Emulogic';
-    globals.ctx.fillText("Interact", 250, 76);
+    globals.ctx.font = '16px Emulogic';
+    globals.ctx.fillText("Interact", 285, 86);
 
 
 }
