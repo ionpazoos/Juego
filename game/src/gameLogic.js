@@ -15,6 +15,7 @@ export default function update(){
             console.log("Loading assets...");
             drawRotatingBallSpinner();
             interactloading();
+            // getData();
             break;
 
         case Game.PLAYING:
@@ -185,6 +186,7 @@ function loadNewGame(){
     globals.currentlevel = 1;
     globals.level = globals.levels[globals.currentlevel];
     initSpritesNewGame();    
+    getData();
     globals.gameState = Game.NEWGAME;
     globals.currentSound = Sounds.MENU;
     
@@ -499,7 +501,7 @@ console.log(sprite.xPos);
 }
 
 function updatescore(){
-
+    globals.highScore = globals.Players[0].score;
     if(globals.score > globals.highScore){
         globals.highScore =  globals.score;
     }
@@ -1066,7 +1068,7 @@ function updategrassparticle(particle){
 }
 
 function restoreDefaultValues() {
-    globals.leveltime.value     = 140
+    globals.leveltime.value     = 300
     globals.leveltime.timeChangeCounter = 0
 
     globals.sprites             = []

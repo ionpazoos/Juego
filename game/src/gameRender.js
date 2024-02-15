@@ -509,14 +509,14 @@ function renderMenu() {
 
 
 function renderscore() {
-    let x = 50;
+    let x = 0;
     let count = 0;
 
     globals.ctx.font = '8px Emulogic'; // Establecer el tamaño y la fuente del texto predeterminado
     globals.ctx.fillStyle = 'black';
 
-    let startIndex = globals.playerId + 4;
-    let endIndex = globals.playerId - 5;
+    let startIndex = globals.playerId + 5;
+    let endIndex = globals.playerId - 4;
 
     // Ajustar el índice de inicio y fin si están fuera de los límites del array
     if (startIndex >= globals.Players.length) {

@@ -176,7 +176,7 @@ export function SendData(event) {
                         console.log("resultJSON: "+resultJSON);
                         
                         // Inicializar los datos
-                        initplayers(resultJSON);
+     
                         
                     }
                  else {
@@ -224,6 +224,7 @@ function findactualplayer() {
             // Establecer el jugador actual como aquel cuyo ID coincide con globals.playerId
             globals.player = globals.Players[i];
             console.log("jugador encontrado");
+            globals.playerId = i;
             break; // Salir del bucle una vez que se encuentre el jugador
             
         }
