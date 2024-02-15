@@ -213,23 +213,7 @@ function initplayer(x,y){
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
 }
-// function initmoneda(){
 
-//     //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
-//     const imageSet = new ImageSet(0, 0,  15, 15, 15, 0, 0);
-
-//     //Creamos los datos de la animacion. 8 frames / state
-//     const frames = new Frames(4, 4);
-    
-//     const hitbox =  new HitBox(15,15,0,0);
-//     const deadtime = new Time(3,1);
-
-//     //Creamos nuestro sprite
-//     const Moneda = new Ladron_j(SpriteID.MONEDA, State.MONEDA, 1590, 100, imageSet, frames,0,0,-50,hitbox,deadtime);
-
-//     //Añadimos el pirata al array de sprites
-//     globals.sprites.push(Moneda);
-// }
 function initvillan(x){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
