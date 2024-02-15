@@ -74,7 +74,7 @@ function initKeyEventsGameOver(){
 function initTimers(){
     globals.leveltime = new Time(360,0.5);
     globals.lifetime = new Time(15,1);
-    globals.keytime = new Time(0.2,0,2);
+    globals.keytime = new Time(1,0.1);
     globals.villantime = new Time(10,1);
     
 }
@@ -164,23 +164,29 @@ function loadHandler(){
 
 function initSprites() {
     //funcion para iniciar sprites del playing
-    initplayer();
+    initplayer(3500,100);
     initskeleton(150);
     initskeleton(2600);
-    initbee();
+    initbee(460,80);
     // initcaballero();
     initsupersayan();
     initvillan(800);
     initvillan(2000);
     // initmoneda();
 }
+function initSpritesLv2() {
+    //funcion para iniciar sprites del playing
+    initplayer(30,500);
+    initbee(770,310);
+    // initcaballero();
+    // initmoneda();
+}
 function initSpritesNewGame(){
     initvillan(60);
-    
 }
 
 
-function initplayer(){
+function initplayer(x,y){
 
     //Creamos las propiedades de las imagenes:initFil: any, initCol: any, xSize: any, ySize: any, gridSize: any, xOffset: any, yOffSet: any, imgpath: any
     const imageSet = new ImageSet(0, 0,  32, 32, 32, 0, -1);
@@ -194,7 +200,7 @@ function initplayer(){
     const deadtime = new Time(3,1);
 
     //Creamos nuestro sprite
-    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, 30, 100, imageSet, frames,physics,hitbox,hitbox2,deadtime);
+    const player = new Sprite(SpriteID.PLAYER, State.STILL_RIGHT, x, y, imageSet, frames,physics,hitbox,hitbox2,deadtime);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(player);
@@ -231,7 +237,7 @@ function initvillan(x){
 
 
     //Creamos nuestro sprite
-    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, x, 5, imageSet, frames,physics,hitbox,50,hitbox2,deadtime);
+    const villan = new Ladron_j (SpriteID.VILLAN, State.RUNNING_LEFT_VILLAN, x, 5, imageSet, frames,physics,hitbox,50,hitbox2,deadtime,100);
 
      villan.physics.vx = 50;
    
@@ -257,12 +263,12 @@ function initskeleton(x){
     const initTimeToChancheDirection = Math.floor(Math.random()*3)+1;
 
     //Creamos nuestro sprite
-    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, x, 0, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2,deadtime);
+    const Skeleton = new Ladron(SpriteID.SKELETON, State.RUNNING_LEFT_ESKELETON, x, 0, imageSet, frames,physics,initTimeToChancheDirection,hitbox,30,hitbox2,deadtime,200);
 
     //Añadimos el pirata al array de sprites
     globals.sprites.push(Skeleton);
 }
-function initbee(){
+function initbee(x,y){
 
     //Creamos las propiedades de las imagenes: xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(0, 0, 64, 40, 64, 0, 0,0);
@@ -272,8 +278,8 @@ function initbee(){
 
     const initangle = 90*Math.PI * 180;
     const omega = 1.5;
-    const xRotorCenter = 460;
-    const yRotorCenter = 80;
+    const xRotorCenter = x;
+    const yRotorCenter = y;
 
     const physics = new Physics(30,0,omega,initangle,xRotorCenter,yRotorCenter);
     const hitbox =  new HitBox(20,15,0,23);
@@ -281,7 +287,7 @@ function initbee(){
     const deadtime = new Time(3,1);
 
     //Creamos nuestro sprite
-    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT_BEE, 10, 10, imageSet, frames,physics,hitbox,100,hitbox2,deadtime);
+    const bee = new Ladron_j(SpriteID.BEE, State.STILL_RIGHT_BEE, x, y, imageSet, frames,physics,hitbox,100,hitbox2,deadtime,250);
 
 
 
@@ -307,7 +313,7 @@ function initcaballero(){
     const deadtime = new Time(3,1);
 
     //Creamos nuestro sprite
-    const caballero = new Ladron_j(SpriteID.CABALLERO, State.IDLE_CABALLERO, 1250, 105, imageSet, frames,physics,hitbox,100,hitbox2,deadtime);
+    const caballero = new Ladron_j(SpriteID.CABALLERO, State.IDLE_CABALLERO, 1250, 105, imageSet, frames,physics,hitbox,100,hitbox2,deadtime,200);
 
 
 
@@ -436,7 +442,7 @@ function initGrass(x,y){
     
     particle.physics.vy = particle.physics.vlimit;
         
-   console.log(globals.particles.length);
+ 
     particle.physics.ay = particle.physics.aLimit;
     
     globals.particles.push(particle);
@@ -472,6 +478,6 @@ async function initplayers(data) {
 export {
     initHTMLelements, initLevel, initSprites,
     initVars, loadAssets, initTimers, initEvents,initCamera,initSpritesNewGame,
-    initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass,initShine,initplayers,initconfeti,initKeyEventsGameOver
+    initcaballero,initskeleton,initvillan,initExplosion,initRain,initGrass,initShine,initplayers,initconfeti,initKeyEventsGameOver,initSpritesLv2
 };
 

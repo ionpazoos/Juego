@@ -98,8 +98,8 @@ function drawSpinnerAndMessage() {
     globals.ctx.fill();
 
     // Dibujar texto "Presiona espacio para continuar"
-    const message = "Presiona espacio para continuar";
-    globals.ctx.font = "20px Arial";
+    const message = "Press space to continue";
+    globals.ctx.font = "8px Emulogic";
     globals.ctx.fillStyle = spinnerColor; // Color negro
     globals.ctx.textAlign = "center";
     globals.ctx.fillText(message, 250, 150);
@@ -185,7 +185,7 @@ function GAMEOVER() {
 
     // Estilo del texto "Game Over"
     globals.ctx.fillStyle = 'darkturquoise'; // Cambié el color a azul turquesa oscuro
-    globals.ctx.font = 'bold 24px monospace'; // Usé la fuente genérica "monospace"
+    globals.ctx.font = 'bold 32px Emulogic'; // Usé la fuente genérica "monospace"
 
     // Centrar el texto horizontalmente y verticalmente
     globals.ctx.textAlign = 'center';
@@ -202,7 +202,7 @@ function GAMEOVER() {
 
     // Establecer el estilo para el cuadro de entrada de nombre
     globals.ctx.fillStyle = 'white';
-    globals.ctx.font = '16px monospace'; // Usé la misma fuente genérica "monospace" para el texto
+    globals.ctx.font = '16px Emulogic'; // Usé la misma fuente genérica "monospace" para el texto
 
     // Dibujar el recuadro para ingresar el nombre
     globals.ctx.fillRect(globals.canvas.width / 2 - 40, globals.canvas.height / 2 + 50, 80, 20);
@@ -235,7 +235,7 @@ globals.ctx.fillRect(0, 0, globals.canvas.width, globals.canvas.height);
 
 // Estilo del texto "You Win!"
 globals.ctx.fillStyle = 'green'; // Cambié el color a verde
-globals.ctx.font = 'bold 24px monospace'; // Usé la fuente genérica "monospace"
+globals.ctx.font = 'bold 16px Emulogic'; // Usé la fuente genérica "monospace"
 
 // Centrar el texto horizontalmente y verticalmente
 globals.ctx.textAlign = 'center';
@@ -252,7 +252,7 @@ globals.ctx.fillText("You Win!", globals.canvas.width / 2, globals.canvas.height
 
 // Texto "Try again?"
 globals.ctx.fillStyle = 'white';
-globals.ctx.font = '16px monospace'; 
+globals.ctx.font = '8px Emulogic'; 
 
 // Restaurar el estilo de sombra
 globals.ctx.shadowColor = 'transparent';
@@ -440,7 +440,7 @@ function    renderBook(selectedPaper) {
     // Restablecer la transformación a la identidad al final para evitar problemas futuros
     globals.ctx.setTransform(...transformValues);
 
-    globals.ctx.font = '5px Arial';
+    globals.ctx.font = '4px Emulogic';
     globals.ctx.fillStyle = '#000';
 
     function drawText(index) {
@@ -484,7 +484,7 @@ function renderMenu() {
 
     // Establecemos el estilo de fuente y alineación
     ctx.fillStyle = "black";
-    ctx.font = "15px Arial";
+    ctx.font = "8px Emulogic";
     ctx.textAlign = "center";
 
     // Ciclo para dibujar las opciones del menú
@@ -512,7 +512,7 @@ function renderscore() {
     let x = 50;
     let count = 0;
 
-    globals.ctx.font = '16px Arial'; // Establecer el tamaño y la fuente del texto predeterminado
+    globals.ctx.font = '8px Emulogic'; // Establecer el tamaño y la fuente del texto predeterminado
     globals.ctx.fillStyle = 'black';
 
     let startIndex = globals.playerId + 4;
@@ -535,12 +535,12 @@ function renderscore() {
         if (i === globals.playerId) {
             
             // Si es el jugador actual, aumentar el tamaño del texto y hacerlo más grande
-            globals.ctx.font = 'bold 20px Arial';
+            globals.ctx.font = 'bold 16px Emulogic';
             globals.ctx.fillText((i + 1) + "." + jugador.name + ": " + jugador.score, x, 70);
             globals.ctx.drawImage(globals.tileSets[0], 30, 0, 32, 30, x-2, 80, 64, 64);
         } else {
             // Si no es el jugador actual, usar el tamaño de fuente predeterminado
-            globals.ctx.font = '16px Arial';
+            globals.ctx.font = '8px Emulogic';
             globals.ctx.fillText((i + 1) + "." + jugador.name + ": " + jugador.score, x, 100);
             globals.ctx.drawImage(globals.tileSets[0], 30, 0, 32, 30, x, 110, 32, 32);
         }
@@ -554,7 +554,7 @@ function renderscore() {
     }
 
     // Restaurar el tamaño de fuente predeterminado al finalizar el bucle
-    globals.ctx.font = '16px Arial';
+    globals.ctx.font = '8px Emulogic';
 
     // Si el bucle no ha alcanzado 10 jugadores, dibujar los jugadores restantes desde el principio del array
     if (count < 10) {
@@ -563,12 +563,12 @@ function renderscore() {
             
             // Dibujar el texto del jugador
             if (i === globals.playerId) {
-                globals.ctx.font = 'bold 20px Arial';
+                globals.ctx.font = 'bold 16px Emulogic';
                 
                 globals.ctx.drawImage(globals.tileSets[0], 30, 0, 32, 30, x-2, 80, 64, 64);
                 // Dibujar una imagen (en tu caso, un icono de jugador)
             } else {
-                globals.ctx.font = '16px Arial';
+                globals.ctx.font = '8px Emulogic';
                 globals.ctx.fillText((i + 1) + "." + jugador.name + ": " + jugador.score, x, 100);
                 // Dibujar una imagen (en tu caso, un icono de jugador)
             globals.ctx.drawImage(globals.tileSets[0], 30, 0, 32, 30, x, 110, 32, 32);
@@ -773,7 +773,7 @@ function renderHUD(){
 
 
     //Draw score
-    globals.ctxHUD.font = '17px upheavtt';
+    globals.ctxHUD.font = '8px Emulogic';
     globals.ctxHUD.fillStyle = 'pink';
     globals.ctxHUD.fillText("SCORE", 32, 16);
     globals.ctxHUD.fillStyle = 'lightgray';
@@ -804,9 +804,9 @@ function renderHUD(){
 }
 
 function renderTitle(){
-    globals.ctxHUD.font = '30px upheavtt';
+    globals.ctxHUD.font = '16px Emulogic';
     globals.ctxHUD.fillStyle = 'pink';
-    globals.ctxHUD.fillText("Haserrearen esnatzea", 200, 26);
+    globals.ctxHUD.fillText("Wake Up And Yell", 200, 26);
 }
 
 function rendercontrols(){
@@ -816,11 +816,11 @@ function rendercontrols(){
     globals.ctx.drawImage(globals.tileSets[0], 24, 1315, 16, 16, 155, 32, 32, 32);
     globals.ctx.drawImage(globals.tileSets[0], 56, 1315, 16, 16, 185, 32, 32, 32);
     globals.ctx.drawImage(globals.tileSets[0], 40, 1315, 16, 16, 128, 32, 32, 32);
-    globals.ctx.font = '15px upheavtt';
+    globals.ctx.font = '15px Emulogic';
     globals.ctx.fillText("Move", 145, 76);
 
     globals.ctx.drawImage(globals.tileSets[0], 68, 1569, 32, 16, 250, 32, 64, 32);
-    globals.ctx.font = '15px upheavtt';
+    globals.ctx.font = '15px Emulogic';
     globals.ctx.fillText("Interact", 250, 76);
 
 
@@ -884,14 +884,14 @@ function renderParticle(particle){
  function renderGrassParticle(particle) {
     if (particle.state === particleState.ON) {
 
-        console.log(particle.xPos);
+        
         globals.ctx.fillStyle = "lightGreen";
         globals.ctx.beginPath();
         globals.ctx.rect(particle.xPos , particle.yPos , 1, 1);
         globals.ctx.fill();
         globals.ctx.closePath();
     } else {
-        console.log("particle off");
+        // console.log("particle off");
     }
 }
 
@@ -930,7 +930,6 @@ function renderExplison(particle){
         globals.ctx.fillStyle = "red";
         globals.ctx.globalAlpha = particle.alpha;
         globals.ctx.beginPath();
-        console.log(particle.yPos);
         globals.ctx.rect(particle.xPos - globals.camara.x, particle.yPos - globals.camara.y,2,2);
         globals.ctx.fill();
         globals.ctx.globalAlpha = 1.0;

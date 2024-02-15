@@ -1,7 +1,7 @@
 import { Colisions, Game, Sounds, SpriteID, State, particleID, particleState} from "./constants.js";
 import globals from "./globals.js";
 import  detectCollision from "./collisions.js"
-import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initconfeti,initKeyEventsGameOver } from "./initialize.js";
+import { initSprites,initExplosion, initSpritesNewGame,initRain, initvillan,initGrass,initShine, initconfeti,initKeyEventsGameOver,initSpritesLv2 } from "./initialize.js";
 import { SendData, getData } from "./events.js";
 
 
@@ -123,9 +123,16 @@ function loadhighscore(){
 function loadPlaying(){
     restoreDefaultValues();
     console.log("Loading game...");
-    globals.currentlevel = 0;
+    if(globals.score === 0){globals.currentlevel = 0;} 
      globals.level = globals.levels[globals.currentlevel];
-    initSprites();
+
+     if(globals.currentlevel === 0){
+        initSprites();
+     }
+     else if(globals.currentlevel === 4){
+        initSpritesLv2()
+     }
+    
     globals.gameState = Game.PLAYING
     console.log("GAME LOADED");
     globals.sounds[Sounds.MENU].volume = 0;
@@ -190,7 +197,9 @@ function updateSprites(){
 
         if(sprite.state === State.DEAD){
             const indexSpriteRemove1 = globals.sprites.indexOf(sprite);
-            globals.sprites.splice(indexSpriteRemove1, 1);
+            globals.score += sprite.score;
+            
+            globals.sprites.splice(indexSpriteRemove1, 1);  
         }
         else{
             updateSprite(sprite);
@@ -198,7 +207,7 @@ function updateSprites(){
         
         
     }
-
+    console.log("score:" + globals.score);
 
 }
 
@@ -239,15 +248,13 @@ function gameover(){
     if(globals.life <=0){
         globals.gameState = Game.LOADING_GAMEOVER;
     }
-    if(row >= 30){
+    if(row >= 40){
 
         globals.gameState = Game.LOADING_GAMEOVER;
             
     }
 }
-function mostrarFormulario() {
-    document.getElementById('scoreFor').style.display = 'block';
-}
+
 function updatelifesprite(){
         let life = globals.life;
 
@@ -404,7 +411,6 @@ function updateParticle(particle){
 //Funcion que actualiza el personaje
 function updateplayer(sprite){
 
-    //Aqui actualizariamos el estado de las variables del player
 
 
 
@@ -463,8 +469,6 @@ function updateplayer(sprite){
     sprite.physics.vx -= sprite.physics.vx * friction;
 //fricion
     if (sprite.physics.isOnGround) {
-        // Coeficiente de fricción (ajusta según sea necesario)
-
         
         // Detener completamente la velocidad si es muy pequeña
         if (Math.abs(sprite.physics.vx) < 0.5) {
@@ -480,29 +484,33 @@ function updateplayer(sprite){
 sprite.physics.vy += 250 * globals.deltaTime;
 // Actualizar posición en el eje y
 
-if(sprite.physics.vy < -300){
-    sprite.physics.vy = -300
-}
+    // if(sprite.physics.vy < -300){
+    //     sprite.physics.vy = -300
+    // }
 
 sprite.xPos += sprite.physics.vx * globals.deltaTime;
 sprite.yPos += sprite.physics.vy * globals.deltaTime;
 
 
     updateAnimationFrame(sprite);
-
+    changelevel(sprite);
     gameover();
-    
-    
-
-
+console.log(sprite.xPos);
 }
 
 function updatescore(){
-    
-    globals.score += globals.deltaTime * 1.5  ;
 
     if(globals.score > globals.highScore){
         globals.highScore =  globals.score;
+    }
+}
+function changelevel(sprite){
+    if(sprite.xPos > 3700){
+        globals.currentlevel = 4;
+        sprite.xPos = 30;
+        sprite.yPos = 100;
+        globals.gameState = Game.LOADING_PLAY;
+
     }
 }
 function updateenemi(sprite){
@@ -1064,8 +1072,6 @@ function restoreDefaultValues() {
     globals.sprites             = []
 
     globals.life                = 300
-
-    globals.score               = 0
 
     globals.particles           = []
 

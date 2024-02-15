@@ -59,7 +59,7 @@ export default {
 
     currentSound: -1,
 
-    score: 50,
+    score: 0,
     highScore: 100,
     menuOptions : ["New Game", "Controls", "Story", "High Score"],
     selectedOption:0,

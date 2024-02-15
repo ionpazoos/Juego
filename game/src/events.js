@@ -84,6 +84,10 @@ export function handleKeyPressAZ(key) {
         console.log('Nombre actual:', globals.playerName);
 
         globals.keytime.value = 1;
+    }   else if (key === 'Backspace' && globals.playerName.length > 0) {
+        //Borrar el nombre
+        globals.playerName = "";
+        console.log('Nombre actual:', globals.playerName);
     }
 }
 

@@ -677,7 +677,7 @@ function detectCollisionBetweenPlayerAndSprites(sprite){
     if(isOverlap){
         sprite.isColidingHead = true;
         console.log("Le he dado en la cabeza "+ sprite.id + sprite.isColidingHead );
-        player.physics.vy -= 300;
+        player.physics.vy -= 200;
     }
 
 

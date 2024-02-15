@@ -27,13 +27,14 @@ export default class Sprite{
 }
 export class Ladron extends Sprite
 {
-    constructor(id,state,xPos,yPos,imageSet,frames,physics,maxTimeToChangeDirection,hitbox,damage,hitbox2,deadTimer)
+    constructor(id,state,xPos,yPos,imageSet,frames,physics,maxTimeToChangeDirection,hitbox,damage,hitbox2,deadTimer,score)
     {
         super(id,state,xPos,yPos,imageSet,frames,physics,hitbox,hitbox2,deadTimer);
 
         this.directionChangeCounter = 0;
         this.maxTimeToChangeDirection = maxTimeToChangeDirection;
         this.damage = damage;
+        this.score = score;
        
        
         this.isColidingHead = false;
@@ -42,12 +43,13 @@ export class Ladron extends Sprite
 
 export class Ladron_j extends Sprite
 {
-    constructor(id,state,xPos,yPos,imageSet,frames,physics,hitbox,damage,hitbox2,deadTimer)
+    constructor(id,state,xPos,yPos,imageSet,frames,physics,hitbox,damage,hitbox2,deadTimer,score)
     {
         super(id,state,xPos,yPos,imageSet,frames,physics,hitbox,hitbox2,deadTimer);
 
         this.collisionBorder = Colisions.NO_COLISIONS;
         this.damage = damage;
+        this.score = score;
     
         this.isColidingHead = false;
     }
