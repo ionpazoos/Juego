@@ -459,7 +459,7 @@ function updateplayer(sprite){
            sprite.physics.vy += sprite.physics.jumpforce;
             
            globals.sounds[Sounds.JUMP].play();
-           globals.sounds[Sounds.JUMP].volume = 1;
+           globals.sounds[Sounds.JUMP].volume = 0.3;
         }
 
         
@@ -598,6 +598,8 @@ function interactMenu(){
         if(globals.action.space){
             if(globals.selectedOption === 0){
                 globals.gameState = Game.LOADING_PLAY;
+                globals.sounds[Sounds.GAME_MUSIC].play();
+                globals.sounds[Sounds.GAME_MUSIC].volume = 1;
             }
             else if(globals.selectedOption === 1){
                 globals.gameState = Game.CONTROLS;
@@ -609,8 +611,7 @@ function interactMenu(){
                 globals.gameState = Game.LOADING_HIGHSCORE;
             }
 
-            globals.sounds[Sounds.GAME_MUSIC].play();
-            globals.sounds[Sounds.GAME_MUSIC].volume = 1;
+
         }
 
 
@@ -689,6 +690,7 @@ function interacthigscores(){
 
         if( globals.action.esc){
             globals.gameState = Game.LOADING_MENU;
+            globals.sounds[Sounds.HIGHSCORE].volume = 0;
         }
 
     globals.keytime.value = 1;
@@ -1227,18 +1229,7 @@ function dificulti(){
     }
 }
 
-function arrayorder(){
-    let unorderedarray = globals.Players.slice(); // Copia del array original para no modificarlo directamente
 
-    // Ordenar el array por puntajes de mayor a menor
-    unorderedarray.sort(function(a, b) {
-        return b.score - a.score;
-        
-    });
-    console.log(unorderedarray);
-    return unorderedarray;
-
-}
 }
 
 
