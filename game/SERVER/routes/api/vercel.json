@@ -1,0 +1,11 @@
+{
+    "functions": {
+        "api/getAllClassic.php": { "runtime": "vercel-php@0.6.1" },
+        "api/postClassic.php": { "runtime": "vercel-php@0.6.1" }
+    },
+    "routes": [
+        { "src": "/api/get/(.*)", "methods": ["GET"], "dest": "/SERVER/routes/api/getAllClassic.php" },
+        { "src": "/api/post/(.*)", "methods": ["POST"], "dest": "/SERVER/routes/api/postClassic.php" },
+        { "src": "/(.*)", "dest": "/SERVER/routes/api/getAllClassic.php" }
+    ]
+}
