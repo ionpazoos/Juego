@@ -1,6 +1,7 @@
 {
     "functions": {
-        "routes/*.php": { "runtime": "vercel-php@0.6.1" }
+        "routes/getAllClassic.php": { "runtime": "vercel-php@0.6.1" },
+        "routes/postClassic.php": { "runtime": "vercel-php@0.6.1" }
     },
     "routes": [
         { "src": "/routes/get/(.*)", "methods": ["GET"], "dest": "/SERVER/routes/getAllClassic.php" },
