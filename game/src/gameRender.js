@@ -257,7 +257,7 @@ function winning() {
     globals.ctx.shadowOffsetY = 0;
 
     // Pintar la siguiente historia debajo del mensaje de victoria
-    const story = "X.G, The Erudite, managed to escape from the foes. Suddenly a path of light opened before her eyes. It was a small cottage in the middle of the forest. Its name was 'Wound's Valley Inn'. He decided to enter.";
+    const story = "Finally, after overcoming the challenges of the labyrinth, Master Silvano and X.G reach the top of a magnificent mountain called Serene Peak. From there, with a panoramic view of the City of Evil Tongues, X.G feels a renewed clarity of intelligence and control over his emotions. In that epic place ends the first part of his journey, where the next stage of his odyssey begins.";
 
     // Estilo del texto de la historia
     globals.ctx.fillStyle = 'white';
@@ -267,7 +267,7 @@ function winning() {
     const maxWidth = 500; // Ancho máximo del texto
     const words = story.split(' ');
     let line = '';
-    let y = globals.canvas.height / 2 + 40; // Posición vertical inicial
+    let y = globals.canvas.height / 2 ; // Posición vertical inicial
 
     for (let word of words) {
         let testLine = line + word + ' ';

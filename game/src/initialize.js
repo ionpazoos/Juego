@@ -162,7 +162,7 @@ function loadHandler(){
         console.log("Assets finished loading");
 
         //Start the game
-        globals.gameState = Game.LOADING_MENU;
+        globals.gameState = Game.LOADING;
         console.log("modo cambiado");
 
 

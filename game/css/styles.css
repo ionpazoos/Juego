@@ -7,7 +7,7 @@
 
 #gameScreen {
     width: 100%;
-    height: 80%;
+    height: 100%;
      border: black;
     border-style: solid; 
     image-rendering: -moz-crisp-edges;

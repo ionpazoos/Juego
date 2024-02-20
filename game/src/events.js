@@ -100,7 +100,7 @@ export function getData()
 
 
     //Ruta o absoluta o relativa al fichero que hace la petición (html)
-    const url = "http://localhost:3000/game/SERVER/routes/getAllClassic.php";
+    const url = "https://juego-mu.vercel.app/SERVER/routes/getAllClassic.php";
     const request = new XMLHttpRequest();
 
     request.onreadystatechange = function()
@@ -158,7 +158,7 @@ export function SendData(event) {
     console.log(dataToSend);
 
     // Ruta relativa al archivo que maneja la petición
-    const url = "http://localhost:3000/game/SERVER/routes/postClassic.php";
+    const url = "https://juego-mu.vercel.app/SERVER/routes/postClassic.php";
     const request = new XMLHttpRequest();
     request.open('POST', url, true);
     
