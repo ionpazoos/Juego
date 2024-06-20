@@ -10,28 +10,23 @@ export function keyDownHandeler(event){
     switch(event.keyCode){
         case Key.UP:
             globals.action.moveUp = true;
-            console.log("up");
             break;
-
-            case Key.DOWN:
-                globals.action.moveDown = true;
+        case Key.DOWN:
+            globals.action.moveDown = true;
+            break;
+        case Key.LEFT:
+            globals.action.moveLeft = true;
+            break;
+        case Key.RIGHT:
+                globals.action.moveRight = true;
                 break;
-            case Key.LEFT:
-                    globals.action.moveLeft = true;
-                    break;
-            case Key.RIGHT:
-                    globals.action.moveRight = true;
-
-            case Key.Space:
-                globals.action.space = true;
-                break;
-            case Key.esc:
-                    globals.action.esc = true;
-                        
-                        break;
-                        
-                    
-                    
+        case Key.Space:
+            globals.action.space = true;
+            break;
+        case Key.esc:
+            globals.action.esc = true;    
+            break;
+                             
     }
 }
 
@@ -42,25 +37,21 @@ export function keyupHandeler(event){
         case Key.UP:
             globals.action.moveUp = false;
             break;
-
-            case Key.DOWN:
-                globals.action.moveDown = false;
+        case Key.DOWN:
+            globals.action.moveDown = false;
+            break;
+        case Key.LEFT:
+                globals.action.moveLeft = false;
                 break;
-            case Key.LEFT:
-                    globals.action.moveLeft = false;
-                    break;
-            case Key.RIGHT:
-                    globals.action.moveRight = false;
-                    break;
-
-            case Key.Space:
-                globals.action.space = false;
-                    
-                    break;
-            case Key.esc:
-                        globals.action.esc = false;
-                            
-                            break;
+        case Key.RIGHT:
+            globals.action.moveRight = false;
+            break;
+        case Key.Space:
+            globals.action.space = false;              
+            break;
+        case Key.esc:
+            globals.action.esc = false;
+            break;
     }
 }
 
@@ -174,10 +165,6 @@ export function SendData(event) {
                     
                         const resultJSON = JSON.parse(this.responseText);
                         console.log("resultJSON: "+resultJSON);
-                        
-                        // Inicializar los datos
-     
-                        
                     }
                  else {
                     alert("Communication error: No data received");

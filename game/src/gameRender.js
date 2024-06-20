@@ -652,8 +652,8 @@ function drawHitbox(sprite){
     const w1 = sprite.hitbox.xSize;
     const h1 = sprite.hitbox.ySize;
 
-    globals.ctx.strokeStyle = "red";
-    globals.ctx.strokeRect(x1,y1,w1,h1);
+        globals.ctx.strokeStyle = "red";
+        globals.ctx.strokeRect(x1,y1,w1,h1);
 
    
 

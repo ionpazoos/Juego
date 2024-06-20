@@ -73,8 +73,7 @@ function playGame(){
     win();
     
 }
-function newgame(){
-    
+function newgame(){ 
     updateSprites();
     detectCollision();
     interactMenu();
@@ -83,12 +82,10 @@ function newgame(){
     playSound();
     globals.sounds[Sounds.MENU].play();
     globals.sounds[Sounds.MENU].volume = 1;
-    
-    
 }
 function loadhighscore(){
-                getData();
-              globals.sprites = [];
+            //getData();
+            globals.sprites = [];
             globals.currentlevel = 3;
             globals.level = globals.levels[globals.currentlevel];
             globals.sounds[Sounds.GAME_MUSIC].volume = 0;
@@ -165,7 +162,7 @@ function loadNewGame(){
     globals.currentlevel = 1;
     globals.level = globals.levels[globals.currentlevel];
     initSpritesNewGame();    
-    getData();
+    //getData();
     globals.gameState = Game.NEWGAME;
     globals.currentSound = Sounds.MENU;
     
@@ -303,7 +300,7 @@ function updatekeyTime(){
     }
 
     if(globals.keytime.value <= 0){
-        globals.keytime.value=0;
+        globals.keytime.value =0;
     }
 }
 function updatedeadtimer(sprite){
@@ -484,7 +481,7 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
 console.log(sprite.xPos);
 }
 function updatescore(){
-    globals.highScore = globals.Players[0].score;
+    //globals.highScore = globals.Players[0].score;
     if(globals.score > globals.highScore){
         globals.highScore =  globals.score;
     }
@@ -557,28 +554,19 @@ sprite.yPos += sprite.physics.vy * globals.deltaTime;
 function interactMenu(){
     
     updatekeyTime();
-    if( globals.keytime.value === 0 ){
-         
-        
+    if( globals.keytime.value === 0 ){ 
         if(globals.action.moveUp){
-
             globals.selectedOption--;
-
         }
         else if(globals.action.moveDown){
             globals.selectedOption++;
-
         }
-
         if(globals.selectedOption > globals.menuOptions.length -1){
             globals.selectedOption = globals.menuOptions.length-1;
         }
         else if(globals.selectedOption < 0){
-
             globals.selectedOption = 0;
-
         }
-
         if(globals.action.space){
             if(globals.selectedOption === 0){
                 globals.gameState = Game.LOADING_PLAY;
@@ -595,16 +583,12 @@ function interactMenu(){
             else if(globals.selectedOption === 3){
                 globals.gameState = Game.LOADING_HIGHSCORE;
             }
-
-
         }
-
-
     }
-
     else{
         if( globals.action.esc){
             globals.gameState = Game.NEWGAME;
+            globals.selectedOption = -1;
         }
     }
     globals.keytime.value = 1;
@@ -612,7 +596,6 @@ function interactMenu(){
 }
 function interactstory(){
     updatekeyTime();
-    console.log(globals.keytime.value);
     
         if(globals.keytime.value <=0){
         if(globals.action.moveRight ){
@@ -637,6 +620,10 @@ function interactstory(){
         }
         if( globals.action.esc){
             globals.gameState = Game.NEWGAME;
+            globals.selectedPaperIndex = 0;
+            let transformValues = [1, 0, 0, 1, 0, 0];
+            globals.ctx.setTransform(...transformValues);
+
         }
         
     }
@@ -761,13 +748,8 @@ function calculateColision(sprite){
     }
 }
 function updatebee(sprite){
-
-
     sprite.physics.angle += sprite.physics.omega * globals.deltaTime;
     setPositionBee(sprite);
-
-
-    
 
     if(sprite.isColidingHead){
         updatedeadtimer(sprite);
@@ -841,7 +823,7 @@ function updatesupersayan(sprite){
 
 updateAnimationFrame(sprite);
 }
- function setPositionBee(sprite){
+function setPositionBee(sprite){
     const radius = 25;
 
     sprite.xPos = sprite.physics.xRotorCenter + radius * Math.cos(sprite.physics.angle);
@@ -1029,13 +1011,9 @@ function updategrassparticle(particle){
 function restoreDefaultValues() {
     globals.leveltime.value     = 300
     globals.leveltime.timeChangeCounter = 0
-
     globals.sprites             = []
-
     globals.life                = 300
-
     globals.particles           = []
-
     globals.level               = []
 }
 function playSound(){

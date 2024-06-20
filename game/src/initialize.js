@@ -54,7 +54,7 @@ function initVars(){
 
     globals.currentSound = Sounds.NO_SOUND;
 
-
+    initplayers();
     
 }
 function initEvents(){
@@ -172,7 +172,7 @@ function loadHandler(){
 
 function initSprites() {
     //funcion para iniciar sprites del playing
-    initplayer(30,100);
+    initplayer(30,40);
     initskeleton(150);
     initskeleton(2600);
     initbee(460,80);
@@ -441,18 +441,28 @@ function initGrass(x,y){
 
 }
 
-async function initplayers(data) {
+async function initplayers() {
     try {
         // Espera a que se resuelva la promesa devuelta por cargarMejoresPuntuaciones()
-        const playersinfo = data;
+        const playersinfo = [     new Jugador(1, "Alice", 1000),
+        new Jugador(2, "Bob", 950),
+        new Jugador(3, "Charlie", 900),
+        new Jugador(4, "David", 850),
+        new Jugador(5, "Eve", 800),
+        new Jugador(6, "Frank", 750),
+        new Jugador(7, "Grace", 700),
+        new Jugador(8, "Heidi", 650),
+        new Jugador(9, "Ivan", 600),
+        new Jugador(10, "Judy", 550)];
         
         console.log(playersinfo);
+        
 
         // Itera sobre los datos de los puntajes recibidos y crea objetos Jugador
         for (let i = 0; i < playersinfo.length; i++) {
             const jugadorData = playersinfo[i];
             console.log(playersinfo[i]);
-            const jugador = new Jugador(parseInt(jugadorData.id), jugadorData.nombre, parseInt(jugadorData.score));
+            const jugador = new Jugador(parseInt(jugadorData.id), jugadorData.name, parseInt(jugadorData.score));
             // Agrega el jugador creado al arreglo de jugadores
             globals.Players.push(jugador);
 
