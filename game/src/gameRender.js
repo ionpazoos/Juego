@@ -773,9 +773,19 @@ function moveCamera(){
      // Ajusta la posición del fondo en relación con la posición de la cámara
     const backgroundX = globals.camara.x-10;  // Ajusta según las necesidades
     const backgroundY = globals.camara.y -20;  // Ajusta según las necesidades
-
+    
     // Dibuja la imagen de fondo ajustada a la posición de la cámara
+    console.log("loop:" + globals.loop);
+    if(globals.loop === 0){
+        console.log("painting white");
     globals.ctx.drawImage(globals.tileSets[0], 0, globals.canvas.width +20, globals.canvas.height, 200, backgroundX, backgroundY, globals.canvas.width+20, globals.canvas.height);
+
+    }
+    else{
+        console.log("painting black");
+    globals.ctx.drawImage(globals.tileSets[0], 499, globals.canvas.width +20, globals.canvas.height, 200, backgroundX, backgroundY, globals.canvas.width+20, globals.canvas.height);
+
+    }
 }
 
 

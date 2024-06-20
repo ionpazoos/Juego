@@ -1152,13 +1152,13 @@ function dificulti(){
         
         initvillan(globals.sprites[0].xPos + 100,globals.sprites[0].xPos - 30);
         globals.lastTimeSpawn = globals.leveltime.value;
-        console.log("spawn")
     }
 
     if((globals.sprites[0].xPos > 1200 && globals.sprites[0].xPos < 1205) && globals.spawntime.value <= 0){
         
         initskeleton(1500);
         globals.spawntime.value = 1;
+        
     }
 
     loopEvent();
@@ -1168,7 +1168,10 @@ function loopEvent(){
     if(globals.leveltime.value === 149){
         globals.enemikilled = 0;
     }
-    if(globals.enemikilled > 10){ globals.eventpass = true}
+    if(globals.enemikilled > 10){
+         globals.eventpass = true
+         globals.loop = 0;
+    }
 
     if(globals.leveltime.value <= 150 && globals.leveltime.value >= 120){
 
@@ -1176,6 +1179,7 @@ function loopEvent(){
             initvillan(globals.sprites[0].xPos + 50);
             globals.spawntime.value = 1;
         }
+        globals.loop = 1;
         
     }
 

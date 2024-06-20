@@ -77,13 +77,14 @@ export default {
     playerName:"",
     playerId: 0,
 
-    lastFrameTime:0,
+    lastFrameTime: 0,
     lastTimeSpawn: 130,
 
     eventpass: false,
-    enemikilled:0,
+    enemikilled: 0,
 
     textfinished: false,
+    loop: 0,
 
 
 
