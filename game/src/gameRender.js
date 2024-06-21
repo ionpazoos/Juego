@@ -783,9 +783,13 @@ function moveCamera(){
     }
     else{
         console.log("painting black");
+
     globals.ctx.drawImage(globals.tileSets[0], 499, globals.canvas.width +20, globals.canvas.height, 200, backgroundX, backgroundY, globals.canvas.width+20, globals.canvas.height);
 
     }
+    globals.ctx.fillStyle = "black";
+    let text = "You need to kill 10 enemies,current:" + globals.enemikilled;
+    globals.ctx.fillText("You need to kill 10 enemies,current:", backgroundX + 100 , backgroundY);
 }
 
 
