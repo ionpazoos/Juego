@@ -136,6 +136,13 @@ function loadAssets(){
     globals.sounds.push(gameover);
     globals.assetsToLoad.push(gameover);
 
+    let ouch = document.querySelector('#ouch');
+    ouch.addEventListener("canplaytrhough",loadHandler,false);
+    ouch.addEventListener("timeupdate",updateMusic,false);
+    ouch.load();
+    globals.sounds.push(ouch);
+    globals.assetsToLoad.push(ouch);
+
    
 }
 

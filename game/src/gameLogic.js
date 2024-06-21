@@ -253,7 +253,8 @@ function whenPlayerGetHit(sprite){
         sprite.physics.vy -= 50;
     }
    
-    
+    globals.sounds[Sounds.OUCH].play();
+    globals.sounds[Sounds.OUCH].volume = 1;
 
     if(sprite.physics.vx < 0){
         sprite.physics.vx += 250;
@@ -571,7 +572,7 @@ function interactMenu(){
             if(globals.selectedOption === 0){
                 globals.gameState = Game.LOADING_PLAY;
                 globals.sounds[Sounds.GAME_MUSIC].play();
-                globals.sounds[Sounds.GAME_MUSIC].volume = 1;
+                globals.sounds[Sounds.GAME_MUSIC].volume = 0.3;
             }
             else if(globals.selectedOption === 1){
                 globals.gameState = Game.CONTROLS;
@@ -1184,7 +1185,7 @@ function loopEvent(){
     }
 
     if(globals.leveltime.value <= 60 && globals.leveltime.value >= 10){
-
+        globals.loop = 2;
         if(globals.spawntime.value <= 0){
             initskeleton(globals.sprites[0].xPos - 50);
             initvillan(globals.sprites[0].xPos + 50);
@@ -1206,7 +1207,7 @@ function win(){
 function gameoverlogic(){
     globals.sounds[Sounds.GAME_MUSIC].volume = 0;
     globals.sounds[Sounds.GAMEOVER].play();
-    globals.sounds[Sounds.GAMEOVER].volume = 1;
+    globals.sounds[Sounds.GAMEOVER].volume = 0.4;
     playSound();
 
 createRandomShineParticle();

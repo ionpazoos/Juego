@@ -775,7 +775,7 @@ function moveCamera(){
     const backgroundY = globals.camara.y -20;  // Ajusta según las necesidades
     
     // Dibuja la imagen de fondo ajustada a la posición de la cámara
-    console.log("loop:" + globals.loop);
+
     if(globals.loop === 0){
         console.log("painting white");
     globals.ctx.drawImage(globals.tileSets[0], 0, globals.canvas.width +20, globals.canvas.height, 200, backgroundX, backgroundY, globals.canvas.width+20, globals.canvas.height);
